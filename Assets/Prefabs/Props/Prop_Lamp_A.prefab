@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 459410}
   - component: {fileID: 20581440}
+  - component: {fileID: 9007537645295035873}
   m_Layer: 8
   m_Name: Prop_Lamp_A
   m_TagString: Untagged
@@ -170,6 +171,24 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2364168}
   m_Enabled: 1
+--- !u!114 &9007537645295035873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de90cd5685cf4884beb4c691979a32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
+  lightSource: {fileID: 5812421488959719561}
+  flashIntensity: 1.5
+  minOffTime: 3
+  maxOffTime: 5
+  minFlashTime: 0.05
+  maxFlashTime: 0.2
 --- !u!1 &185748
 GameObject:
   m_ObjectHideFlags: 0
