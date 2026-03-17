@@ -139,7 +139,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 650.36615, y: 18.767, z: 487.8075}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 439000}
@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 8794415314978514089}
   - component: {fileID: 1986638360711423195}
   - component: {fileID: 3048418733126630388}
+  - component: {fileID: 6999552958099472996}
   m_Layer: 0
   m_Name: light4
   m_TagString: Untagged
@@ -412,6 +413,24 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &6999552958099472996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5808523815693628036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de90cd5685cf4884beb4c691979a32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
+  lightSource: {fileID: 0}
+  flashIntensity: 1
+  minOffTime: 3
+  maxOffTime: 5
+  minFlashTime: 0.5
+  maxFlashTime: 1
 --- !u!1 &7257816076205933216
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +442,7 @@ GameObject:
   - component: {fileID: 2149895048220942913}
   - component: {fileID: 6556527344262053018}
   - component: {fileID: 7068731515340909403}
+  - component: {fileID: 6061957122087840045}
   m_Layer: 0
   m_Name: light3
   m_TagString: Untagged
@@ -539,6 +559,24 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &6061957122087840045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7257816076205933216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de90cd5685cf4884beb4c691979a32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
+  lightSource: {fileID: 0}
+  flashIntensity: 1
+  minOffTime: 3
+  maxOffTime: 5
+  minFlashTime: 0.5
+  maxFlashTime: 1
 --- !u!1 &8324139507722420866
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +588,7 @@ GameObject:
   - component: {fileID: 503232971386740786}
   - component: {fileID: 7855146831097816062}
   - component: {fileID: 4889765056051757020}
+  - component: {fileID: 590424360414519647}
   m_Layer: 0
   m_Name: light1
   m_TagString: Untagged
@@ -666,6 +705,24 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &590424360414519647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324139507722420866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de90cd5685cf4884beb4c691979a32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
+  lightSource: {fileID: 0}
+  flashIntensity: 1
+  minOffTime: 3
+  maxOffTime: 5
+  minFlashTime: 0.5
+  maxFlashTime: 1
 --- !u!1 &9014554688726971767
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,6 +734,7 @@ GameObject:
   - component: {fileID: 9145279340331270752}
   - component: {fileID: 4532272858974214500}
   - component: {fileID: 1712995044691464337}
+  - component: {fileID: 7874529411568797922}
   m_Layer: 0
   m_Name: light2
   m_TagString: Untagged
@@ -793,3 +851,21 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &7874529411568797922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9014554688726971767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de90cd5685cf4884beb4c691979a32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
+  lightSource: {fileID: 0}
+  flashIntensity: 1
+  minOffTime: 3
+  maxOffTime: 5
+  minFlashTime: 0.5
+  maxFlashTime: 1

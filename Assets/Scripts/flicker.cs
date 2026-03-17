@@ -5,40 +5,60 @@ public class LightFlicker : MonoBehaviour
 {
     public Light lightSource;
 
-    public float flashIntensity = 1.5f;
+    [Header("Flash Brightness")]
+    public float minFlashIntensity = 0.8f;
+    public float maxFlashIntensity = 1.2f;
 
-    public float minOffTime = 1f;
-    public float maxOffTime = 4f;
+    [Header("Time While Off")]
+    public float minOffTime = 8f;
+    public float maxOffTime = 20f;
 
-    public float minFlashTime = 0.05f;
-    public float maxFlashTime = 0.2f;
+    [Header("Time While On")]
+    public float minFlashTime = 0.08f;
+    public float maxFlashTime = 0.25f;
+
+    [Header("How Often This Light Actually Flashes")]
+    [Range(0f, 1f)] public float flashChance = 0.25f;
+
+    [Header("Burst Size")]
+    public int minFlashCount = 1;
+    public int maxFlashCount = 3;
 
     void Start()
     {
         if (lightSource == null)
             lightSource = GetComponent<Light>();
 
+        lightSource.intensity = 0f;
+
         StartCoroutine(Flicker());
     }
 
     IEnumerator Flicker()
     {
+        // random startup delay so lights do not sync
+        yield return new WaitForSeconds(Random.Range(0f, 5f));
+
         while (true)
         {
-            // Stay OFF (dark most of the time)
             lightSource.intensity = 0f;
+
+            // wait in darkness for a random amount of time
             yield return new WaitForSeconds(Random.Range(minOffTime, maxOffTime));
 
-            // Flash burst (quick flickers ON)
-            int flashCount = Random.Range(1, 4);
+            // sometimes do nothing this cycle
+            if (Random.value > flashChance)
+                continue;
+
+            int flashCount = Random.Range(minFlashCount, maxFlashCount + 1);
 
             for (int i = 0; i < flashCount; i++)
             {
-                lightSource.intensity = Random.Range(0.8f, flashIntensity);
+                lightSource.intensity = Random.Range(minFlashIntensity, maxFlashIntensity);
                 yield return new WaitForSeconds(Random.Range(minFlashTime, maxFlashTime));
 
                 lightSource.intensity = 0f;
-                yield return new WaitForSeconds(Random.Range(0.02f, 0.08f));
+                yield return new WaitForSeconds(Random.Range(0.03f, 0.12f));
             }
         }
     }

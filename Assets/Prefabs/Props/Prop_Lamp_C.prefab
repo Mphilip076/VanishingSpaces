@@ -141,7 +141,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 651.6111, y: 19.273, z: 487.1671}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 490466}
@@ -485,6 +485,7 @@ GameObject:
   - component: {fileID: 5636312089324238121}
   - component: {fileID: 1880041488098825221}
   - component: {fileID: 1981871756951606923}
+  - component: {fileID: 5922814370197041840}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -501,7 +502,7 @@ Transform:
   m_GameObject: {fileID: 2022083522191402986}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.057678223, y: -1.8464108, z: -0.13092041}
+  m_LocalPosition: {x: 0.057678223, y: -1.38, z: -0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -601,3 +602,21 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &5922814370197041840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022083522191402986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de90cd5685cf4884beb4c691979a32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
+  lightSource: {fileID: 0}
+  flashIntensity: 1
+  minOffTime: 3
+  maxOffTime: 5
+  minFlashTime: 0.5
+  maxFlashTime: 1
