@@ -114,7 +114,7 @@ public class Room
     {
         foreach(Room r in allRooms)
         {
-            if(r.name.equals(roomName)) return r;
+            if(r.name.Equals(roomName)) return r;
         }
 
         // Doesn't exist
