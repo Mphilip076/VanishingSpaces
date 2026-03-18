@@ -40,6 +40,7 @@ public class Room
                                 // the set exits
     private bool roomIsLocked;  // Whether the user has to complete some kind of puzzle 
                                 // to unlock the door or needs some item, such as a key
+                                // Default false
     
 
     // The exits to other rooms. All three are initially null
@@ -48,11 +49,11 @@ public class Room
     private Room exit2;
     private Room exit3;
 
-    public Room(string name, Scene scene, bool roomIsLocked)
+    public Room(string name, Scene scene)
     {
         this.name = name;
         this.scene = scene;
-        this.roomIsLocked = roomIsLocked;
+        this.roomIsLocked = false;
 
         // By default, the room is unlocked and has no exits
         this.lockedInPlace = false;
@@ -105,6 +106,19 @@ public class Room
     public bool DoorIsLocked()
     {
         return roomIsLocked;
+    }
+
+    // Find a room by name
+    // Returns null if not found
+    public static Room GetRoom(string roomName)
+    {
+        foreach(Room r in allRooms)
+        {
+            if(r.name.equals(roomName)) return r;
+        }
+
+        // Doesn't exist
+        return null;
     }
 
     // ------------------------------------ SETTERS ------------------------------------
