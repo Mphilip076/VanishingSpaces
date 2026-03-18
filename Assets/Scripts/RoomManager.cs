@@ -23,13 +23,14 @@ public class RoomManager : MonoBehaviour
 
         /* Create the rooms here. Example:
 
-            Room room1 = new Room("Room 1", SceneManager.GetSceneByName("Room1Scene"));
-            Room room2 = new Room("Room 2", SceneManager.GetSceneByName("Room2Scene"));
-            Room room3 = new Room("Room 3", SceneManager.GetSceneByName("Room3Scene"));
+            Room room1 = new Room("Room 1", SceneManager.GetSceneByName("Room1Scene"), false);
+            Room room2 = new Room("Room 2", SceneManager.GetSceneByName("Room2Scene"), false);
+            Room room3 = new Room("Room 3", SceneManager.GetSceneByName("Room3Scene"), false);
 
             room1.SetExit1(room2);
             room1.SetExit2(room3);
             // room 1 exit 3 is not used, so it doesn't need to be set.
+            // the bool is true if you want to prevent the user from leaving until they complete some task
         */
     }
 
