@@ -7,7 +7,7 @@ public class LightFlicker : MonoBehaviour
 
     [Header("Flash Brightness")]
     public float minFlashIntensity = 0.8f;
-    public float maxFlashIntensity = 1.2f;
+    public float maxFlashIntensity = 3f;
 
     [Header("Time While Off")]
     public float minOffTime = 8f;

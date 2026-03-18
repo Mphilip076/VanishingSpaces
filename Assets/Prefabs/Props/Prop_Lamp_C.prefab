@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 130512}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -179,7 +179,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 133240}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.7818698, b: 0.023584902, a: 1}
@@ -387,7 +387,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193654}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -615,8 +615,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
   lightSource: {fileID: 0}
-  flashIntensity: 1
+  minFlashIntensity: 0.8
+  maxFlashIntensity: 3
   minOffTime: 3
   maxOffTime: 5
   minFlashTime: 0.5
   maxFlashTime: 1
+  flashChance: 0.25
+  minFlashCount: 1
+  maxFlashCount: 3

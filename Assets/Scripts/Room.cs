@@ -34,9 +34,13 @@ public class Room
     private Scene scene;    // The scene that represents this room. 
                             // This is where the actual game objects and environment of the room are located.
 
-    private bool isLocked;  // Whether the room is locked or not
-                            // If locked, any entrances to that room will always lead to that room
-                            // instead of a random room
+    private bool lockedInPlace; // Whether the room is locked or not
+                                // If true, any entrances to that room will always lead to that room
+                                // instead of a random room, and any exits will always lead to 
+                                // the set exits
+    private bool roomIsLocked;  // Whether the user has to complete some kind of puzzle 
+                                // to unlock the door or needs some item, such as a key
+                                // Default false
     
 
     // The exits to other rooms. All three are initially null
@@ -49,9 +53,10 @@ public class Room
     {
         this.name = name;
         this.scene = scene;
+        this.roomIsLocked = false;
 
         // By default, the room is unlocked and has no exits
-        this.isLocked = false;
+        this.lockedInPlace = false;
         exit1 = null;
         exit2 = null;
         exit3 = null;
@@ -63,22 +68,57 @@ public class Room
     
     // ------------------------------------ GETTERS ------------------------------------
 
-    // Returns the scene
+    /// <returns>
+    /// Returns the scene 
+    /// </returns>
     public Scene GetScene()
     {
         return scene;
     }
 
+    /// <returns>
     // Returns the name of the room
+    /// </returns>
     public string Name()
     {
         return name;
     }
     
-    // Returns whether the room is locked or not
-    public bool IsLocked()
+    /// <summary>
+    /// Returns whether the door's exits are random
+    /// </summary>
+    /// <returns>
+    /// Returns true if the exits will always lead to the exit,
+    /// false if the exit is randomized
+    /// </returns>
+    public bool IsLockedInPlace()
     {
-        return isLocked;
+        return lockedInPlace;
+    }
+
+    /// <summary>
+    /// Return whether the door is locked
+    /// </summary>
+    /// <returns>
+    /// Returns true if the user cannot exit,
+    /// false if they can
+    /// </returns>
+    public bool DoorIsLocked()
+    {
+        return roomIsLocked;
+    }
+
+    // Find a room by name
+    // Returns null if not found
+    public static Room GetRoom(string roomName)
+    {
+        foreach(Room r in allRooms)
+        {
+            if(r.name.Equals(roomName)) return r;
+        }
+
+        // Doesn't exist
+        return null;
     }
 
     // ------------------------------------ SETTERS ------------------------------------
@@ -87,18 +127,18 @@ public class Room
     public void LockInPlace()
     {
         // If the room was unlocked, remove it from the list of unlocked rooms
-        if (!isLocked) unlockedRooms.Remove(this);
+        if (!lockedInPlace) unlockedRooms.Remove(this);
 
-        isLocked = true;
+        lockedInPlace = true;
     }
 
     // Adds the room to the list of randomly selected rooms to enter
     public void AllowRandomEntry()
     {
         // If the room was locked, add it back to the list of unlocked rooms
-        if(isLocked) unlockedRooms.Add(this);
+        if(lockedInPlace) unlockedRooms.Add(this);
         
-        isLocked = false;
+        lockedInPlace = false;
     }
 
     /* ------------------------------------ EXIT SETTERS ------------------------------------ 
@@ -129,10 +169,24 @@ public class Room
         The exits can be accessed using the GetExit1, GetExit2, and GetExit3 functions.
         
         If the exit is not set, return null
+        If the door is locked because the user has not completed a puzzle, return null
         If the room is locked, then always return the right exit
         If the room you are exiting to is locked, then always return the right exit
         Otherwise, return a random exit which is not locked 
        -------------------------------------------------------------------------------------- */
+    
+    // Pervent the user from taking any exit because the door is locked
+    // The user needs to perform some action to unlock it
+    public void LockRoom()
+    {
+        roomIsLocked = true;
+    }
+
+    // Unlock the room so that the player can exit
+    public void UnlockRoom()
+    {
+        roomIsLocked = false;
+    }
 
     // For debugging: returns the exit corresponding to the exit number (1, 2, or 3)
     // Do not use this function in the actual game, since it does not follow the rules for determining which exit to return.
@@ -148,7 +202,15 @@ public class Room
     // If there are no unlocked rooms, return null.
     private Room GetRandomExit()
     {
-        if (unlockedRooms.Count == 0) return null;
+        if (unlockedRooms.Count == 0){
+            Debug.Log("Room " + name + "'s exit 3 cannot be used because it does not exist.");
+            return null;
+        }
+        if (roomIsLocked)
+        {
+            Debug.Log("Room: Cannot get a random exit because no possible exits exist.");
+            return null;
+        }
         return unlockedRooms[Random.Range(0, unlockedRooms.Count)];
     }
 
@@ -158,16 +220,24 @@ public class Room
     {
         // If the exit is not set, return null
         if(exit1 == null) {
+            Debug.Log("Room " + name + "'s exit 1 cannot be used because it does not exist.");
+            return null;
+        }
+
+        // If the door is locked, you can't exit
+        if (roomIsLocked)
+        {
+            Debug.Log("Room "  + name + "'s exit cannot be used because the door is locked.");
             return null;
         }
 
         // If this room is locked, then always return the right exit
-        if (isLocked) {
+        if (lockedInPlace) {
             return exit1;
         }
 
         // If the room you are exiting to is locked, then always return the right exit
-        if (exit1.isLocked) {
+        if (exit1.lockedInPlace) {
             return exit1;
         }
 
@@ -182,16 +252,24 @@ public class Room
     {
         // If the exit is not set, return null
         if(exit2 == null) {
+            Debug.Log("Room " + name + "'s exit 2 cannot be used because it does not exist.");
+            return null;
+        }
+
+        // If the door is locked, you can't exit
+        if (roomIsLocked)
+        {
+            Debug.Log("Room "  + name + "'s exit cannot be used because the door is locked.");
             return null;
         }
 
         // If this room is locked, then always return the right exit
-        if (isLocked) {
+        if (lockedInPlace) {
             return exit2;
         }
 
         // If the room you are exiting to is locked, then always return the right exit
-        if (exit2.isLocked) {
+        if (exit2.lockedInPlace) {
             return exit2;
         }
 
@@ -205,16 +283,24 @@ public class Room
     {
         // If the exit is not set, return null
         if(exit3 == null) {
+            Debug.Log("Room " + name + "'s exit 3 cannot be used because it does not exist.");
+            return null;
+        }
+
+        // If the door is locked, you can't exit
+        if (roomIsLocked)
+        {
+            Debug.Log("Room "  + name + "'s exit cannot be used because the door is locked.");
             return null;
         }
 
         // If this room is locked, then always return the right exit
-        if (isLocked) {
+        if (lockedInPlace) {
             return exit3;
         }
 
         // If the room you are exiting to is locked, then always return the right exit
-        if (exit3.isLocked) {
+        if (exit3.lockedInPlace) {
             return exit3;
         }
 
