@@ -58,7 +58,6 @@ public class Room
 
         // Update the lists
         allRooms.Add(this);
-        unlockedRooms.Add(this);
     }
 
     
@@ -84,8 +83,8 @@ public class Room
 
     // ------------------------------------ SETTERS ------------------------------------
 
-    // Locks the room
-    public void Lock()
+    // Locks the room in place; no more randomness
+    public void LockInPlace()
     {
         // If the room was unlocked, remove it from the list of unlocked rooms
         if (!isLocked) unlockedRooms.Remove(this);
@@ -93,8 +92,8 @@ public class Room
         isLocked = true;
     }
 
-    // Unlocks the room (probably not necessary but just in case)
-    public void Unlock()
+    // Adds the room to the list of randomly selected rooms to enter
+    public void AllowRandomEntry()
     {
         // If the room was locked, add it back to the list of unlocked rooms
         if(isLocked) unlockedRooms.Add(this);
@@ -137,7 +136,7 @@ public class Room
 
     // For debugging: returns the exit corresponding to the exit number (1, 2, or 3)
     // Do not use this function in the actual game, since it does not follow the rules for determining which exit to return.
-    public Room GetExit(int exitNum)
+    public Room GetExitOverride(int exitNum)
     {
         if (exitNum == 1) return exit1;
         else if (exitNum == 2) return exit2;
