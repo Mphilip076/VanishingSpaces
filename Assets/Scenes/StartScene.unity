@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.64
+  m_AmbientIntensity: 0.23
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: c494c335823f54b52b2e87e1b7a63a23, type: 2}
@@ -3199,11 +3199,11 @@ MonoBehaviour:
   lightSource: {fileID: 0}
   minFlashIntensity: 50
   maxFlashIntensity: 100
-  minOffTime: 2
-  maxOffTime: 5
+  minOffTime: 0
+  maxOffTime: 0.5
   minFlashTime: 1
   maxFlashTime: 2
-  flashChance: 0.5
+  flashChance: 0.75
   minFlashCount: 1
   maxFlashCount: 3
 --- !u!114 &707277716
