@@ -1041,7 +1041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FlashlightPickup
   holdPosition: {fileID: 4807268095610542591}
   pickupRange: 2.5
-  pickupKey: 101
+  pickupKey: 114
   dropKey: 113
   flashlightKey: 102
   pickupPromptUI: {fileID: 0}

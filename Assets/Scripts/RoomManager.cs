@@ -32,6 +32,7 @@ public class RoomManager : MonoBehaviour
             Debug.Log("[RoomManager.cs] Adding rooms");
 
             // Add all the rooms here:
+            Room s = new Room("StartScene");
             Room t = new Room("Tutorial");
             Room dr = new Room("DiningRoom");
             Room mb = new Room("MasterBedroom");
@@ -46,13 +47,14 @@ public class RoomManager : MonoBehaviour
             r2.AllowRandomEntry();
 
             // Testing only. Set exits
+            s.SetExit1(t);
             t.SetExit1(dr);
             dr.SetExit1(mb);
             mb.SetExit1(t);
             r1.SetExit1(r2);
             r2.SetExit1(r1);
 
-            Room.SetScene("Tutorial");
+            Room.SetScene("StartScene");
 
             Debug.Log("[RoomManager.cs] Room list size " + Room.allRooms.Count);
             

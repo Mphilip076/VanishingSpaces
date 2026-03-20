@@ -430,7 +430,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466531769}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &466531771
 Camera:
   m_ObjectHideFlags: 0
@@ -504,7 +504,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466531769}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
@@ -1008,6 +1008,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b694b8ec5c41f6247843a2b67222fda6, type: 3}
   m_PrefabInstance: {fileID: 768794559}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &878788734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 878788736}
+  - component: {fileID: 878788735}
+  m_Layer: 8
+  m_Name: PlayerSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &878788735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878788734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f62ce5d33f44c5ea58473f51f63f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  playerPrefab: {fileID: 3418886571602474070, guid: 51ef9b8f1c241774088e882510307b38, type: 3}
+--- !u!4 &878788736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878788734}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.174, y: 1.663, z: -0.446}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &883636805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2500,6 +2545,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 466531772}
   - {fileID: 1436093065}
+  - {fileID: 878788736}
   - {fileID: 1406279529}
   - {fileID: 2112801140}
   - {fileID: 933479285}
