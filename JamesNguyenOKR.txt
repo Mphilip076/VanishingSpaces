@@ -1,0 +1,19 @@
+Schedule and Deliverables:
+
+- Player movement script (PlayerMovement.cs): WASD, mouse look,
+  sprinting, gravity -- Wed by 5pm (estimate: 2 hrs)
+
+- Mixamo character integration with FBX import, material/texture 
+  extraction, shader assignment for render pipeline -- Wed by 8pm 
+  (estimate: 2 hrs)
+
+- Software prototype scene setup with placeholder rooms, flashlight 
+  spotlight, and battery pickup placeholder objects -- Wed by 11pm 
+  (estimate: 1 hrs)
+
+- Animator Controller setup with Idle/Walk/Run states driven by 
+  Speed and IsRunning parameters -- Thurs by 12pm (estimate: 1 hrs)
+
+- Level design sketch and documentation (Level Design section of 
+  project workbook including principles, components list, and 
+  sketch photo) -- Fri by 11pm (estimate: 2 hrs)
