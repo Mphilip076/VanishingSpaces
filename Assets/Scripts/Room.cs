@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
@@ -28,11 +29,11 @@ public class Room
     private static List<Room> unlockedRooms 
                         = new List<Room>();     // A list of all the unlocked rooms in the game, 
                                                 // used for random access to unlocked rooms.
+    public static Room currentRoom;             // The room the user is in
 
     // Instance variables
-    private string name;    // For debugging purposes
-    private Scene scene;    // The scene that represents this room. 
-                            // This is where the actual game objects and environment of the room are located.
+    private string sceneName;   // The name of the scene that represents this room. 
+                                // This is where the actual game objects and environment of the room are located.
 
     private bool lockedInPlace; // Whether the room is locked or not
                                 // If true, any entrances to that room will always lead to that room
@@ -49,10 +50,9 @@ public class Room
     private Room exit2;
     private Room exit3;
 
-    public Room(string name, Scene scene)
+    public Room(string sceneName)
     {
-        this.name = name;
-        this.scene = scene;
+        this.sceneName = sceneName;
         this.roomIsLocked = false;
 
         // By default, the room is unlocked and has no exits
@@ -63,25 +63,30 @@ public class Room
 
         // Update the lists
         allRooms.Add(this);
+
+        Debug.Log("[Room.cs] New room " + sceneName + " added");
+    }
+
+    public static void SetScene(string Name)
+    {
+        Debug.Log("[Room.cs] Attempting to load scene " + Name);
+        Room room = GetRoom(Name);
+        if(room == null) return;
+
+        currentRoom = room;
+        SceneManager.LoadScene(room.sceneName);
+        Debug.Log("[Room.cs] Loaded scene " + Name);
     }
 
     
     // ------------------------------------ GETTERS ------------------------------------
 
     /// <returns>
-    /// Returns the scene 
+    // Returns the name of the room's scene
     /// </returns>
-    public Scene GetScene()
+    public string SceneName()
     {
-        return scene;
-    }
-
-    /// <returns>
-    // Returns the name of the room
-    /// </returns>
-    public string Name()
-    {
-        return name;
+        return sceneName;
     }
     
     /// <summary>
@@ -108,13 +113,13 @@ public class Room
         return roomIsLocked;
     }
 
-    // Find a room by name
+    // Find a room by scene name
     // Returns null if not found
     public static Room GetRoom(string roomName)
     {
         foreach(Room r in allRooms)
         {
-            if(r.name.Equals(roomName)) return r;
+            if(r.sceneName.Equals(roomName)) return r;
         }
 
         // Doesn't exist
@@ -127,17 +132,15 @@ public class Room
     public void LockInPlace()
     {
         // If the room was unlocked, remove it from the list of unlocked rooms
-        if (!lockedInPlace) unlockedRooms.Remove(this);
-
+        unlockedRooms.Remove(this);
         lockedInPlace = true;
     }
 
     // Adds the room to the list of randomly selected rooms to enter
     public void AllowRandomEntry()
     {
-        // If the room was locked, add it back to the list of unlocked rooms
-        if(lockedInPlace) unlockedRooms.Add(this);
-        
+        // Add it back to the list of unlocked rooms
+        unlockedRooms.Add(this);
         lockedInPlace = false;
     }
 
@@ -203,7 +206,7 @@ public class Room
     private Room GetRandomExit()
     {
         if (unlockedRooms.Count == 0){
-            Debug.Log("Room " + name + "'s exit 3 cannot be used because it does not exist.");
+            Debug.Log("Room " + sceneName + "'s exit 3 cannot be used because it does not exist.");
             return null;
         }
         if (roomIsLocked)
@@ -211,7 +214,16 @@ public class Room
             Debug.Log("Room: Cannot get a random exit because no possible exits exist.");
             return null;
         }
-        return unlockedRooms[Random.Range(0, unlockedRooms.Count)];
+        Room ret = unlockedRooms[Random.Range(0, unlockedRooms.Count)];
+
+        // Don't go to the room you're in
+        while(ret == currentRoom)
+        {
+            if(allRooms.Count == 1) break; // prevent infinite loop
+            ret = unlockedRooms[Random.Range(0, unlockedRooms.Count)];
+        }
+
+        return ret;
     }
 
     // Use the first exit
@@ -220,14 +232,14 @@ public class Room
     {
         // If the exit is not set, return null
         if(exit1 == null) {
-            Debug.Log("Room " + name + "'s exit 1 cannot be used because it does not exist.");
+            Debug.Log("[Room.cs] Room " + sceneName + "'s exit 1 cannot be used because it does not exist.");
             return null;
         }
 
         // If the door is locked, you can't exit
         if (roomIsLocked)
         {
-            Debug.Log("Room "  + name + "'s exit cannot be used because the door is locked.");
+            Debug.Log("[Room.cs] Room "  + sceneName + "'s exit cannot be used because the door is locked.");
             return null;
         }
 
@@ -252,14 +264,14 @@ public class Room
     {
         // If the exit is not set, return null
         if(exit2 == null) {
-            Debug.Log("Room " + name + "'s exit 2 cannot be used because it does not exist.");
+            Debug.Log("[Room.cs] Room " + sceneName + "'s exit 2 cannot be used because it does not exist.");
             return null;
         }
 
         // If the door is locked, you can't exit
         if (roomIsLocked)
         {
-            Debug.Log("Room "  + name + "'s exit cannot be used because the door is locked.");
+            Debug.Log("[Room.cs] Room "  + sceneName + "'s exit cannot be used because the door is locked.");
             return null;
         }
 
@@ -283,14 +295,14 @@ public class Room
     {
         // If the exit is not set, return null
         if(exit3 == null) {
-            Debug.Log("Room " + name + "'s exit 3 cannot be used because it does not exist.");
+            Debug.Log("[Room.cs] Room " + sceneName + "'s exit 3 cannot be used because it does not exist.");
             return null;
         }
 
         // If the door is locked, you can't exit
         if (roomIsLocked)
         {
-            Debug.Log("Room "  + name + "'s exit cannot be used because the door is locked.");
+            Debug.Log("[Room.cs] Room "  + sceneName + "'s exit cannot be used because the door is locked.");
             return null;
         }
 

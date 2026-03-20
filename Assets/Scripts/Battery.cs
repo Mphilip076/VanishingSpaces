@@ -15,15 +15,15 @@ public class Battery : MonoBehaviour
         
     }
 
-    public void PickUp()
-    {
-        // Make it disappear
-        this.gameObject.SetActive(false);
-    }
+    // public void PickUp()
+    // {
+    //     // Make it disappear
+    //     this.gameObject.SetActive(false);
+    // }
 
-    // Placeholder: Pick it up on a collision
-    private void OnCollisionEnter(Collision collision)
-    {
-        PickUp();
-    }
+    // // Placeholder: Pick it up on a collision
+    // private void OnCollisionEnter(Collision collision)
+    // {
+    //     PickUp();
+    // }
 }
