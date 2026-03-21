@@ -1,0 +1,7 @@
+Schedule and deliverable:
+- Room class (keeps track of the room data and exit logic) by Tues (3 hrs)
+- Master bedroom scene by Wed (3 hrs)
+- Room swapping script (the character enters a random room) by Thurs (2 hr)
+- Think of storyline themed objects and puzzles (1 hr)
+
+Total: 9 hours
