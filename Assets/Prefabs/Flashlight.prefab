@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9150713091407040530}
   - component: {fileID: 7876607924125353782}
   - component: {fileID: 6377526403806005435}
+  - component: {fileID: -580001053626320787}
   m_Layer: 0
   m_Name: Flashlight
   m_TagString: Pickupable
@@ -144,6 +145,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.072043225, y: 0.23057182, z: 0.0731546}
   m_Center: {x: -0.000000020489097, y: 0, z: 0}
+--- !u!114 &-580001053626320787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2302673602036216484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a54dbca0adec416e9a1717d330701c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashlightFlicker
+  flashlight: {fileID: 7285900578443747783}
+  minTimeBetweenFlickers: 5
+  maxTimeBetweenFlickers: 15
+  minFlickers: 2
+  maxFlickers: 6
+  flickerDuration: 0.05
 --- !u!1001 &7285900578433477191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,6 +220,18 @@ PrefabInstance:
       value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 10800000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
+      propertyPath: m_Color.b
+      value: 0.06051977
+      objectReference: {fileID: 0}
+    - target: {fileID: 10800000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
+      propertyPath: m_Color.g
+      value: 0.52331793
+      objectReference: {fileID: 0}
+    - target: {fileID: 10800000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
+      propertyPath: m_Color.r
+      value: 0.754717
+      objectReference: {fileID: 0}
+    - target: {fileID: 10800000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -216,5 +247,10 @@ PrefabInstance:
 --- !u!4 &7285900578433085639 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
+  m_PrefabInstance: {fileID: 7285900578433477191}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &7285900578443747783 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 10800000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
   m_PrefabInstance: {fileID: 7285900578433477191}
   m_PrefabAsset: {fileID: 0}
