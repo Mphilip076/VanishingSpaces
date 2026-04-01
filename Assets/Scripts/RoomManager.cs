@@ -38,6 +38,7 @@ public class RoomManager : MonoBehaviour
             Room mb = new Room("MasterBedroom");
             Room r1 = new Room("Room1");
             Room r2 = new Room("Room2");
+            Room lr = new Room("LivingRoom");
 
             // Testing only. Make rooms accessible
             dr.AllowRandomEntry();
@@ -45,14 +46,16 @@ public class RoomManager : MonoBehaviour
             t.AllowRandomEntry();
             r1.AllowRandomEntry();
             r2.AllowRandomEntry();
+            lr.AllowRandomEntry();
 
             // Testing only. Set exits
             s.SetExit1(t);
             t.SetExit1(dr);
             dr.SetExit1(mb);
-            mb.SetExit1(t);
+            mb.SetExit1(lr);
             r1.SetExit1(r2);
             r2.SetExit1(r1);
+            lr.SetExit1(dr);
 
             Room.SetScene("StartScene");
 
