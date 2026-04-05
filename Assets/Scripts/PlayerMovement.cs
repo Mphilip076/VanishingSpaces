@@ -16,12 +16,31 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private float xRotation = 0f;
     private Animator animator;
+    public static PlayerMovement Instance;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
+
+        // Reset camera rotation at start so player looks forward
+        xRotation = 0f;
+        if (cameraTransform != null)
+            cameraTransform.localRotation = Quaternion.identity;
     }
 
     void Update()

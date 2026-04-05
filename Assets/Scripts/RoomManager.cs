@@ -93,7 +93,7 @@ public class RoomManager : MonoBehaviour
     void Update()
     {
         // TEST ROOM CHANGES
-        if (Input.GetKey(KeyCode.E)) {
+        if (Input.GetKey(KeyCode.G)) {
             Room nextRoom = Room.currentRoom.GetExit1();
             Room.SetScene(nextRoom.SceneName());
 

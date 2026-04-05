@@ -29,10 +29,16 @@ public class FlashlightFlicker : MonoBehaviour
             float waitTime = Random.Range(minTimeBetweenFlickers, maxTimeBetweenFlickers);
             yield return new WaitForSeconds(waitTime);
 
+            // Only flicker if flashlight is currently ON!
+            if (!flashlight.enabled) continue;
+
             int flickerCount = Random.Range(minFlickers, maxFlickers);
 
             for (int i = 0; i < flickerCount; i++)
             {
+                // Double check each flicker in case player turned it off mid-flicker
+                if (!flashlight.enabled) break;
+
                 flashlight.enabled = false;
                 yield return new WaitForSeconds(flickerDuration);
 
