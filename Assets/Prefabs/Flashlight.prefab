@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7876607924125353782}
   - component: {fileID: 6377526403806005435}
   - component: {fileID: -580001053626320787}
+  - component: {fileID: 6818950638360283248}
   m_Layer: 0
   m_Name: Flashlight
   m_TagString: Pickupable
@@ -36,7 +37,7 @@ Transform:
   m_Children:
   - {fileID: 7285900578433085639}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90}
 --- !u!33 &3194999364496187714
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -163,6 +164,21 @@ MonoBehaviour:
   minFlickers: 2
   maxFlickers: 6
   flickerDuration: 0.05
+--- !u!114 &6818950638360283248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2302673602036216484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24bba98ad7943eb46b260191c80bb364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickableItem
+  itemName: Flashlight
+  itemIcon: {fileID: 21300000, guid: 6473357a82d3b4c4086a0be9d87b049e, type: 3}
+  isFlashlight: 1
 --- !u!1001 &7285900578433477191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -217,7 +233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 10800000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
       propertyPath: m_Range
-      value: 10000
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 10800000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
       propertyPath: m_Color.b
@@ -237,7 +253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 10800000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
       propertyPath: m_Intensity
-      value: 1000
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

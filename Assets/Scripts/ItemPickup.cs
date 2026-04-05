@@ -109,9 +109,6 @@ public class ItemPickup : MonoBehaviour
         heldItem = item;
         item.OnPickup(holdPosition);
 
-        // Keep item alive across scenes!
-        DontDestroyOnLoad(item.gameObject);
-
         if (item.isFlashlight)
         {
             heldLight = item.GetComponentInChildren<Light>(true);

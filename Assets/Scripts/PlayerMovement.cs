@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance;
+
     [Header("Movement")]
     public float walkSpeed = 5f;
     public float runSpeed = 10f;
@@ -10,13 +12,12 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Mouse Look")]
     public float mouseSensitivity = 100f;
-    public Transform cameraTransform; // Assign Camera here
+    public Transform cameraTransform;
 
     private CharacterController controller;
     private Vector3 velocity;
     private float xRotation = 0f;
     private Animator animator;
-    public static PlayerMovement Instance;
 
     void Awake()
     {
@@ -37,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
 
-        // Reset camera rotation at start so player looks forward
         xRotation = 0f;
         if (cameraTransform != null)
             cameraTransform.localRotation = Quaternion.identity;
@@ -54,12 +54,10 @@ public class PlayerMovement : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // Vertical look (camera only)
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        // Horizontal look (rotate whole player)
         transform.Rotate(Vector3.up * mouseX);
     }
 
@@ -74,12 +72,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
-        // Animator
         float currentSpeed = new Vector3(x, 0, z).magnitude;
         animator.SetFloat("Speed", currentSpeed);
         animator.SetBool("IsRunning", isRunning);
 
-        // Gravity
         if (controller.isGrounded && velocity.y < 0)
             velocity.y = -2f;
 

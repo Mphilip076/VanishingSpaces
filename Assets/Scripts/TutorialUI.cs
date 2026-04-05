@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TutorialUI : MonoBehaviour
 {
@@ -7,16 +8,23 @@ public class TutorialUI : MonoBehaviour
 
     [Header("Settings")]
     public KeyCode toggleKey = KeyCode.Tab;
+    public string tutorialSceneName = "Tutorial";
 
     private bool isOpen = false;
 
     void Start()
     {
-        isOpen = true;
-        tutorialPanel.SetActive(true);
+        isOpen = false;
+        tutorialPanel.SetActive(false);
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        // Only auto open in Tutorial scene!
+        if (SceneManager.GetActiveScene().name == tutorialSceneName)
+        {
+            isOpen = true;
+            tutorialPanel.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     void Update()
@@ -34,10 +42,5 @@ public class TutorialUI : MonoBehaviour
             CursorLockMode.None :
             CursorLockMode.Locked;
         Cursor.visible = isOpen;
-    }
-
-    public void OnHelpButtonClick()
-    {
-        TogglePanel();
     }
 }
