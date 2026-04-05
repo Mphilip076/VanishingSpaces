@@ -4787,7 +4787,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2302673602036216484, guid: 4ee24bc75ab8c834fb95a94ae8bca65e, type: 3}
   m_PrefabInstance: {fileID: 948326551711878739}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &858562289
+--- !u!114 &858562284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4796,19 +4796,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 858562283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5de90cd5685cf4884beb4c691979a32c, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a54dbca0adec416e9a1717d330701c2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
-  lightSource: {fileID: 2101364627}
-  minFlashIntensity: 0.8
-  maxFlashIntensity: 3
-  minOffTime: 0.1
-  maxOffTime: 0.5
-  minFlashTime: 10
-  maxFlashTime: 20
-  flashChance: 0.25
-  minFlashCount: 1
-  maxFlashCount: 3
+  m_EditorClassIdentifier: '::'
+  flashlight: {fileID: 2101364627}
+  minTimeBetweenFlickers: 5
+  maxTimeBetweenFlickers: 15
+  minFlickers: 2
+  maxFlickers: 6
+  flickerDuration: 0.05
 --- !u!1001 &860991136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8729,11 +8725,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2876500356994685549, guid: 4ee24bc75ab8c834fb95a94ae8bca65e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.205
+      value: 1.88
       objectReference: {fileID: 0}
     - target: {fileID: 2876500356994685549, guid: 4ee24bc75ab8c834fb95a94ae8bca65e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1291.62
+      value: 1292.63
       objectReference: {fileID: 0}
     - target: {fileID: 2876500356994685549, guid: 4ee24bc75ab8c834fb95a94ae8bca65e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8769,7 +8765,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2302673602036216484, guid: 4ee24bc75ab8c834fb95a94ae8bca65e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 858562289}
+      addedObject: {fileID: 858562284}
   m_SourcePrefab: {fileID: 100100000, guid: 4ee24bc75ab8c834fb95a94ae8bca65e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
