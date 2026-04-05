@@ -86,6 +86,12 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public GameObject GetItemAtSlot(int index)
+    {
+        if (index < 0 || index >= heldItems.Length) return null;
+        return heldItems[index];
+    }
+
     public GameObject GetSelectedItem()
     {
         return heldItems[selectedSlot];

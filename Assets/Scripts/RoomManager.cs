@@ -35,26 +35,26 @@ public class RoomManager : MonoBehaviour
             Room s = new Room("StartScene");
             Room t = new Room("Tutorial");
             Room dr = new Room("DiningRoom");
-            // Room mb = new Room("MasterBedroom");
-            // Room r1 = new Room("Room1");
-            // Room r2 = new Room("Room2");
+            Room mb = new Room("MasterBedroom");
+            Room r1 = new Room("Room1");
+            Room r2 = new Room("Room2");
             Room lr = new Room("LivingRoom");
 
             // Testing only. Make rooms accessible
             dr.AllowRandomEntry();
-            // mb.AllowRandomEntry();
+            mb.AllowRandomEntry();
             t.AllowRandomEntry();
-            // r1.AllowRandomEntry();
-            // r2.AllowRandomEntry();
+            r1.AllowRandomEntry();
+            r2.AllowRandomEntry();
             lr.AllowRandomEntry();
 
             // Testing only. Set exits
             s.SetExit1(t);
             t.SetExit1(dr);
-            // dr.SetExit1(mb);
-            // mb.SetExit1(lr);
-            // r1.SetExit1(r2);
-            // r2.SetExit1(r1);
+            dr.SetExit1(mb);
+            mb.SetExit1(lr);
+            r1.SetExit1(r2);
+            r2.SetExit1(r1);
             lr.SetExit1(dr);
 
             Room.SetScene("StartScene");
@@ -95,6 +95,7 @@ public class RoomManager : MonoBehaviour
         // TEST ROOM CHANGES
         if (Input.GetKey(KeyCode.G)) {
             Room nextRoom = Room.currentRoom.GetExit1();
+            if (nextRoom != null)
             Room.SetScene(nextRoom.SceneName());
 
         }
