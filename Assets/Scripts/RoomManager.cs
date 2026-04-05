@@ -42,10 +42,10 @@ public class RoomManager : MonoBehaviour
 
             // Testing only. Make rooms accessible
             dr.AllowRandomEntry();
-            mb.AllowRandomEntry();
-            t.AllowRandomEntry();
-            r1.AllowRandomEntry();
-            r2.AllowRandomEntry();
+            //mb.AllowRandomEntry();
+            //t.AllowRandomEntry();
+            //r1.AllowRandomEntry();
+            //r2.AllowRandomEntry();
             lr.AllowRandomEntry();
 
             // Testing only. Set exits
