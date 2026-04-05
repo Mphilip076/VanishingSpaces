@@ -30,27 +30,6 @@ public class CodeBox : MonoBehaviour
             codeUI.SetActive(false);
     }
 
-    // void Update()
-    // {
-    //     if (isSolved) return;
-
-    //     float distance = Vector3.Distance(
-    //         transform.position, player.position
-    //     );
-
-    //     if (distance < interactRange && Input.GetKeyDown(interactKey))
-    //     {
-    //         if (!isOpen)
-    //             OpenCodeUI();
-    //         else
-    //             CloseCodeUI();
-    //     }
-
-    //     // Close with Tab or Escape
-    //     if (isOpen && Input.GetKeyDown(KeyCode.Escape))
-    //         CloseCodeUI();
-    // }
-
     void Update()
     {
         if (isSolved) return;
@@ -106,7 +85,6 @@ public class CodeBox : MonoBehaviour
         if (pm != null) pm.enabled = true;
     }
 
-    // Assign this to Submit button OnClick
     public void SubmitCode()
     {
         if (codeInput.text == correctCode)

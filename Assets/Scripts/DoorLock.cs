@@ -40,16 +40,6 @@ public class DoorLock : MonoBehaviour
         float distance = Vector3.Distance(
             transform.position, player.position
         );
-
-        // Add this debug!
-        if (distance < interactRange)
-            Debug.Log("Near door! Press E to interact. Distance: " + distance);
-
-        if (distance < interactRange && Input.GetKeyDown(interactKey))
-        {
-            Debug.Log("E pressed at door!");
-            TryUnlock();
-        }
     }
 
     void TryUnlock()

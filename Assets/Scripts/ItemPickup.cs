@@ -47,55 +47,6 @@ public class ItemPickup : MonoBehaviour
             TryToggleFlashlight();
     }
 
-    // void CheckNearbyItems()
-    // {
-    //     if (pickupPromptUI == null) return;
-
-    //     Collider[] hits = Physics.OverlapSphere(
-    //         transform.position, pickupRange
-    //     );
-
-    //     PickableItem nearest = null;
-
-    //     foreach (var hit in hits)
-    //     {
-    //         PickableItem item = hit.GetComponent<PickableItem>();
-    //         if (item != null)
-    //         {
-    //             nearest = item;
-    //             break;
-    //         }
-    //     }
-
-    //     if (nearest != null)
-    //     {
-    //         pickupPromptUI.SetActive(true);
-    //         if (promptText != null)
-    //             promptText.text = "Press E to pick up";
-    //     }
-    //     else
-    //     {
-    //         pickupPromptUI.SetActive(false);
-    //     }
-    // }
-
-    // void TryPickUp()
-    // {
-    //     Collider[] hits = Physics.OverlapSphere(
-    //         transform.position, pickupRange
-    //     );
-
-    //     foreach (var hit in hits)
-    //     {
-    //         PickableItem item = hit.GetComponent<PickableItem>();
-    //         if (item != null)
-    //         {
-    //             PickUp(item);
-    //             break;
-    //         }
-    //     }
-    // }
-
     void CheckNearbyItems()
     {
         if (pickupPromptUI == null) return;
