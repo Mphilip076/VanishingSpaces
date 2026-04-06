@@ -3,6 +3,7 @@ Assignment 6:
 3D physics: Gives the game a real feeling by letting the statue be able to come into contact with you
 Added the ability for the Statue to push the player which eventually will be worked into you getting attacked by it. Did so using colliders
 Added a Rigidbody component to the flashlight, allowing it to react to gravity and physics forces when dropped in the scene.
+Friction adjustments allow for a more realistic feel as the player explores the level. 
 
 Lights: All of them add to the ambience with the flashing lights and keeping it dark and spooky
 Starting Room lights
