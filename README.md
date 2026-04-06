@@ -28,3 +28,4 @@ Mecanim:
 Statue walking model so that the player can see it walking if it isn't in the flashlight beam
 Player Animator Controller with Idle, Walking, and Running states driven by movement speed parameter. (First person view)
 Ghost Monster Animator Controller handling its movement and idle animations.
+NPC Butler has an idle animation in the dining room.
