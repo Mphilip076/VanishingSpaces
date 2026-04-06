@@ -7,18 +7,34 @@ public class PlayerSpawner : MonoBehaviour
     void Start()
     {
         PlayerMovement existingPlayer = FindAnyObjectByType<PlayerMovement>();
+        Transform playerTransform = null;
 
         if (existingPlayer != null)
         {
             CharacterController cc = existingPlayer.GetComponent<CharacterController>();
-            cc.enabled = false;
+
+            if (cc != null)
+                cc.enabled = false;
+
             existingPlayer.transform.position = transform.position;
             existingPlayer.transform.rotation = transform.rotation;
-            cc.enabled = true;
+
+            if (cc != null)
+                cc.enabled = true;
+
+            playerTransform = existingPlayer.transform;
         }
         else
         {
-            Instantiate(playerPrefab, transform.position, transform.rotation);
+            GameObject newPlayer = Instantiate(playerPrefab, transform.position, transform.rotation);
+            playerTransform = newPlayer.transform;
+        }
+
+        WeepingStatue statue = FindAnyObjectByType<WeepingStatue>();
+        if (statue != null && playerTransform != null)
+        {
+            statue.player = playerTransform;
+            statue.flashlight = playerTransform.GetComponentInChildren<Light>();
         }
     }
 }

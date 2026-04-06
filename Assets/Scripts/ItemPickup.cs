@@ -59,6 +59,9 @@ public class ItemPickup : MonoBehaviour
 
         foreach (var hit in hits)
         {
+            // Skip objects tagged as Interactable!
+            if (hit.CompareTag("Interactable")) continue;
+
             PickableItem item = hit.GetComponent<PickableItem>();
             if (item != null)
             {
@@ -87,6 +90,9 @@ public class ItemPickup : MonoBehaviour
 
         foreach (var hit in hits)
         {
+            // Skip objects tagged as Interactable!
+            if (hit.CompareTag("Interactable")) continue;
+
             PickableItem item = hit.GetComponent<PickableItem>();
             if (item != null)
             {

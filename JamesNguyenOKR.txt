@@ -17,3 +17,27 @@ Schedule and Deliverables:
 - Level design sketch and documentation (Level Design section of 
   project workbook including principles, components list, and 
   sketch photo) -- Fri by 11pm (estimate: 2 hrs)
+
+-------------------------------------------------------------------------------------------------------
+
+- Flashlight pickup system with Rigidbody physics, PickableItem 
+  component, and FlashlightFlicker script -- Assignment 6 (estimate: 1 hr)
+
+- Inventory system with hotbar (10 slots), InventoryManager 
+  singleton, and item pickup/drop via ItemPickup.cs -- Assgiment 6 (estimate: 2 hrs)
+
+- Ghost monster model integration with GhostAnimator controller 
+  and Mecanim setup -- Assgiment 6 (estimate: 1 hr)
+
+- Monster AI system using Finite State Machine (Patrol, Jumpscare, 
+  Disappear states) with NavMesh pathfinding and Audio Source 
+  for scream sound -- Assgiment 6 (estimate: 3 hrs)
+
+- CodeBox puzzle system with UI panel, code input field, and 
+  key reward on correct code entry -- Assgiment 6 (estimate: 2 hrs)
+
+- DoorLock system that checks player inventory for key item 
+  before loading next scene -- Assgiment 6 (estimate: 1 hr)
+
+- Tutorial room scene setup with PlayerSpawner, RoomManager, 
+  and scene transition to DiningRoom -- Assgiment 6 (estimate: 1 hr)
