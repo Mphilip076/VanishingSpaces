@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Battery : MonoBehaviour
 {
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,16 +15,4 @@ public class Battery : MonoBehaviour
     {
         
     }
-
-    // public void PickUp()
-    // {
-    //     // Make it disappear
-    //     this.gameObject.SetActive(false);
-    // }
-
-    // // Placeholder: Pick it up on a collision
-    // private void OnCollisionEnter(Collision collision)
-    // {
-    //     PickUp();
-    // }
 }

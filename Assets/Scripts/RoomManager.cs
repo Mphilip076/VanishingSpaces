@@ -41,21 +41,22 @@ public class RoomManager : MonoBehaviour
             Room lr = new Room("LivingRoom");
 
             // Testing only. Make rooms accessible
-            dr.AllowRandomEntry();
-            // mb.AllowRandomEntry();
-            t.AllowRandomEntry();
-            // r1.AllowRandomEntry();
-            // r2.AllowRandomEntry();
-            lr.AllowRandomEntry();
+            // dr.AllowRandomEntry();
+            // t.AllowRandomEntry();
+            // lr.AllowRandomEntry();
 
-            // Testing only. Set exits
+            // Testing only. Set exits and remove randomness
             s.SetExit1(t);
+            s.LockInPlace();
+
             t.SetExit1(dr);
-            // dr.SetExit1(mb);
-            // mb.SetExit1(lr);
-            // r1.SetExit1(r2);
-            // r2.SetExit1(r1);
-            lr.SetExit1(dr);
+            t.LockInPlace();
+
+            dr.SetExit1(lr);
+            dr.LockInPlace();
+
+            lr.SetExit1(t);
+            lr.LockInPlace();
 
             Room.SetScene("StartScene");
 
@@ -92,11 +93,12 @@ public class RoomManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // ALL CODE IN HTIS LOOP SHOULD BE REMOVED ONCE TESTING IS OVER. 
+
         // TEST ROOM CHANGES
         if (Input.GetKey(KeyCode.G)) {
             Room nextRoom = Room.currentRoom.GetExit1();
             Room.SetScene(nextRoom.SceneName());
-
         }
     }
 }
