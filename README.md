@@ -22,6 +22,7 @@ Monster AI using a Finite State Machine with three states:
 - Patrol: Monster moves between patrol points using NavMesh pathfinding.
 - Jumpscare: When player is detected, monster teleports in front of player and plays scream sound.
 - Disappear: After the jumpscare, monster disappears after a short delay.
+Room swapping uses a Finite State Machine to control which room the player goes to when swapping
 
 Mecanim:
 Statue walking model so that the player can see it walking if it isn't in the flashlight beam
