@@ -16,12 +16,22 @@ public class InventoryManager : MonoBehaviour
     public Color normalColor = new Color(0f, 0f, 0f, 0.6f);
 
     private GameObject[] heldItems = new GameObject[10];
+    private Sprite[] heldItemIcons = new Sprite[10];  // store icons separately
     private string[] heldItemNames = new string[10];
     private int selectedSlot = 0;
 
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(transform.root.gameObject); // persist the whole canvas
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
     void Start()
@@ -63,6 +73,7 @@ public class InventoryManager : MonoBehaviour
             {
                 heldItems[i] = item;
                 heldItemNames[i] = itemName;
+                heldItemIcons[i] = icon;  // store icon separately
                 slotIcons[i].sprite = icon;
                 slotIcons[i].enabled = true;
                 return true;
@@ -79,11 +90,45 @@ public class InventoryManager : MonoBehaviour
             {
                 heldItems[i] = null;
                 heldItemNames[i] = null;
+                heldItemIcons[i] = null;
                 slotIcons[i].sprite = null;
                 slotIcons[i].enabled = false;
                 return;
             }
         }
+    }
+
+    // Call this after scene loads to refresh UI icons
+    public void RefreshUI()
+    {
+        for (int i = 0; i < heldItems.Length; i++)
+        {
+            if (heldItemIcons[i] != null)
+            {
+                slotIcons[i].sprite = heldItemIcons[i];
+                slotIcons[i].enabled = true;
+            }
+            else
+            {
+                slotIcons[i].sprite = null;
+                slotIcons[i].enabled = false;
+            }
+        }
+
+        for (int i = 0; i < slotBackgrounds.Length; i++)
+            slotBackgrounds[i].color = normalColor;
+
+        slotBackgrounds[selectedSlot].color = selectedColor;
+    }
+
+    public bool HasItem(string itemName)
+    {
+        for (int i = 0; i < heldItemNames.Length; i++)
+        {
+            if (heldItemNames[i] == itemName)
+                return true;
+        }
+        return false;
     }
 
     public GameObject GetItemAtSlot(int index)
