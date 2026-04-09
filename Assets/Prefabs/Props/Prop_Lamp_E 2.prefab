@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 468664}
   - component: {fileID: 20584294}
   m_Layer: 8
-  m_Name: Prop_Lamp_E
+  m_Name: Prop_Lamp_E 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -295,6 +295,7 @@ GameObject:
   - component: {fileID: 4787709438686398154}
   - component: {fileID: 695424612172165263}
   - component: {fileID: 2901286259864602404}
+  - component: {fileID: 4841743515554530087}
   m_Layer: 0
   m_Name: light3
   m_TagString: Untagged
@@ -411,6 +412,28 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &4841743515554530087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2239872661580560100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de90cd5685cf4884beb4c691979a32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
+  lightSource: {fileID: 0}
+  minFlashIntensity: 0.8
+  maxFlashIntensity: 3
+  minOffTime: 8
+  maxOffTime: 20
+  minFlashTime: 0.08
+  maxFlashTime: 0.25
+  flashChance: 0.25
+  minFlashCount: 1
+  maxFlashCount: 3
 --- !u!1 &3471848146686810736
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,6 +445,7 @@ GameObject:
   - component: {fileID: 5496163194727457897}
   - component: {fileID: 9067576571924194409}
   - component: {fileID: 4678498654912230846}
+  - component: {fileID: 8490503632685411332}
   m_Layer: 0
   m_Name: light1
   m_TagString: Untagged
@@ -538,6 +562,28 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &8490503632685411332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3471848146686810736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de90cd5685cf4884beb4c691979a32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
+  lightSource: {fileID: 0}
+  minFlashIntensity: 0.8
+  maxFlashIntensity: 3
+  minOffTime: 8
+  maxOffTime: 20
+  minFlashTime: 0.08
+  maxFlashTime: 0.25
+  flashChance: 0.25
+  minFlashCount: 1
+  maxFlashCount: 3
 --- !u!1 &8897473272870144635
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +595,7 @@ GameObject:
   - component: {fileID: 5398271818602687090}
   - component: {fileID: 8807365856144989653}
   - component: {fileID: 344434184255732339}
+  - component: {fileID: 2590848465150461004}
   m_Layer: 0
   m_Name: light2
   m_TagString: Untagged
@@ -665,3 +712,25 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &2590848465150461004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897473272870144635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de90cd5685cf4884beb4c691979a32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
+  lightSource: {fileID: 0}
+  minFlashIntensity: 0.8
+  maxFlashIntensity: 3
+  minOffTime: 8
+  maxOffTime: 20
+  minFlashTime: 0.08
+  maxFlashTime: 0.25
+  flashChance: 0.25
+  minFlashCount: 1
+  maxFlashCount: 3
