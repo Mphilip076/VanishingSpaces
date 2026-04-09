@@ -16,15 +16,7 @@ public class Picture : PickableItem
     // Check if the picture is placed in the correct position
     public bool CheckCorrectPlacement()
     {
-        if(currentPosition == correctPosition)
-        {
-            isPlacedCorrectly = true; // Set the flag to true if the picture is in the correct position
-            Debug.Log("[Picture Puzzle]Picture " + base.itemName + " is placed correctly!"); // Log a message for debugging purposes
-        }
-        else
-        {
-            isPlacedCorrectly = false; // Set the flag to false if the picture is not in the correct position
-        }
+        return currentPosition.position == correctPosition.position;
     }
 
     public bool CheckPuzzleCompletion()
