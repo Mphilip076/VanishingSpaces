@@ -44,7 +44,7 @@ public class ChestPuzzle : MonoBehaviour
         }
 
         float distance = Vector3.Distance(transform.position, player.position);
-        Debug.Log("Distance to chest: " + distance);
+        // Debug.Log("Distance to chest: " + distance);
 
         if (distance < interactRange && Input.GetKeyDown(interactKey))
         {

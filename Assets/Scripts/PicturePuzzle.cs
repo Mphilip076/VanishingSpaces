@@ -23,9 +23,9 @@ public class PicturePuzzle : MonoBehaviour
         Picture.pos3 = pictureC.currentPosition;
 
         // Correct positions
-        pictureA.correctPosition = pictureB.correctPosition; // Set the correct position for picture A
-        pictureB.correctPosition = pictureC.correctPosition; // Set the correct position for picture B
-        pictureC.correctPosition = pictureA.correctPosition; // Set the correct position for picture C
+        pictureA.correctPosition = pictureB.currentPosition; // Set the correct position for picture A
+        pictureB.correctPosition = pictureC.currentPosition; // Set the correct position for picture B
+        pictureC.correctPosition = pictureA.currentPosition; // Set the correct position for picture C
     }
 
     // Update is called once per frame

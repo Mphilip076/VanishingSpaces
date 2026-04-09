@@ -40,15 +40,11 @@ public class RoomManager : MonoBehaviour
             Room r2 = new Room("Room2");
             Room lr = new Room("LivingRoom");
 
-            // Testing only. Make rooms accessible
+            // Make rooms accessible
             dr.AllowRandomEntry();
-            //mb.AllowRandomEntry();
-            //t.AllowRandomEntry();
-            //r1.AllowRandomEntry();
-            //r2.AllowRandomEntry();
             lr.AllowRandomEntry();
 
-            // Testing only. Set exits
+            // Set exits
             s.SetExit1(t);
             t.SetExit1(dr);
             dr.SetExit1(mb);
@@ -57,10 +53,10 @@ public class RoomManager : MonoBehaviour
             r2.SetExit1(r1);
             lr.SetExit1(dr);
 
-            Room.SetScene("StartScene");
-
             Debug.Log("[RoomManager.cs] Room list size " + Room.allRooms.Count);
-            
+
+
+            Room.SetScene("StartScene");            
             hasStarted = true;
         }
 
@@ -97,7 +93,6 @@ public class RoomManager : MonoBehaviour
             Room nextRoom = Room.currentRoom.GetExit1();
             if (nextRoom != null)
             Room.SetScene(nextRoom.SceneName());
-
         }
     }
 }
