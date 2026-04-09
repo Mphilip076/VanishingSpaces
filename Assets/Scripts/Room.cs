@@ -69,10 +69,15 @@ public class Room
 
     public static void SetScene(string Name)
     {
+        // Find the room corresponding to the scene name
         Debug.Log("[Room.cs] Attempting to load scene " + Name);
         Room room = GetRoom(Name);
         if(room == null) return;
 
+        // Save the current room before loading the new scene
+        // SceneManager.
+
+        // Load the new scene
         currentRoom = room;
         SceneManager.LoadScene(room.sceneName);
         Debug.Log("[Room.cs] Loaded scene " + Name);
@@ -142,6 +147,8 @@ public class Room
         // Add it back to the list of unlocked rooms
         unlockedRooms.Add(this);
         lockedInPlace = false;
+
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive); // Preload the scene in the background
     }
 
     /* ------------------------------------ EXIT SETTERS ------------------------------------ 
