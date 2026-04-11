@@ -52,6 +52,12 @@ public class Room
 
     public Room(string sceneName)
     {
+        if(GetRoom(sceneName) != null)
+        {
+            Debug.LogError("[Room.cs] Error: A room with the scene name " + sceneName + " already exists. Please use a unique scene name for each room.");
+            return;
+        }
+        
         this.sceneName = sceneName;
         this.roomIsLocked = false;
 
@@ -72,10 +78,11 @@ public class Room
         // Find the room corresponding to the scene name
         Debug.Log("[Room.cs] Attempting to load scene " + Name);
         Room room = GetRoom(Name);
-        if(room == null) return;
-
-        // Save the current room before loading the new scene
-        // SceneManager.
+        if(room == null)
+        {
+            Debug.LogError("[Room.cs] Error: No room with the scene name " + Name + " exists. Please check that the scene name is correct and that a Room object has been created for that scene.");
+            return;
+        }
 
         // Load the new scene
         currentRoom = room;

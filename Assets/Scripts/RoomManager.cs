@@ -43,6 +43,7 @@ public class RoomManager : MonoBehaviour
             // Make rooms accessible
             dr.AllowRandomEntry();
             lr.AllowRandomEntry();
+            t.AllowRandomEntry();
 
             // Set exits
             s.SetExit1(t);
@@ -58,6 +59,7 @@ public class RoomManager : MonoBehaviour
 
             Room.SetScene("StartScene");            
             hasStarted = true;
+            Debug.Log("[RoomManager.cs] Finished loading rooms");
         }
 
 
@@ -88,7 +90,6 @@ public class RoomManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // TEST ROOM CHANGES
         if (Input.GetKey(KeyCode.G)) {
             Room nextRoom = Room.currentRoom.GetExit1();
             if (nextRoom != null)
