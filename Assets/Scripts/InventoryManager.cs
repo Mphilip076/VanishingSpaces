@@ -56,6 +56,7 @@ public class InventoryManager : MonoBehaviour
 
     void SelectSlot(int index)
     {
+        Debug.Log("[InventoryManager] Selecting slot: " + index);
         slotBackgrounds[selectedSlot].color = normalColor;
         selectedSlot = index;
         slotBackgrounds[selectedSlot].color = selectedColor;
@@ -67,6 +68,7 @@ public class InventoryManager : MonoBehaviour
 
     public bool AddItem(GameObject item, Sprite icon, string itemName)
     {
+        Debug.Log("[InventoryManager] Attempting to add item: " + itemName);
         for (int i = 0; i < heldItems.Length; i++)
         {
             if (heldItems[i] == null)
@@ -76,14 +78,18 @@ public class InventoryManager : MonoBehaviour
                 heldItemIcons[i] = icon;  // store icon separately
                 slotIcons[i].sprite = icon;
                 slotIcons[i].enabled = true;
+                Debug.Log("[InventoryManager] Item added to slot " + i + ": " + itemName);
                 return true;
             }
         }
+
+        Debug.Log("[InventoryManager] Inventory full! Could not add item: " + itemName);
         return false;
     }
 
     public void RemoveItem(GameObject item)
     {
+        Debug.Log("[InventoryManager] Attempting to remove item: " + item.name);
         for (int i = 0; i < heldItems.Length; i++)
         {
             if (heldItems[i] == item)
@@ -101,6 +107,7 @@ public class InventoryManager : MonoBehaviour
     // Call this after scene loads to refresh UI icons
     public void RefreshUI()
     {
+        Debug.Log("[InventoryManager] Refreshing inventory UI");
         for (int i = 0; i < heldItems.Length; i++)
         {
             if (heldItemIcons[i] != null)
@@ -123,6 +130,7 @@ public class InventoryManager : MonoBehaviour
 
     public bool HasItem(string itemName)
     {
+        Debug.Log("[InventoryManager] Checking for item: " + itemName);
         for (int i = 0; i < heldItemNames.Length; i++)
         {
             if (heldItemNames[i] == itemName)
