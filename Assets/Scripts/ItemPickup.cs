@@ -65,6 +65,7 @@ public class ItemPickup : MonoBehaviour
             PickableItem item = hit.GetComponent<PickableItem>();
             if (item != null)
             {
+                Debug.Log("[ItemPickup] Detected nearby object: " + hit.name);
                 nearest = item;
                 break;
             }
@@ -84,6 +85,7 @@ public class ItemPickup : MonoBehaviour
 
     void TryPickUp()
     {
+        Debug.Log("[ItemPickup] Attempting to pick up item...");
         Collider[] hits = Physics.OverlapSphere(
             transform.position, pickupRange
         );
@@ -110,7 +112,12 @@ public class ItemPickup : MonoBehaviour
             item.itemName
         );
 
-        if (!added) return;
+        if (!added){ 
+            Debug.Log("[ItemPickup] Failed to pick up item: " + item.name);
+            return;
+        }
+
+        Debug.Log("[ItemPickup] Picked up: " + item.name);
 
         heldItem = item;
         item.OnPickup(holdPosition);
@@ -126,7 +133,11 @@ public class ItemPickup : MonoBehaviour
 
     void DropItem()
     {
-        if (heldItem == null) return;
+        if (heldItem == null)
+        {
+            Debug.LogWarning("[ItemPickup] No item to drop!");
+            return;
+        }
 
         if (heldLight != null)
         {
@@ -138,6 +149,7 @@ public class ItemPickup : MonoBehaviour
         InventoryManager.Instance.RemoveItem(heldItem.gameObject);
         heldItem.OnDrop();
         heldItem = null;
+        Debug.Log("[ItemPickup] Item dropped.");
     }
 
     void TryToggleFlashlight()
