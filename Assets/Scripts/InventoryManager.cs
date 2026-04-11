@@ -24,10 +24,12 @@ public class InventoryManager : MonoBehaviour
     public void Print()
     {
         Debug.Log("[ItemPickup.cs] Printing inventory items:");
-        for (int i = 0; i < heldItems.Length; i++)
+        foreach (var item in heldItems)
         {
-            var item = heldItems[i];
-            Debug.Log(item.name + " at slot " + i);
+            if (item != null)
+                Debug.Log("[ItemPickup.cs] - " + item.name);
+            else
+                Debug.Log("[ItemPickup.cs] - Empty Slot");
         }
         Debug.Log("[ItemPickup.cs] End of inventory list.");
     }
