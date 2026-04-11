@@ -9,23 +9,18 @@ public class PicturePuzzle : MonoBehaviour
     private bool solved = false;
 
 
+    // The users need to find the pictures and place them in the correct positions to solve the puzzle.
+    // The pictures can be picked up and moved around, and 
+    //      they will snap to the correct positions when dropped near them.
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Current positions
-        pictureA.currentPosition = pictureA.transform; // Initialize current position to the starting position of the picture
-        pictureB.currentPosition = pictureB.transform; // Initialize current position to the starting position of
-        pictureC.currentPosition = pictureC.transform; // Initialize current position to the starting position of the picture
-
-        // Possible positions
-        Picture.pos1 = pictureA.currentPosition;
-        Picture.pos2 = pictureB.currentPosition;
-        Picture.pos3 = pictureC.currentPosition;
-
-        // Correct positions
-        pictureA.correctPosition = pictureB.currentPosition; // Set the correct position for picture A
-        pictureB.correctPosition = pictureC.currentPosition; // Set the correct position for picture B
-        pictureC.correctPosition = pictureA.currentPosition; // Set the correct position for picture C
+        // Set the static position references in the Picture class
+        Picture.pos1 = new Vector3(-4.80f, 1.60f, 3.35f);
+        Picture.pos2 = new Vector3(-4.12f, 1.60f, 11.07f); 
+        Picture.pos3 = new Vector3(0.18f, 1.52f, 7.05f); 
     }
 
     // Update is called once per frame
@@ -38,7 +33,6 @@ public class PicturePuzzle : MonoBehaviour
             solved = true;
             Debug.Log("[Picture Puzzle] Puzzle Solved!");
         }
-
 
     }
 }
