@@ -8,7 +8,7 @@ public class Picture : PickableItem
     public Transform correctPosition; // Position where the picture should be placed
 
     [Header("Distance Threshold for Placement")]
-    public float distanceThreshold = 2f;
+    public static float distanceThreshold = 2f;
 
     [Header("Puzzle State")]
     public static Transform pos1;
@@ -71,5 +71,7 @@ public class Picture : PickableItem
 
         // If not dropped near any of the positions, do nothing
     }
+
+    
 
 }
