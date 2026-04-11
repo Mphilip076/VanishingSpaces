@@ -16,7 +16,7 @@ public class PickableItem : MonoBehaviour
         col = GetComponent<Collider>();
     }
 
-    public void OnPickup(Transform holdPosition)
+    public virtual void OnPickup(Transform holdPosition)
     {
         if (rb != null) rb.isKinematic = true;
         if (col != null) col.enabled = false;
@@ -26,7 +26,7 @@ public class PickableItem : MonoBehaviour
         transform.localRotation = Quaternion.identity;
     }
 
-    public void OnDrop()
+    public virtual void OnDrop()
     {
         if (rb != null) rb.isKinematic = false;
         if (col != null) col.enabled = true;
