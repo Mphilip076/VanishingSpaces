@@ -20,6 +20,18 @@ public class InventoryManager : MonoBehaviour
     private string[] heldItemNames = new string[10];
     private int selectedSlot = 0;
 
+    // Print the current inventory items for debugging
+    public void Print()
+    {
+        Debug.Log("[ItemPickup.cs] Printing inventory items:");
+        for (int i = 0; i < heldItems.Length; i++)
+        {
+            var item = heldItems[i];
+            Debug.Log(item.name + " at slot " + i);
+        }
+        Debug.Log("[ItemPickup.cs] End of inventory list.");
+    }
+
     void Awake()
     {
         if (Instance == null)
@@ -80,6 +92,8 @@ public class InventoryManager : MonoBehaviour
                 slotIcons[i].enabled = true;
                 Debug.Log("[InventoryManager] Item added to slot " + i + ": " + itemName);
                 return true;
+            } else {
+                Debug.Log("[InventoryManager] Slot " + i + " is occupied by: " + heldItemNames[i]);
             }
         }
 

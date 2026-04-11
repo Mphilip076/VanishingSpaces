@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -37,14 +38,16 @@ public class ItemPickup : MonoBehaviour
     {
         CheckNearbyItems();
 
-        if (Input.GetKeyDown(pickupKey) && heldItem == null)
+        if (Input.GetKeyDown(pickupKey))
             TryPickUp();
 
-        if (Input.GetKeyDown(dropKey) && heldItem != null)
+        if (Input.GetKeyDown(dropKey))
             DropItem();
 
         if (Input.GetKeyDown(flashlightKey))
             TryToggleFlashlight();
+
+        heldItem = InventoryManager.Instance.GetSelectedItem()?.GetComponent<PickableItem>();
     }
 
     void CheckNearbyItems()
@@ -85,27 +88,30 @@ public class ItemPickup : MonoBehaviour
 
     void TryPickUp()
     {
-        Debug.Log("[ItemPickup] Attempting to pick up item...");
+        Debug.Log("[ItemPickup] Attempting to pick up items");
         Collider[] hits = Physics.OverlapSphere(
             transform.position, pickupRange
         );
 
         foreach (var hit in hits)
         {
-            // Skip objects tagged as Interactable!
-            if (hit.CompareTag("Interactable")) continue;
+            Debug.Log("[ItemPickup] Checking nearby object: " + hit.name);
+            if (hit.CompareTag("Pickupable")) {
+                PickableItem item = hit.GetComponent<PickableItem>();
+                Debug.Log("[ItemPickup] Found pickable item: " + hit.name);
 
-            PickableItem item = hit.GetComponent<PickableItem>();
-            if (item != null)
-            {
-                PickUp(item);
-                break;
+                if (item != null)
+                {
+                    PickUp(item);
+                    break;
+                }
             }
         }
     }
 
     void PickUp(PickableItem item)
     {
+        Debug.Log("[ItemPickup] Attempting to pick up item: " + item.name);
         bool added = InventoryManager.Instance.AddItem(
             item.gameObject,
             item.itemIcon,
@@ -129,6 +135,8 @@ public class ItemPickup : MonoBehaviour
             if (heldLight != null)
                 heldLight.enabled = false;
         }
+
+        InventoryManager.Instance.Print();
     }
 
     void DropItem()
