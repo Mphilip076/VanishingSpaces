@@ -6,7 +6,7 @@ public class ItemPickup : MonoBehaviour
 {
     [Header("Settings")]
     public Transform holdPosition;
-    public float pickupRange = 3f;
+    public float pickupRange = 4f;
 
     [Header("Keys")]
     public KeyCode pickupKey = KeyCode.E;

@@ -2,37 +2,51 @@ using UnityEngine;
 
 public class PicturePuzzle : MonoBehaviour
 {
-    [Header("Picture References")]
-    public Picture pictureA;
-    public Picture pictureB;
-    public Picture pictureC;
-    private bool solved = false;
+    [Header("Picture Puzzle Settings")]
+    public Vector3 pictureALocation;
+    public Vector3 pictureBLocation;
+    public Vector3 pictureCLocation;
 
+    private bool isSolved;
+    
 
-    // The users need to find the pictures and place them in the correct positions to solve the puzzle.
-    // The pictures can be picked up and moved around, and 
-    //      they will snap to the correct positions when dropped near them.
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Set the static position references in the Picture class
-        Picture.pos1 = new Vector3(-4.80f, 1.60f, 3.35f);
-        Picture.pos2 = new Vector3(-4.12f, 1.60f, 11.07f); 
-        Picture.pos3 = new Vector3(0.18f, 1.52f, 7.05f); 
+        isSolved = false;
+
+        pictureALocation = Picture.pos1;
+        pictureBLocation = Picture.pos2;
+        pictureCLocation = Picture.pos3;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(solved) return;
+        if(isSolved) return;
 
-        if(pictureA.CheckCorrectPlacement() && pictureB.CheckCorrectPlacement() && pictureC.CheckCorrectPlacement())
-        {
-            solved = true;
-            Debug.Log("[Picture Puzzle] Puzzle Solved!");
+        CheckPuzzle();
+    }
+
+    public void CheckPuzzle()
+    {
+        if(Picture.A == null || Picture.B == null || Picture.C == null){
+            Debug.LogWarning("[PicturePuzzle] One or more pictures are missing!");
+            return;
         }
 
+        Debug.Log("[PicturePuzzle] Checking puzzle, A at " + Picture.A.transform.position + ", B at " + Picture.B.transform.position + ", C at " + Picture.C.transform.position);
+        Debug.Log("[PicturePuzzle] Target positions: A at " + pictureALocation + ", B at " + pictureBLocation + ", C at " + pictureCLocation);
+
+        if(Picture.A.transform.position == pictureALocation &&
+           Picture.B.transform.position == pictureBLocation &&
+           Picture.C.transform.position == pictureCLocation)
+        {
+            OnSolve();
+        }
+    }
+
+    public void OnSolve()
+    {
+        isSolved = true;
+        Debug.Log("[PicturePuzzle] Puzzle Solved!");
     }
 }

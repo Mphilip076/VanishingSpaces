@@ -874,17 +874,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 489730, guid: 4ba8e211073bd4c4883585b581504113, type: 3}
   m_PrefabInstance: {fileID: 417000681}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &475491595 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1394816796006922860, guid: edad68b7209ba1640a9305f19444f178, type: 3}
-  m_PrefabInstance: {fileID: 2011313574}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31c4ae09d8bcd1d4c82035a3c40d6ef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Picture
 --- !u!1001 &494983791
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -983,9 +972,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c987ebef739be84d8cedf8a3515ba6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PicturePuzzle
-  pictureA: {fileID: 7169655046162662314, guid: 8fffa1cb77b87bb438d6c546b78acaa4, type: 3}
-  pictureB: {fileID: 475491595}
-  pictureC: {fileID: 7508422482606150273, guid: b181547a29f8f594196eb9031540c2f5, type: 3}
+  pictureALocation: {x: 0, y: 0, z: 0}
+  pictureBLocation: {x: 0, y: 0, z: 0}
+  pictureCLocation: {x: 0, y: 0, z: 0}
 --- !u!4 &532161571
 Transform:
   m_ObjectHideFlags: 0
@@ -4293,7 +4282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118029728277166973, guid: edad68b7209ba1640a9305f19444f178, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.008
+      value: 0.009
       objectReference: {fileID: 0}
     - target: {fileID: 4118029728277166973, guid: edad68b7209ba1640a9305f19444f178, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4301,7 +4290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4118029728277166973, guid: edad68b7209ba1640a9305f19444f178, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.357
+      value: 4.975
       objectReference: {fileID: 0}
     - target: {fileID: 4118029728277166973, guid: edad68b7209ba1640a9305f19444f178, type: 3}
       propertyPath: m_LocalRotation.w
