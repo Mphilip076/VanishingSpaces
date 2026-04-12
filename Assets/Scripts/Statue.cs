@@ -7,9 +7,18 @@ public class WeepingStatue : MonoBehaviour
     public Light flashlight;
     public NavMeshAgent agent;
     public Animator animator;
-    public AudioSource audioSource;
+
+    public AudioSource moveAudioSource;
+    public AudioSource whisperAudioSource;
 
     public float raycastHeight = 1.2f;
+
+    public float whisperResumeDelay = 0.25f;
+    public float maxWhisperDistance = 15f;
+    public float minWhisperVolume = 0.05f;
+    public float maxWhisperVolume = 0.35f;
+
+    private bool whisperWaitingToPlay = false;
 
     void Start()
     {
@@ -19,8 +28,13 @@ public class WeepingStatue : MonoBehaviour
         if (animator == null)
             animator = GetComponent<Animator>();
 
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
+        AudioSource[] sources = GetComponents<AudioSource>();
+
+        if (sources.Length > 0 && moveAudioSource == null)
+            moveAudioSource = sources[0];
+
+        if (sources.Length > 1 && whisperAudioSource == null)
+            whisperAudioSource = sources[1];
     }
 
     void Update()
@@ -32,31 +46,68 @@ public class WeepingStatue : MonoBehaviour
 
         if (hitByLight)
         {
-            // Freeze movement
             agent.isStopped = true;
 
-            // Freeze animation exactly where it is
             if (animator != null)
                 animator.speed = 0f;
 
-            // Stop sound when frozen
-            if (audioSource != null && audioSource.isPlaying)
-                audioSource.Stop();
+            if (moveAudioSource != null && moveAudioSource.isPlaying)
+                moveAudioSource.Stop();
+
+            StopWhisperImmediately();
         }
         else
         {
-            // Move toward player
             agent.isStopped = false;
             agent.SetDestination(player.position);
 
-            // Resume animation
             if (animator != null)
                 animator.speed = 1f;
 
-            // Play sound only while moving
-            if (audioSource != null && !audioSource.isPlaying)
-                audioSource.Play();
+            if (moveAudioSource != null && !moveAudioSource.isPlaying)
+                moveAudioSource.Play();
+
+            StartWhisperWithDelay();
+            UpdateWhisperIntensity();
         }
+    }
+
+    void StartWhisperWithDelay()
+    {
+        if (whisperAudioSource == null || whisperAudioSource.isPlaying || whisperWaitingToPlay)
+            return;
+
+        whisperWaitingToPlay = true;
+        Invoke(nameof(PlayWhisper), whisperResumeDelay);
+    }
+
+    void PlayWhisper()
+    {
+        whisperWaitingToPlay = false;
+
+        if (whisperAudioSource != null && !whisperAudioSource.isPlaying)
+            whisperAudioSource.Play();
+    }
+
+    void StopWhisperImmediately()
+    {
+        whisperWaitingToPlay = false;
+        CancelInvoke(nameof(PlayWhisper));
+
+        if (whisperAudioSource != null && whisperAudioSource.isPlaying)
+            whisperAudioSource.Stop();
+    }
+
+    void UpdateWhisperIntensity()
+    {
+        if (whisperAudioSource == null || player == null)
+            return;
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        float t = 1f - Mathf.Clamp01(distance / maxWhisperDistance);
+
+        whisperAudioSource.volume = Mathf.Lerp(minWhisperVolume, maxWhisperVolume, t);
+        whisperAudioSource.pitch = Mathf.Lerp(0.9f, 1.05f, t);
     }
 
     bool IsHitByFlashlight()
@@ -67,14 +118,12 @@ public class WeepingStatue : MonoBehaviour
         Vector3 statueTarget = transform.position + Vector3.up * raycastHeight;
         Vector3 directionToStatue = (statueTarget - flashlight.transform.position).normalized;
 
-        // Check if inside flashlight cone
         float angle = Vector3.Angle(flashlight.transform.forward, directionToStatue);
         if (angle > flashlight.spotAngle * 0.5f)
             return false;
 
         float distance = Vector3.Distance(flashlight.transform.position, statueTarget);
 
-        // Check if light is not blocked
         if (Physics.Raycast(flashlight.transform.position, directionToStatue, out RaycastHit hit, distance))
         {
             if (hit.transform == transform || hit.transform.IsChildOf(transform))
