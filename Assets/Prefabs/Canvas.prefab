@@ -1178,6 +1178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TutorialUI
   tutorialPanel: {fileID: 353396984638256222}
   toggleKey: 9
+  tutorialSceneName: Tutorial
 --- !u!114 &4790373405769238798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3412,19 +3413,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6143739034742223696, guid: 15e1c59a981fe3b48ae0bac817088ede, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6143739034742223696, guid: 15e1c59a981fe3b48ae0bac817088ede, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6143739034742223696, guid: 15e1c59a981fe3b48ae0bac817088ede, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6143739034742223696, guid: 15e1c59a981fe3b48ae0bac817088ede, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6143739034742223696, guid: 15e1c59a981fe3b48ae0bac817088ede, type: 3}
       propertyPath: m_SizeDelta.x
@@ -3464,11 +3465,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6143739034742223696, guid: 15e1c59a981fe3b48ae0bac817088ede, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 330.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6143739034742223696, guid: 15e1c59a981fe3b48ae0bac817088ede, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 483
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6143739034742223696, guid: 15e1c59a981fe3b48ae0bac817088ede, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

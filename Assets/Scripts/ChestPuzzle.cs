@@ -7,8 +7,10 @@ public class ChestPuzzle : MonoBehaviour
     public string correctCode = "1234";
     public float interactRange = 2f;
     public KeyCode interactKey = KeyCode.O;
+    private AudioSource chestSound;
 
     [Header("Key Item to Give Player")]
+    public GameObject keyPrefab;
     public Sprite keyIcon;
     public string keyItemName = "Key";
 
@@ -17,18 +19,17 @@ public class ChestPuzzle : MonoBehaviour
     public TMP_InputField codeInput;
     public TextMeshProUGUI feedbackText;
 
-    // [Header("Chest Animation")]
-    // public Animation chestAnimation;
-
     private bool isOpen = false;
     private bool isSolved = false;
-    private Transform player;
     private Animation chestAnimation;
 
     void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;
+        chestSound = GetComponent<AudioSource>();
         chestAnimation = GetComponent<Animation>();
+
+        if (codeUI == null)
+            codeUI = GameObject.Find("CodeBoxUI");
 
         if (codeUI != null)
             codeUI.SetActive(false);
@@ -37,18 +38,21 @@ public class ChestPuzzle : MonoBehaviour
     void Update()
     {
         if (isSolved) return;
-        if (player == null)
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
+        bool playerNearby = false;
+
+        foreach (var hit in hits)
         {
-            Debug.Log("Player is NULL!");
-            return;
+            if (hit.CompareTag("Player"))
+            {
+                playerNearby = true;
+                break;
+            }
         }
 
-        float distance = Vector3.Distance(transform.position, player.position);
-        // Debug.Log("Distance to chest: " + distance);
-
-        if (distance < interactRange && Input.GetKeyDown(interactKey))
+        if (playerNearby && Input.GetKeyDown(interactKey))
         {
-            Debug.Log("Key pressed near chest!");
             if (!isOpen)
                 OpenCodeUI();
             else
@@ -58,11 +62,19 @@ public class ChestPuzzle : MonoBehaviour
 
     void OpenCodeUI()
     {
+        if (codeUI == null) return;
+
         isOpen = true;
         codeUI.SetActive(true);
-        feedbackText.text = "";
-        codeInput.text = "";
-        codeInput.ActivateInputField();
+
+        if (feedbackText != null)
+            feedbackText.text = "";
+
+        if (codeInput != null)
+        {
+            codeInput.text = "";
+            codeInput.ActivateInputField();
+        }
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -71,17 +83,10 @@ public class ChestPuzzle : MonoBehaviour
         if (pm != null) pm.enabled = false;
     }
 
-    void GiveKey()
-    {
-        InventoryManager.Instance.AddItem(
-            gameObject,
-            keyIcon,
-            keyItemName
-        );
-    }
-
     void CloseCodeUI()
     {
+        if (codeUI == null) return;
+
         isOpen = false;
         codeUI.SetActive(false);
 
@@ -92,39 +97,52 @@ public class ChestPuzzle : MonoBehaviour
         if (pm != null) pm.enabled = true;
     }
 
+    void GiveKey()
+    {
+        if (keyPrefab == null) return;
+
+        InventoryManager.Instance.AddItem(
+            keyPrefab,
+            keyIcon,
+            keyItemName
+        );
+    }
+
     public void SubmitCode()
     {
+        if (codeInput == null) return;
+
         if (codeInput.text == correctCode)
         {
-            feedbackText.text = "Correct!";
-            feedbackText.color = Color.green;
+            if (feedbackText != null)
+            {
+                feedbackText.text = "Correct!";
+                feedbackText.color = Color.green;
+            }
 
             isSolved = true;
 
-            // Play chest open animation
             if (chestAnimation != null)
                 chestAnimation.Play("ChestAnim");
 
-            // Close UI after a short delay
-            Invoke("CloseCodeUI", 1.5f);
+            if (chestSound != null)
+                chestSound.Play();
 
-            // Give key after animation finishes
+            Invoke("CloseCodeUI", 1.5f);
             Invoke("GiveKey", 2f);
         }
         else
         {
-            feedbackText.text = "Incorrect!";
-            feedbackText.color = Color.red;
-            codeInput.text = "";
+            if (feedbackText != null)
+            {
+                feedbackText.text = "Incorrect!";
+                feedbackText.color = Color.red;
+            }
 
-            // Close UI after showing incorrect message
+            if (codeInput != null)
+                codeInput.text = "";
+
             Invoke("CloseCodeUI", 1f);
         }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, interactRange);
     }
 }

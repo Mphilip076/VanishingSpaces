@@ -16,30 +16,16 @@ public class InventoryManager : MonoBehaviour
     public Color normalColor = new Color(0f, 0f, 0f, 0.6f);
 
     private GameObject[] heldItems = new GameObject[10];
-    private Sprite[] heldItemIcons = new Sprite[10];  // store icons separately
+    private Sprite[] heldItemIcons = new Sprite[10];
     private string[] heldItemNames = new string[10];
     private int selectedSlot = 0;
-
-    // Print the current inventory items for debugging
-    public void Print()
-    {
-        Debug.Log("[ItemPickup.cs] Printing inventory items:");
-        foreach (var item in heldItems)
-        {
-            if (item != null)
-                Debug.Log("[ItemPickup.cs] - " + item.name);
-            else
-                Debug.Log("[ItemPickup.cs] - Empty Slot");
-        }
-        Debug.Log("[ItemPickup.cs] End of inventory list.");
-    }
 
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(transform.root.gameObject); // persist the whole canvas
+            DontDestroyOnLoad(transform.root.gameObject);
         }
         else
         {
@@ -70,7 +56,6 @@ public class InventoryManager : MonoBehaviour
 
     void SelectSlot(int index)
     {
-        Debug.Log("[InventoryManager] Selecting slot: " + index);
         slotBackgrounds[selectedSlot].color = normalColor;
         selectedSlot = index;
         slotBackgrounds[selectedSlot].color = selectedColor;
@@ -82,30 +67,23 @@ public class InventoryManager : MonoBehaviour
 
     public bool AddItem(GameObject item, Sprite icon, string itemName)
     {
-        Debug.Log("[InventoryManager] Attempting to add item: " + itemName);
         for (int i = 0; i < heldItems.Length; i++)
         {
             if (heldItems[i] == null)
             {
                 heldItems[i] = item;
                 heldItemNames[i] = itemName;
-                heldItemIcons[i] = icon;  // store icon separately
+                heldItemIcons[i] = icon;
                 slotIcons[i].sprite = icon;
                 slotIcons[i].enabled = true;
-                Debug.Log("[InventoryManager] Item added to slot " + i + ": " + itemName);
                 return true;
-            } else {
-                Debug.Log("[InventoryManager] Slot " + i + " is occupied by: " + heldItemNames[i]);
             }
         }
-
-        Debug.Log("[InventoryManager] Inventory full! Could not add item: " + itemName);
         return false;
     }
 
     public void RemoveItem(GameObject item)
     {
-        Debug.Log("[InventoryManager] Attempting to remove item: " + item.name);
         for (int i = 0; i < heldItems.Length; i++)
         {
             if (heldItems[i] == item)
@@ -120,10 +98,8 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // Call this after scene loads to refresh UI icons
     public void RefreshUI()
     {
-        Debug.Log("[InventoryManager] Refreshing inventory UI");
         for (int i = 0; i < heldItems.Length; i++)
         {
             if (heldItemIcons[i] != null)
@@ -146,7 +122,6 @@ public class InventoryManager : MonoBehaviour
 
     public bool HasItem(string itemName)
     {
-        Debug.Log("[InventoryManager] Checking for item: " + itemName);
         for (int i = 0; i < heldItemNames.Length; i++)
         {
             if (heldItemNames[i] == itemName)
