@@ -6,7 +6,8 @@ public class WeepingStatue : MonoBehaviour
     public Transform player;
     public Light flashlight;
     public NavMeshAgent agent;
-    public Animator animator; // ADD THIS
+    public Animator animator;
+    public AudioSource audioSource;
 
     public float raycastHeight = 1.2f;
 
@@ -15,8 +16,11 @@ public class WeepingStatue : MonoBehaviour
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
 
-        if (animator == null) // ADD THIS
+        if (animator == null)
             animator = GetComponent<Animator>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -31,9 +35,13 @@ public class WeepingStatue : MonoBehaviour
             // Freeze movement
             agent.isStopped = true;
 
-            // Freeze animation EXACTLY where it is
+            // Freeze animation exactly where it is
             if (animator != null)
                 animator.speed = 0f;
+
+            // Stop sound when frozen
+            if (audioSource != null && audioSource.isPlaying)
+                audioSource.Stop();
         }
         else
         {
@@ -44,6 +52,10 @@ public class WeepingStatue : MonoBehaviour
             // Resume animation
             if (animator != null)
                 animator.speed = 1f;
+
+            // Play sound only while moving
+            if (audioSource != null && !audioSource.isPlaying)
+                audioSource.Play();
         }
     }
 
@@ -53,7 +65,6 @@ public class WeepingStatue : MonoBehaviour
             return false;
 
         Vector3 statueTarget = transform.position + Vector3.up * raycastHeight;
-
         Vector3 directionToStatue = (statueTarget - flashlight.transform.position).normalized;
 
         // Check if inside flashlight cone

@@ -7854,6 +7854,8 @@ MonoBehaviour:
   player: {fileID: 0}
   flashlight: {fileID: 0}
   agent: {fileID: 1826435641}
+  animator: {fileID: 0}
+  audioSource: {fileID: 0}
   raycastHeight: 1.2
 --- !u!136 &1826435640
 CapsuleCollider:
@@ -7911,18 +7913,18 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_Resource: {fileID: 8300000, guid: 79f31c5204ee2c2408f3733ed66b1cc9, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 2
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -7957,7 +7959,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
