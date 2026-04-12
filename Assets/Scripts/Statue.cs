@@ -10,6 +10,7 @@ public class WeepingStatue : MonoBehaviour
 
     public AudioSource moveAudioSource;
     public AudioSource whisperAudioSource;
+    private AudioSource jumpscareAudioSource;
 
     public float raycastHeight = 1.2f;
 
@@ -19,6 +20,7 @@ public class WeepingStatue : MonoBehaviour
     public float maxWhisperVolume = 0.35f;
 
     private bool whisperWaitingToPlay = false;
+    private bool wasHitByLightLastFrame = false;
 
     void Start()
     {
@@ -35,6 +37,9 @@ public class WeepingStatue : MonoBehaviour
 
         if (sources.Length > 1 && whisperAudioSource == null)
             whisperAudioSource = sources[1];
+
+        if (sources.Length > 2)
+            jumpscareAudioSource = sources[2]; // 👈 third source
     }
 
     void Update()
@@ -43,6 +48,13 @@ public class WeepingStatue : MonoBehaviour
             return;
 
         bool hitByLight = IsHitByFlashlight();
+
+        // 🔥 PLAY JUMPSCARE ONLY ON FIRST LOOK
+        if (hitByLight && !wasHitByLightLastFrame)
+        {
+            if (jumpscareAudioSource != null)
+                jumpscareAudioSource.Play();
+        }
 
         if (hitByLight)
         {
@@ -70,6 +82,8 @@ public class WeepingStatue : MonoBehaviour
             StartWhisperWithDelay();
             UpdateWhisperIntensity();
         }
+
+        wasHitByLightLastFrame = hitByLight;
     }
 
     void StartWhisperWithDelay()
