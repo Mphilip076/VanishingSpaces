@@ -6,6 +6,7 @@ public class WeepingStatue : MonoBehaviour
     public Transform player;
     public Light flashlight;
     public NavMeshAgent agent;
+    public Animator animator; // ADD THIS
 
     public float raycastHeight = 1.2f;
 
@@ -13,6 +14,9 @@ public class WeepingStatue : MonoBehaviour
     {
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
+
+        if (animator == null) // ADD THIS
+            animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -24,14 +28,22 @@ public class WeepingStatue : MonoBehaviour
 
         if (hitByLight)
         {
-            // Freeze
+            // Freeze movement
             agent.isStopped = true;
+
+            // Freeze animation EXACTLY where it is
+            if (animator != null)
+                animator.speed = 0f;
         }
         else
         {
             // Move toward player
             agent.isStopped = false;
             agent.SetDestination(player.position);
+
+            // Resume animation
+            if (animator != null)
+                animator.speed = 1f;
         }
     }
 
