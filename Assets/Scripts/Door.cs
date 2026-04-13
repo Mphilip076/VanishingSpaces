@@ -12,23 +12,13 @@ public class Door : MonoBehaviour
 
     [Header("Sounds")]
     public AudioSource doorSound;
-
-    private GameObject pickupPromptUI;
-    private TextMeshProUGUI promptText;
-    private volatile bool playerNearby = false;
+    public volatile bool playerNearby = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         doorSound = GetComponent<AudioSource>();
-
-        pickupPromptUI = GameObject.Find("InteractPromptUI");
-        GameObject promptObj = GameObject.Find("InteractPromptText");
-        if (promptObj != null)
-            promptText = promptObj.GetComponent<TextMeshProUGUI>();
-        else
-            Debug.Log("[Door] Couldn't find UI");
     }
 
     // Update is called once per frame
@@ -48,31 +38,12 @@ public class Door : MonoBehaviour
 
         if (playerNearby)
         {
-            ShowPrompt("Press E to use door");
-
             if (Input.GetKeyDown(interactKey))
             {
-                CancelInvoke(nameof(HidePrompt));
                 doorSound.Play();
-                Debug.Log("[Door] Invoking NextScene");
                 Invoke(nameof(NextScene), 1.5f);
             }
         }
-        else
-        {
-            HidePrompt();
-        }
-    }
-
-    void ShowPrompt(string message)
-    {
-        if (pickupPromptUI != null) pickupPromptUI.SetActive(true);
-        if (promptText != null) promptText.text = message;
-    }
-
-    void HidePrompt()
-    {
-        if (pickupPromptUI != null) pickupPromptUI.SetActive(false);
     }
 
     void NextScene()
