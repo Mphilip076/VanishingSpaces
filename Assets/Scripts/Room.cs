@@ -38,11 +38,7 @@ public class Room
     private bool lockedInPlace; // Whether the room is locked or not
                                 // If true, any entrances to that room will always lead to that room
                                 // instead of a random room, and any exits will always lead to 
-                                // the set exits
-    private bool roomIsLocked;  // Whether the user has to complete some kind of puzzle 
-                                // to unlock the door or needs some item, such as a key
-                                // Default false
-    
+                                // the set exits    
 
     // The exits to other rooms. All three are initially null
     // The rooms can be set using the SetExit1, SetExit2, and SetExit3 functions.
@@ -59,7 +55,6 @@ public class Room
         }
         
         this.sceneName = sceneName;
-        this.roomIsLocked = false;
 
         // By default, the room is unlocked and has no exits
         this.lockedInPlace = false;
@@ -111,18 +106,6 @@ public class Room
     public bool IsLockedInPlace()
     {
         return lockedInPlace;
-    }
-
-    /// <summary>
-    /// Return whether the door is locked
-    /// </summary>
-    /// <returns>
-    /// Returns true if the user cannot exit,
-    /// false if they can
-    /// </returns>
-    public bool DoorIsLocked()
-    {
-        return roomIsLocked;
     }
 
     // Find a room by scene name
@@ -191,19 +174,6 @@ public class Room
         If the room you are exiting to is locked, then always return the right exit
         Otherwise, return a random exit which is not locked 
        -------------------------------------------------------------------------------------- */
-    
-    // Pervent the user from taking any exit because the door is locked
-    // The user needs to perform some action to unlock it
-    public void LockRoom()
-    {
-        roomIsLocked = true;
-    }
-
-    // Unlock the room so that the player can exit
-    public void UnlockRoom()
-    {
-        roomIsLocked = false;
-    }
 
     // For debugging: returns the exit corresponding to the exit number (1, 2, or 3)
     // Do not use this function in the actual game, since it does not follow the rules for determining which exit to return.
@@ -223,11 +193,7 @@ public class Room
             Debug.Log("Room " + sceneName + "'s exit 3 cannot be used because it does not exist.");
             return null;
         }
-        if (roomIsLocked)
-        {
-            Debug.Log("Room: Cannot get a random exit because no possible exits exist.");
-            return null;
-        }
+
         Room ret = unlockedRooms[Random.Range(0, unlockedRooms.Count)];
 
         // Don't go to the room you're in
@@ -247,13 +213,6 @@ public class Room
         // If the exit is not set, return null
         if(exit1 == null) {
             Debug.Log("[Room.cs] Room " + sceneName + "'s exit 1 cannot be used because it does not exist.");
-            return null;
-        }
-
-        // If the door is locked, you can't exit
-        if (roomIsLocked)
-        {
-            Debug.Log("[Room.cs] Room "  + sceneName + "'s exit cannot be used because the door is locked.");
             return null;
         }
 
@@ -282,13 +241,6 @@ public class Room
             return null;
         }
 
-        // If the door is locked, you can't exit
-        if (roomIsLocked)
-        {
-            Debug.Log("[Room.cs] Room "  + sceneName + "'s exit cannot be used because the door is locked.");
-            return null;
-        }
-
         // If this room is locked, then always return the right exit
         if (lockedInPlace) {
             return exit2;
@@ -313,13 +265,6 @@ public class Room
             return null;
         }
 
-        // If the door is locked, you can't exit
-        if (roomIsLocked)
-        {
-            Debug.Log("[Room.cs] Room "  + sceneName + "'s exit cannot be used because the door is locked.");
-            return null;
-        }
-
         // If this room is locked, then always return the right exit
         if (lockedInPlace) {
             return exit3;
@@ -332,5 +277,17 @@ public class Room
 
         // None of the conditions for returning the right exit are met, so return a random exit which is not locked
         return GetRandomExit();
+    }
+
+    // Use the exit corresponding to the exit number
+    // This does use the exit logic
+    // Sets the scene to the new scene
+    public void UseExit(int exitNumber)
+    {
+        if(exitNumber < 0 || exitNumber > 3) return;
+
+        if(exitNumber == 1 && exit1 != null) SetScene(GetExit1().sceneName);
+        if(exitNumber == 2 && exit1 != null) SetScene(GetExit2().sceneName);
+        if(exitNumber == 3 && exit1 != null) SetScene(GetExit3().sceneName);
     }
 }
