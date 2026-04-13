@@ -137,8 +137,6 @@ public class Room
         // Add it back to the list of unlocked rooms
         unlockedRooms.Add(this);
         lockedInPlace = false;
-
-        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive); // Preload the scene in the background
     }
 
     /* ------------------------------------ EXIT SETTERS ------------------------------------ 

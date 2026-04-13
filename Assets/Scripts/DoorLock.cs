@@ -14,7 +14,7 @@ public class DoorLock : MonoBehaviour
 
     private AudioSource doorSound;
 
-    private bool isUnlocked = false;
+    private static bool isUnlocked = false;
     private bool playerNearby = false;
     private GameObject pickupPromptUI;
     private TextMeshProUGUI promptText;
@@ -61,7 +61,7 @@ public class DoorLock : MonoBehaviour
     }
 
     void TryUnlock()
-    {
+    {        
         if (InventoryManager.Instance.HasItem(requiredKeyName))
         {
             isUnlocked = true;
@@ -74,10 +74,6 @@ public class DoorLock : MonoBehaviour
 
             ShowPrompt("Door unlocked!");
             Invoke("LoadNextScene", 1.5f);
-        }
-        else
-        {
-            ShowPrompt("You need a key!");
         }
     }
 

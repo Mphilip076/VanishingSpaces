@@ -35,6 +35,7 @@ public class RoomManager : MonoBehaviour
             Room t = new Room("Tutorial");
             Room dr = new Room("DiningRoom");
             Room lr = new Room("LivingRoom");
+            Room s = new Room("StartScene");
 
             // Make rooms accessible
             dr.AllowRandomEntry();
@@ -42,12 +43,18 @@ public class RoomManager : MonoBehaviour
             t.AllowRandomEntry();
 
             // Set exits
+
+            // Start scene will always exit to tutorial
+            s.SetExit1(t);
+            s.LockInPlace();
+
             t.SetExit1(dr);
             lr.SetExit1(dr);
             dr.SetExit1(t);
 
             Debug.Log("[RoomManager.cs] Room list size " + Room.allRooms.Count);
 
+            Room.SetScene("StartScene");
             hasStarted = true;
             Debug.Log("[RoomManager.cs] Finished loading rooms");
         }
@@ -58,7 +65,7 @@ public class RoomManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKey(KeyCode.G)) {
-            Room.SetScene("Tutorial");
+            Room.currentRoom.UseExit(1);
         }
     }
 }

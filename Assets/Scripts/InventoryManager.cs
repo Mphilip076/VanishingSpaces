@@ -167,6 +167,19 @@ public class InventoryManager : MonoBehaviour
         return heldItems[index];
     }
 
+    public GameObject GetItemByName(string name)
+    {
+        foreach(var item in heldItems)
+        {
+            if(item.name == name)
+            {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
     public GameObject GetSelectedItem()
     {
         return heldItems[selectedSlot];

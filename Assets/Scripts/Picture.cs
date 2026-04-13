@@ -5,9 +5,9 @@ public class Picture : PickableItem
     public static float snapDistance = 7f;
 
     [Header("Pictures")]
-    public static Picture A;
-    public static Picture B;
-    public static Picture C;
+    public static Picture A = null;
+    public static Picture B = null;
+    public static Picture C = null;
 
     public static PictureSlot slot1;
     public static PictureSlot slot2;
@@ -32,6 +32,10 @@ public class Picture : PickableItem
         {
             Debug.Log("[Picture] Assigned Picture C");
             C = this;
+        }
+        else if (this == A || this == B || this == C)
+        {
+            // Do nothing
         }
         else
         {

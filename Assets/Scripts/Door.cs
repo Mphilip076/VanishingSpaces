@@ -15,7 +15,7 @@ public class Door : MonoBehaviour
 
     private GameObject pickupPromptUI;
     private TextMeshProUGUI promptText;
-    private bool playerNearby = false;
+    private volatile bool playerNearby = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

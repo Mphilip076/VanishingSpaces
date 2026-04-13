@@ -1849,7 +1849,7 @@ MonoBehaviour:
   interactKey: 101
   requiredKeyName: Key
   exitNum: 1
-  unlockSound: {fileID: 8300000, guid: 0b38c587fa7e34acbbe6fec9eeee2953, type: 3}
+  unlockSound: {fileID: 0}
 --- !u!82 &743313130
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1861,8 +1861,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_Resource: {fileID: 8300000, guid: 0b38c587fa7e34acbbe6fec9eeee2953, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
