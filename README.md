@@ -30,3 +30,10 @@ Statue walking model so that the player can see it walking if it isn't in the fl
 Player Animator Controller with Idle, Walking, and Running states driven by movement speed parameter. (First person view)
 Ghost Monster Animator Controller handling its movement and idle animations.
 NPC Butler has an idle animation in the dining room.
+
+
+
+Assignment 6:
+
+Matthew:
+I edited the game by adding more rooms and more detail work to each of them. I also added movement to the statues where the movement stops the frame when the flashlight is on it. As the statue steps it creates a stomping sound effect and when it walks it makes a whispering sound effect. Both effects stop when the user points the flashlight on them. Along with this when the user points the flashlight on the statue it makes a jumpscare sound effect for the statue getting closer. Along with this for UI design I increased the size of the elements on the starting screen to fit it bettter. I also added features to the buttons where if they are hovered over they turn red and then turn white when pressed. Along with this I added a control button on the start screne that shows the user the controls before they start. For the start button I also added a feature that when pressed it makes a jumpscare sound. After this the title and buttons all fade and then the camera begins to move down the hallway. As it goes down the hallway when it gets to the doors they both open and the screen fades to black. The buttons make the user have an easier time navigating the game giving an easier way to look at it and then also knowing the controls before they start. The camera pan works to help the player feel more immersed in the game so they don't feel like it just randomly starts.
