@@ -93,7 +93,8 @@ public class InventoryManager : MonoBehaviour
         Debug.Log("[Inventory Manager] Attempting to add item " + itemName);
         for (int i = 0; i < heldItems.Length; i++)
         {
-            if (heldItems[i] == null)
+            if(heldItemNames[i] != null) Debug.Log($"[Inventory Manager] HeldItems[{i}] = {heldItemNames[i]}");
+            if (heldItems[i] == null && heldItemNames[i] == null)
             {
                 heldItems[i] = item;
                 heldItemNames[i] = itemName;
@@ -101,6 +102,7 @@ public class InventoryManager : MonoBehaviour
                 slotIcons[i].sprite = icon;
                 slotIcons[i].enabled = true;
                 Debug.Log("[Inventory Manager] Item " + item.name + " added at index " + i);
+                Print();
                 return true;
             }
         }
