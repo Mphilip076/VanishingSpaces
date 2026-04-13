@@ -1,4 +1,6 @@
 using UnityEngine;
+using TMPro;
+using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
@@ -20,13 +22,21 @@ public class MainMenu : MonoBehaviour
     public DoorOpen rightDoor;
     public float doorOpenDistance = 2f;
 
-    public AudioSource buttonAudio; // ADDED
+    public AudioSource buttonAudio;
+
+    public TMP_Text journalText;
+    [TextArea(3, 10)]
+    public string journalMessage;
+    public float typeSpeed = 0.05f;
+    public float journalDelayBeforeLoad = 1.5f;
+    public AudioSource typewriterAudio;
 
     private bool isMoving = false;
     private bool isFadingMenu = false;
     private bool isFadingToBlack = false;
     private bool hasStarted = false;
     private bool doorsOpened = false;
+    private bool journalStarted = false;
 
     void Start()
     {
@@ -44,6 +54,12 @@ public class MainMenu : MonoBehaviour
 
         if (fadeGroup != null)
             fadeGroup.alpha = 0f;
+
+        if (journalText != null)
+        {
+            journalText.text = "";
+            journalText.gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -99,11 +115,7 @@ public class MainMenu : MonoBehaviour
             if (distance < 0.05f && fadeGroup == null)
             {
                 isMoving = false;
-
-                if (InventoryManager.Instance != null)
-                    InventoryManager.Instance.Show();
-
-                Room.SetScene("Tutorial");
+                StartJournalSequence();
             }
         }
 
@@ -117,10 +129,7 @@ public class MainMenu : MonoBehaviour
                 isFadingToBlack = false;
                 isMoving = false;
 
-                if (InventoryManager.Instance != null)
-                    InventoryManager.Instance.Show();
-
-                Room.SetScene("Tutorial");
+                StartJournalSequence();
             }
         }
     }
@@ -131,8 +140,7 @@ public class MainMenu : MonoBehaviour
 
         hasStarted = true;
 
-        // PLAY BUTTON SOUND (ADDED)
-        if (buttonAudio != null)
+        if (buttonAudio != null && buttonAudio.clip != null)
             buttonAudio.PlayOneShot(buttonAudio.clip);
 
         if (menuGroup != null)
@@ -148,6 +156,42 @@ public class MainMenu : MonoBehaviour
     void BeginCameraMove()
     {
         isMoving = true;
+    }
+
+    void StartJournalSequence()
+    {
+        if (journalStarted) return;
+        journalStarted = true;
+
+        StartCoroutine(TypeJournalAndLoad());
+    }
+
+    IEnumerator TypeJournalAndLoad()
+    {
+        if (journalText != null)
+        {
+            journalText.gameObject.SetActive(true);
+            journalText.text = "";
+
+            foreach (char letter in journalMessage)
+            {
+                journalText.text += letter;
+
+                if (typewriterAudio != null && typewriterAudio.clip != null && !char.IsWhiteSpace(letter))
+                {
+                    typewriterAudio.PlayOneShot(typewriterAudio.clip);
+                }
+
+                yield return new WaitForSeconds(typeSpeed);
+            }
+        }
+
+        yield return new WaitForSeconds(journalDelayBeforeLoad);
+
+        if (InventoryManager.Instance != null)
+            InventoryManager.Instance.Show();
+
+        Room.SetScene("Tutorial");
     }
 
     public void OpenTutorial()
