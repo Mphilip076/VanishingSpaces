@@ -54,6 +54,18 @@ public class InventoryManager : MonoBehaviour
             SelectSlot(9);
     }
 
+    public void Hide()
+    {
+        Canvas canvas = transform.root.GetComponent<Canvas>();
+        if (canvas != null) canvas.enabled = false;
+    }
+
+    public void Show()
+    {
+        Canvas canvas = transform.root.GetComponent<Canvas>();
+        if (canvas != null) canvas.enabled = true;
+    }
+
     void SelectSlot(int index)
     {
         slotBackgrounds[selectedSlot].color = normalColor;
