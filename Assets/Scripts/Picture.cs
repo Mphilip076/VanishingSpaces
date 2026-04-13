@@ -1,27 +1,22 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Picture : PickableItem
 {
+    public static float snapDistance = 7f;
+
+    [Header("Pictures")]
     public static Picture A;
     public static Picture B;
     public static Picture C;
 
-    [Header("Positions")]
-    public static float snapDistance = 5f;
-
-
-    // Static positions for the pictures
-    public static Vector3 pos1 = new Vector3(-4.12f, 1.60f, 3.35f); // sun
-    public static Vector3 pos2 = new Vector3(-4.12f, 1.60f, 11.07f); // moon
-    public static Vector3 pos3 = new Vector3(0.18f, 1.52f, 7.05f); //star
-    public static bool pos1inUse = false;
-    public static bool pos2inUse = false;
-    public static bool pos3inUse = false;
-
+    public static PictureSlot slot1;
+    public static PictureSlot slot2;
+    public static PictureSlot slot3;
 
     void Start()
     {
+        Debug.Log("[Picture] " + this.name + " started, A = " + A);
+        
         // Prevent duplicates
         if(this.name == "Picture A" && A == null)
         {
@@ -43,74 +38,18 @@ public class Picture : PickableItem
             Debug.Log("[Picture] Duplicate picture found, destroying");
             Destroy(gameObject);
         }
-
-        canPickUp = true;
-        canDrop = false;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Room.currentRoom.SceneName() == "LivingRoom")
-        {
+        if(Input.GetKeyDown(KeyCode.R))
             SnapDrop();
-        }
-    }
-
-    private void SetRotation(int i)
-    {
-        if(i == 0)
-        {
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        }
-        if(i == 1)
-        {
-            transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-        }
-        else if(i == 2)
-        {
-            transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-        }
-        else if(i == 3)
-        {
-            transform.rotation = Quaternion.Euler(0f, -90f, 0f);
-        }
-    }
-
-    private bool GoToPosition(int posNum)
-    {
-        if(posNum == 1 && pos1inUse) return false;
-        if(posNum == 2 && pos2inUse) return false;
-        if(posNum == 3 && pos3inUse) return false;
-
-        switch(posNum)
-        {
-            case 1:
-                base.OnDrop();
-                SetRotation(1);
-                transform.position = pos1;
-                pos1inUse = true;
-                return true;
-            case 2:
-                base.OnDrop();
-                SetRotation(2);
-                transform.position = pos2;
-                pos2inUse = true;
-                return true;
-            case 3:
-                base.OnDrop();
-                SetRotation(3);
-                transform.position = pos3;
-                pos3inUse = true;
-                return true;
-        }
-
-        return false;
     }
 
     public static bool CanPlace()
     {
         if(Room.currentRoom.SceneName() != "LivingRoom") return false;
-        if(pos1inUse && pos2inUse && pos3inUse) return false;
+        if(slot1.inUse && slot2.inUse && slot3.inUse) return false;
 
         // Does the player have a painting
         Picture p = null;
@@ -121,11 +60,48 @@ public class Picture : PickableItem
         else return false; // No
 
         // Location 1
-        if(pos1inUse == false && Vector3.Distance(p.transform.position, pos1) <= snapDistance) return true;
-        if(pos2inUse == false && Vector3.Distance(p.transform.position, pos2) <= snapDistance) return true;
-        if(pos3inUse == false && Vector3.Distance(p.transform.position, pos3) <= snapDistance) return true;
+        if(slot1.inUse == false && Vector3.Distance(p.transform.position, slot1.transform.position) <= snapDistance) return true;
+        if(slot2.inUse == false && Vector3.Distance(p.transform.position, slot2.transform.position) <= snapDistance) return true;
+        if(slot3.inUse == false && Vector3.Distance(p.transform.position, slot3.transform.position) <= snapDistance) return true;
 
-        return false;        
+        return false;
+    }
+
+    private bool GoToPosition(int slotNum)
+
+    {
+        if(slotNum == 1 && slot1.inUse) return false;
+        if(slotNum == 2 && slot2.inUse) return false;
+        if(slotNum == 3 && slot3.inUse) return false;
+
+        switch(slotNum)
+        {
+            case 1:
+                base.OnDrop();
+                transform.position = slot1.transform.position;
+                transform.rotation = slot1.transform.rotation;
+                slot1.inUse = true;
+                slot1.placeSound.Play();
+                return true;
+            case 2:
+                base.OnDrop();
+                transform.position = slot2.transform.position;
+                transform.rotation = slot2.transform.rotation;
+                slot2.inUse = true;
+                slot2.placeSound.Play();
+                return true;
+            case 3:
+                base.OnDrop();
+                transform.position = slot3.transform.position;
+                transform.rotation = slot3.transform.rotation;
+                slot3.inUse = true;
+                slot3.placeSound.Play();
+                return true;
+
+
+        }
+
+        return false;
     }
 
     private bool WithinDistance(int posNum)
@@ -137,13 +113,13 @@ public class Picture : PickableItem
         switch(posNum)
         {
             case 1:
-                location = pos1;
+                location = slot1.transform.position;
                 break;
             case 2:
-                location = pos2;
+                location = slot2.transform.position;
                 break;
             case 3:
-                location = pos3;
+                location = slot3.transform.position;
                 break;
         }
 
@@ -153,9 +129,9 @@ public class Picture : PickableItem
     public override void OnPickup(Transform holdPosition)
     {
         // Mark position as not in use when picked up
-        if(transform.position == pos1) pos1inUse = false;
-        if(transform.position == pos2) pos2inUse = false;
-        if(transform.position == pos3) pos3inUse = false;
+        if(transform.position == slot1.transform.position) slot1.inUse = false;
+        if(transform.position == slot2.transform.position) slot2.inUse = false;
+        if(transform.position == slot3.transform.position) slot3.inUse = false;
 
         base.OnPickup(holdPosition);
     }
@@ -175,14 +151,10 @@ public class Picture : PickableItem
                     if(GoToPosition(i)) {
                         // Successfully snapped to position
                         Debug.Log("[Picture]Snapped to position " + i);
-                        InventoryManager.Instance.RemoveItem(gameObject);
                         return;
                     }
                 }
             }
-
-            // Not within range of any position, or position is occupied
-            // Do nothing
-        }
+        }        
     }
 }

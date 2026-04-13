@@ -1,3 +1,4 @@
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class PicturePuzzle : MonoBehaviour
@@ -6,10 +7,17 @@ public class PicturePuzzle : MonoBehaviour
     public Vector3 pictureALocation;
     public Vector3 pictureBLocation;
     public Vector3 pictureCLocation;
-    
+
+    [Header("Picture Slots")]
+    public PictureSlot slot1;
+    public PictureSlot slot2;
+    public PictureSlot slot3;
+
+    [Header("Completion Action")]
     public GameObject completionReward;
     public Sprite completionRewardSprite;
     public string completionRewardName;
+    public AudioSource completeSound;
 
     private bool isSolved;
     
@@ -18,9 +26,13 @@ public class PicturePuzzle : MonoBehaviour
     {
         isSolved = false;
 
-        pictureCLocation = Picture.pos1; // sun
-        pictureALocation = Picture.pos2; // moon
-        pictureBLocation = Picture.pos3; // star
+        pictureCLocation = slot1.transform.position; // sun
+        pictureALocation = slot2.transform.position; // moon
+        pictureBLocation = slot3.transform.position; // star
+
+        slot1.inUse = false;
+        slot2.inUse = false;
+        slot3.inUse = false;
     }
 
     void Update()
@@ -30,7 +42,12 @@ public class PicturePuzzle : MonoBehaviour
         CheckPuzzle();
     }
 
-    public void CheckPuzzle()
+    public bool PuzzleSolved()
+    {
+        return isSolved;
+    }
+
+    private void CheckPuzzle()
     {
         if(Picture.A == null || Picture.B == null || Picture.C == null){
             Debug.LogWarning("[PicturePuzzle] One or more pictures are missing!");
@@ -48,7 +65,7 @@ public class PicturePuzzle : MonoBehaviour
         }
     }
 
-    public void OnSolve()
+    private void OnSolve()
     {
         isSolved = true;
         Debug.Log("[PicturePuzzle] Puzzle Solved!");
