@@ -40,3 +40,10 @@ Matthew:I edited the game by adding more rooms and more detail work to each of t
 Sound Design: I also added movement to the statues where the movement stops the frame when the flashlight is on it. As the statue steps it creates a stomping sound effect and when it walks it makes a whispering sound effect. Both effects stop when the user points the flashlight on them. Along with this when the user points the flashlight on the statue it makes a jumpscare sound effect for the statue getting closer. For the start button I also added a feature that when pressed it makes a jumpscare sound.
 
 UI Design: Along with this for UI design I increased the size of the elements on the starting screen to fit it bettter. I also added features to the buttons where if they are hovered over they turn red and then turn white when pressed. Along with this I added a control button on the start screne that shows the user the controls before they start. After this the title and buttons all fade and then the camera begins to move down the hallway. As it goes down the hallway when it gets to the doors they both open and the screen fades to black. The buttons make the user have an easier time navigating the game giving an easier way to look at it and then also knowing the controls before they start. The camera pan works to help the player feel more immersed in the game so they don't feel like it just randomly starts.
+
+
+Bhavani
+
+Sound design: Picture place sound: The sound made when the player places a picture in a slot. It is a soft thud, like putting a light object on wood; Ambient Sounds which give the player a feeling of tension. Also door creak sounds in all rooms but the tutorial room.
+
+UI design: Scroll open had no background so it was hard to see; added background so that the text could be seen clearly. When walking up to the door it would only tell you that you need a key in the split second you press E; modified so you need a key is the default and only shows e to open after unlocking. 
