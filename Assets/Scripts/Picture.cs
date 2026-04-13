@@ -50,7 +50,7 @@ public class Picture : PickableItem
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && Room.currentRoom.SceneName() == "LivingRoom")
+        if (Input.GetKeyDown(KeyCode.E) && Room.currentRoom.SceneName() == "LivingRoom")
         {
             SnapDrop();
         }
