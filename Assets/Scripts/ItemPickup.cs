@@ -58,14 +58,17 @@ public class ItemPickup : MonoBehaviour
         PickableItem nearest = null;
         float nearestDistance = float.MaxValue;
         ChestPuzzle nearestChest = null;
-        DoorLock nearestDoor = null;
+        DoorLock nearestDoorLock = null;
+        Door nearestDoor = null;
         ScrollNote nearestScroll = null;
 
         foreach (var hit in hits)
         {
+            
             ChestPuzzle chest = hit.GetComponentInParent<ChestPuzzle>();
-            if (chest != null)
+            if (chest != null && !chest.IsSolved())
             {
+                Debug.Log("[ItemPickup] Found a chest");
                 nearestChest = chest;
                 break;
             }
@@ -73,7 +76,16 @@ public class ItemPickup : MonoBehaviour
             DoorLock door = hit.GetComponentInParent<DoorLock>();
             if (door != null)
             {
-                nearestDoor = door;
+                Debug.Log("[ItemPickup] Found a locked door");
+                nearestDoorLock = door;
+                break;
+            }
+
+            Door door1 = hit.GetComponentInParent<Door>();
+            if(door1 != null)
+            {
+                Debug.Log("[ItemPickup] Found a door");
+                nearestDoor = door1;
                 break;
             }
 
@@ -101,34 +113,14 @@ public class ItemPickup : MonoBehaviour
             }
         }
 
-        if (nearestChest != null)
-        {
-            pickupPromptUI.SetActive(true);
-            if (promptText != null)
-                promptText.text = "Press O to unlock";
-        }
-        else if (nearestDoor != null)
-        {
-            pickupPromptUI.SetActive(true);
-            if (promptText != null)
-                promptText.text = "Press E to unlock";
-        }
-        else if (nearestScroll != null)
-        {
-            pickupPromptUI.SetActive(true);
-            if (promptText != null)
-                promptText.text = "Press E to read";
-        }
+        if (nearestChest != null) SetMessage("Press O to unlock");
+        else if (nearestDoorLock != null) SetMessage("Press E to unlock");
+        else if (nearestDoor != null) SetMessage("Press E to open");
+        else if (nearestScroll != null) SetMessage("Press E to read");
         else if (nearest != null)
         {
-            pickupPromptUI.SetActive(true);
-            if (promptText != null)
-            {
-                if (nearest.isFlashlight && heldItem == null)
-                    promptText.text = "Press E to hold";
-                else
-                    promptText.text = "Press E to pick up";
-            }
+            if (nearest.isFlashlight && heldItem == null) SetMessage("Press E to hold");
+            else SetMessage("Press E to pick up");
         }
         else
         {
@@ -136,8 +128,16 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
+    private void SetMessage(string message)
+    {
+        pickupPromptUI.SetActive(true);
+        if (promptText != null)
+            promptText.text = message;
+    }
+
     void TryPickUp()
     {
+        Debug.Log("[ItemPickup] trying to pickup");
         Collider[] hits = Physics.OverlapSphere(
             transform.position, pickupRange
         );
@@ -152,6 +152,7 @@ public class ItemPickup : MonoBehaviour
             PickableItem item = hit.GetComponent<PickableItem>();
             if (item != null && item.canPickUp)
             {
+                Debug.Log("[ItemPickup] Found item: " + item.name);
                 float distance = Vector3.Distance(
                     transform.position, hit.transform.position
                 );
@@ -188,6 +189,7 @@ public class ItemPickup : MonoBehaviour
 
     void PickUp(PickableItem item)
     {
+        Debug.Log("[ItemPickup] Picking up " + item.name);
         bool added = InventoryManager.Instance.AddItem(
             item.gameObject,
             item.itemIcon,
@@ -206,10 +208,13 @@ public class ItemPickup : MonoBehaviour
             if (heldLight != null)
                 heldLight.enabled = false;
         }
+
+        Debug.Log("[ItemPickup] Picked up successfully");
     }
 
     void DropItem()
     {
+        Debug.Log("[ItemPickup] Dropping item");
         if (heldItem != null)
         {
             GameObject selectedItem = InventoryManager.Instance.GetSelectedItem();
@@ -224,6 +229,8 @@ public class ItemPickup : MonoBehaviour
                     flashlightOn = false;
                 }
 
+                Debug.Log("[ItemPickup] Dropping " + heldItem.name);
+
                 InventoryManager.Instance.RemoveItem(heldItem.gameObject);
                 heldItem.OnDrop();
                 heldItem = null;
@@ -233,10 +240,11 @@ public class ItemPickup : MonoBehaviour
 
         GameObject selected = InventoryManager.Instance.GetSelectedItem();
         if (selected == null) return;
-        
+
         // Don't drop the pictures
         if(selected.name == "Picture A" || selected.name == "Picture B" || selected.name == "Picture C") return;
 
+        Debug.Log("[ItemPickup] Dropping " + selected.name);
         InventoryManager.Instance.RemoveItem(selected);
 
         selected.transform.position = transform.position + transform.forward * 1.5f;

@@ -34,6 +34,17 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    void Print()
+    {
+        Debug.Log("[Inventory Manager] Printing Inventory");
+        for(int i = 0; i < 10; i++)
+        {
+            if(heldItems[i] == null) Debug.Log($"[Inventory Manager] Slot {i} is empty");
+            else Debug.Log($"[Inventory Manager] Slot {i} contains {heldItemNames[i]}");
+        }
+        Debug.Log("[Inventory Manager] Done.");
+    }
+
     void Start()
     {
         foreach (var icon in slotIcons)
@@ -79,6 +90,7 @@ public class InventoryManager : MonoBehaviour
 
     public bool AddItem(GameObject item, Sprite icon, string itemName)
     {
+        Debug.Log("[Inventory Manager] Attempting to add item " + itemName);
         for (int i = 0; i < heldItems.Length; i++)
         {
             if (heldItems[i] == null)
@@ -88,14 +100,19 @@ public class InventoryManager : MonoBehaviour
                 heldItemIcons[i] = icon;
                 slotIcons[i].sprite = icon;
                 slotIcons[i].enabled = true;
+                Debug.Log("[Inventory Manager] Item " + item.name + " added at index " + i);
                 return true;
             }
         }
+
+        Debug.Log("[Inventory Manager] failed to add item " + item.name);
+        Print();
         return false;
     }
 
     public void RemoveItem(GameObject item)
     {
+        Debug.Log("[Inventory Manager] Removing item " + item.name);
         for (int i = 0; i < heldItems.Length; i++)
         {
             if (heldItems[i] == item)
