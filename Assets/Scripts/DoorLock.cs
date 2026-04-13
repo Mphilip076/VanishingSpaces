@@ -16,17 +16,10 @@ public class DoorLock : MonoBehaviour
 
     private static bool isUnlocked = false;
     private bool playerNearby = false;
-    private GameObject pickupPromptUI;
-    private TextMeshProUGUI promptText;
 
     void Start()
     {
         doorSound = GetComponent<AudioSource>();
-
-        pickupPromptUI = GameObject.Find("InteractPromptUI");
-        GameObject promptObj = GameObject.Find("InteractPromptText");
-        if (promptObj != null)
-            promptText = promptObj.GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -45,19 +38,16 @@ public class DoorLock : MonoBehaviour
 
         if (playerNearby)
         {
-            if(isUnlocked) ShowPrompt("Press E to use door");
-            else ShowPrompt("You need a key! (E to use)");
-
             if (Input.GetKeyDown(interactKey))
             {
-                CancelInvoke("HidePrompt");
                 TryUnlock();
             }
         }
-        else
-        {
-            HidePrompt();
-        }
+    }
+
+    public bool IsUnlocked()
+    {
+        return isUnlocked;
     }
 
     void TryUnlock()
@@ -72,21 +62,10 @@ public class DoorLock : MonoBehaviour
                 doorSound.Play();
             }
 
-            ShowPrompt("Door unlocked!");
             Invoke("LoadNextScene", 1.5f);
         }
     }
 
-    void ShowPrompt(string message)
-    {
-        if (pickupPromptUI != null) pickupPromptUI.SetActive(true);
-        if (promptText != null) promptText.text = message;
-    }
-
-    void HidePrompt()
-    {
-        if (pickupPromptUI != null) pickupPromptUI.SetActive(false);
-    }
 
     void LoadNextScene()
     {

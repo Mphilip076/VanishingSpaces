@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using JetBrains.Annotations;
+using System.Runtime.InteropServices;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -62,6 +64,8 @@ public class ItemPickup : MonoBehaviour
         ChestPuzzle nearestChest = null;
         ScrollNote nearestScroll = null;
         PictureSlot nearestSlot = null;
+        Door nearestDoor = null;
+        DoorLock nearestDoorLock = null;
 
         foreach (var hit in hits)
         {
@@ -88,6 +92,20 @@ public class ItemPickup : MonoBehaviour
                 break;
             }
 
+            Door door = hit.GetComponentInParent<Door>();
+            if(door != null)
+            {
+                nearestDoor = door;
+                break;
+            }
+
+            DoorLock dl = hit.GetComponentInParent<DoorLock>();
+            if(dl != null)
+            {
+                nearestDoorLock = dl;
+                break;
+            }
+
             if (hit.CompareTag("Interactable")) continue;
 
             PickableItem item = hit.GetComponent<PickableItem>();
@@ -108,6 +126,18 @@ public class ItemPickup : MonoBehaviour
         if (nearestChest != null) SetMessage("Press O to unlock");
         else if (nearestScroll != null) SetMessage("Press E to read");
         else if (nearestSlot != null) SetMessage("Press R to place picture");
+        else if (nearestDoor != null) SetMessage("Press E to use door");
+        else if (nearestDoorLock != null)
+        {
+            if (nearestDoorLock.IsUnlocked())
+            {
+                SetMessage("Press E to use door");
+            }
+            else
+            {
+                SetMessage("Door is locked! (Press E to use key)");
+            }
+        }
         else if (nearest != null)
         {
             if (nearest.isFlashlight && heldItem == null) SetMessage("Press E to hold");
