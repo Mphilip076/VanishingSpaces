@@ -54,4 +54,11 @@ public class RoomManager : MonoBehaviour
 
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.G)) {
+            Room.SetScene("Tutorial");
+        }
+    }
 }

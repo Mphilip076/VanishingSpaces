@@ -246,9 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e371df8f89b9dd429fcd181a3081f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
-  interactRange: 2
+  interactRange: 3
   interactKey: 101
-  exitNumber: 2
+  exitNumber: 1
   doorSound: {fileID: 16286026}
 --- !u!4 &16286028
 Transform:
@@ -4597,7 +4597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e371df8f89b9dd429fcd181a3081f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
-  interactRange: 2
+  interactRange: 3
   interactKey: 101
   exitNumber: 1
   doorSound: {fileID: 1770815115}
