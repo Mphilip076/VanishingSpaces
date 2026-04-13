@@ -60,6 +60,11 @@ public class ChestPuzzle : MonoBehaviour
         }
     }
 
+    public bool IsSolved()
+    {
+        return isSolved;
+    }
+
     void OpenCodeUI()
     {
         if (codeUI == null) return;
