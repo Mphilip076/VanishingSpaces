@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3719868202890673504}
   - component: {fileID: 8107659713085417994}
   - component: {fileID: 5251723143213088926}
-  - component: {fileID: 7508422482606150273}
+  - component: {fileID: -1508035562810987808}
   m_Layer: 0
   m_Name: Picture C
   m_TagString: Pickupable
@@ -114,7 +114,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2530988280945247426, guid: 023de7066c8cb4f4b8fac239aa224628, type: 3}
---- !u!114 &7508422482606150273
+--- !u!114 &-1508035562810987808
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Picture
   itemName: Picture C
-  itemIcon: {fileID: -1661251611, guid: a0ef6d015cff99a4c9567d70c705d9d4, type: 3}
+  itemIcon: {fileID: -816530329, guid: a0ef6d015cff99a4c9567d70c705d9d4, type: 3}
   isFlashlight: 0
-  correctPosition: {x: 0, y: 0, z: 0}
+  canDrop: 1
+  canPickUp: 1
