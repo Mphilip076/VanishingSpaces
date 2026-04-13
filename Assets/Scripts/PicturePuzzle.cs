@@ -6,6 +6,10 @@ public class PicturePuzzle : MonoBehaviour
     public Vector3 pictureALocation;
     public Vector3 pictureBLocation;
     public Vector3 pictureCLocation;
+    
+    public GameObject completionReward;
+    public Sprite completionRewardSprite;
+    public string completionRewardName;
 
     private bool isSolved;
     
@@ -51,5 +55,6 @@ public class PicturePuzzle : MonoBehaviour
         Picture.A.canPickUp = false;
         Picture.B.canPickUp = false;
         Picture.C.canPickUp = false;
+        InventoryManager.Instance.AddItem(completionReward, completionRewardSprite, completionRewardName);
     }
 }

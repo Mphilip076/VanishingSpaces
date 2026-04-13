@@ -8,13 +8,13 @@ public class Picture : PickableItem
     public static Picture C;
 
     [Header("Positions")]
-    public float snapDistance = 7f;
+    public static float snapDistance = 5f;
 
 
     // Static positions for the pictures
-    public static Vector3 pos1 = new Vector3(-4.12f, 1.60f, 3.35f);
-    public static Vector3 pos2 = new Vector3(-4.12f, 1.60f, 11.07f);
-    public static Vector3 pos3 = new Vector3(0.18f, 1.52f, 7.05f);
+    public static Vector3 pos1 = new Vector3(-4.12f, 1.60f, 3.35f); // sun
+    public static Vector3 pos2 = new Vector3(-4.12f, 1.60f, 11.07f); // moon
+    public static Vector3 pos3 = new Vector3(0.18f, 1.52f, 7.05f); //star
     public static bool pos1inUse = false;
     public static bool pos2inUse = false;
     public static bool pos3inUse = false;
@@ -42,6 +42,17 @@ public class Picture : PickableItem
         {
             Debug.Log("[Picture] Duplicate picture found, destroying");
             Destroy(gameObject);
+        }
+
+        canPickUp = true;
+        canDrop = false;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) && Room.currentRoom.SceneName() == "LivingRoom")
+        {
+            SnapDrop();
         }
     }
 
@@ -96,6 +107,27 @@ public class Picture : PickableItem
         return false;
     }
 
+    public static bool CanPlace()
+    {
+        if(Room.currentRoom.SceneName() != "LivingRoom") return false;
+        if(pos1inUse && pos2inUse && pos3inUse) return false;
+
+        // Does the player have a painting
+        Picture p = null;
+
+        if(InventoryManager.Instance.HasItem("Picture A")) p = A;
+        else if(InventoryManager.Instance.HasItem("Picture B")) p = B;
+        else if(InventoryManager.Instance.HasItem("Picture C")) p = C;
+        else return false; // No
+
+        // Location 1
+        if(pos1inUse == false && Vector3.Distance(p.transform.position, pos1) <= snapDistance) return true;
+        if(pos2inUse == false && Vector3.Distance(p.transform.position, pos2) <= snapDistance) return true;
+        if(pos3inUse == false && Vector3.Distance(p.transform.position, pos3) <= snapDistance) return true;
+
+        return false;        
+    }
+
     private bool WithinDistance(int posNum)
     {
         if(posNum < 1 || posNum > 3) return false;
@@ -128,7 +160,7 @@ public class Picture : PickableItem
         base.OnPickup(holdPosition);
     }
 
-    public override void OnDrop()
+    public void SnapDrop()
     {
         if(Room.currentRoom.SceneName() == "LivingRoom")
         {
@@ -143,20 +175,14 @@ public class Picture : PickableItem
                     if(GoToPosition(i)) {
                         // Successfully snapped to position
                         Debug.Log("[Picture]Snapped to position " + i);
+                        InventoryManager.Instance.RemoveItem(gameObject);
                         return;
                     }
                 }
             }
 
             // Not within range of any position, or position is occupied
-            SetRotation(0);
-            base.OnDrop();
-        }
-        else
-        {
-            // Not in the living room, so just drop it
-            SetRotation(0);
-            base.OnDrop();
+            // Do nothing
         }
     }
 }

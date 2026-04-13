@@ -87,7 +87,7 @@ public class ItemPickup : MonoBehaviour
             if (hit.CompareTag("Interactable")) continue;
 
             PickableItem item = hit.GetComponent<PickableItem>();
-            if (item != null)
+            if (item != null && item.canPickUp)
             {
                 float distance = Vector3.Distance(
                     transform.position, hit.transform.position
@@ -150,7 +150,7 @@ public class ItemPickup : MonoBehaviour
             if (hit.CompareTag("Interactable")) continue;
 
             PickableItem item = hit.GetComponent<PickableItem>();
-            if (item != null)
+            if (item != null && item.canPickUp)
             {
                 float distance = Vector3.Distance(
                     transform.position, hit.transform.position
@@ -215,6 +215,8 @@ public class ItemPickup : MonoBehaviour
             GameObject selectedItem = InventoryManager.Instance.GetSelectedItem();
             if (selectedItem == heldItem.gameObject)
             {
+                if(heldItem.canDrop == false) return;
+
                 if (heldLight != null)
                 {
                     heldLight.enabled = false;
@@ -231,6 +233,9 @@ public class ItemPickup : MonoBehaviour
 
         GameObject selected = InventoryManager.Instance.GetSelectedItem();
         if (selected == null) return;
+        
+        // Don't drop the pictures
+        if(selected.name == "Picture A" || selected.name == "Picture B" || selected.name == "Picture C") return;
 
         InventoryManager.Instance.RemoveItem(selected);
 

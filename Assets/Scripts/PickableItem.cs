@@ -6,6 +6,8 @@ public class PickableItem : MonoBehaviour
     public string itemName = "Item";
     public Sprite itemIcon;
     public bool isFlashlight = false;
+    public bool canDrop = true;
+    public bool canPickUp = true;
 
     private Rigidbody rb;
     private Collider col;
