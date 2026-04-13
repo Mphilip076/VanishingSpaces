@@ -48,7 +48,7 @@ public class DoorLock : MonoBehaviour
         if (playerNearby)
         {
             if(isUnlocked) ShowPrompt("Press E to use door");
-            else ShowPrompt("You need a key!");
+            else ShowPrompt("You need a key! (E to use)");
 
             if (Input.GetKeyDown(interactKey))
             {
