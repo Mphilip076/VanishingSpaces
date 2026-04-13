@@ -5346,6 +5346,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 418322, guid: b3697fca2cda39f418b6b897bcf90cf6, type: 3}
   m_PrefabInstance: {fileID: 947776718}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &996529961
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2146999714165645219, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 454.4736
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146999714165645219, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146999714165645219, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2790.9304
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146999714165645219, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146999714165645219, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146999714165645219, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146999714165645219, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146999714165645219, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146999714165645219, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146999714165645219, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861581962340943538, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
+      propertyPath: m_Name
+      value: AmbientSounds
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 223effd3ad3a6664faa77cab81b70ab4, type: 3}
 --- !u!1001 &1004335966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7567,6 +7624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   lightSource: {fileID: 1380603929}
+  flickerSound: {fileID: 0}
   minFlashIntensity: 0.8
   maxFlashIntensity: 1.2
   minOffTime: 1
@@ -7863,8 +7921,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   moveAudioSource: {fileID: 0}
   whisperAudioSource: {fileID: 0}
-  jumpscareAudioSource: {fileID: 0}
-  jumpscareClip: {fileID: 0}
   raycastHeight: 1.2
   whisperResumeDelay: 0.25
   maxWhisperDistance: 15
@@ -9403,3 +9459,4 @@ SceneRoots:
   - {fileID: 227439583}
   - {fileID: 433140790}
   - {fileID: 1368009819}
+  - {fileID: 996529961}

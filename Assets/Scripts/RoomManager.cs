@@ -32,12 +32,8 @@ public class RoomManager : MonoBehaviour
             Debug.Log("[RoomManager.cs] Adding rooms");
 
             // Add all the rooms here:
-            Room s = new Room("StartScene");
             Room t = new Room("Tutorial");
             Room dr = new Room("DiningRoom");
-            Room mb = new Room("MasterBedroom");
-            Room r1 = new Room("Room1");
-            Room r2 = new Room("Room2");
             Room lr = new Room("LivingRoom");
 
             // Make rooms accessible
@@ -46,44 +42,15 @@ public class RoomManager : MonoBehaviour
             t.AllowRandomEntry();
 
             // Set exits
-            s.SetExit1(t);
             t.SetExit1(dr);
-            dr.SetExit1(mb);
-            mb.SetExit1(lr);
-            r1.SetExit1(r2);
-            r2.SetExit1(r1);
             lr.SetExit1(dr);
+            dr.SetExit1(t);
 
             Debug.Log("[RoomManager.cs] Room list size " + Room.allRooms.Count);
 
-
-            Room.SetScene("StartScene");            
             hasStarted = true;
             Debug.Log("[RoomManager.cs] Finished loading rooms");
         }
-
-
-        /* TODO: Modify room parameters:
-
-            Room.GetRoom("Master Bedroom").AllowRandomEntry(); 
-            // The user can enter this room randomly
-            // Says nothing about the exits
-            // Each room should be added individually when the entry requirements are met
-            // *calling LockInPlace will remove randomness
-
-            Room.GetRoom("Dining Room").LockInPlace(); 
-            // The user found the anchor item!!
-            // This room's exits will not be random anymore
-            // *calling AllowRandomEntry will cause the exits to be random again
-
-            Room.GetRoom("Tutorial").LockRoom(); 
-            // The user cannot exit the room until .UnlockRoom() is called
-            // (presumably after the user finds the key or completes a puzzle)
-
-            // TODO: Load rooms
-            Room.SetScene("Tutorial");
-        */
-
 
     }
 
@@ -91,9 +58,7 @@ public class RoomManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKey(KeyCode.G)) {
-            Room nextRoom = Room.currentRoom.GetExit1();
-            if (nextRoom != null)
-            Room.SetScene(nextRoom.SceneName());
+            Room.SetScene("Tutorial");
         }
     }
 }

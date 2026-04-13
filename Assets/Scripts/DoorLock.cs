@@ -7,7 +7,7 @@ public class DoorLock : MonoBehaviour
     public float interactRange = 2f;
     public KeyCode interactKey = KeyCode.E;
     public string requiredKeyName = "Key";
-    public string nextScene = "DiningRoom";
+    public int exitNum = 1;
 
     [Header("Sounds")]
     public AudioClip unlockSound;
@@ -47,7 +47,8 @@ public class DoorLock : MonoBehaviour
 
         if (playerNearby)
         {
-            ShowPrompt("Press E to use door");
+            if(isUnlocked) ShowPrompt("Press E to use door");
+            else ShowPrompt("You need a key! (E to use)");
 
             if (Input.GetKeyDown(interactKey))
             {
@@ -95,10 +96,6 @@ public class DoorLock : MonoBehaviour
 
     void LoadNextScene()
     {
-        Room nextRoom = Room.GetRoom(nextScene);
-        if (nextRoom != null)
-        {
-            Room.SetScene(nextRoom.SceneName());
-        }
+        Room.currentRoom.UseExit(exitNum);
     }
 }

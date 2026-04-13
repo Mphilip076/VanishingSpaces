@@ -4,7 +4,7 @@ using TMPro;
 public class Door : MonoBehaviour
 {
     [Header("Settings")]
-    public float interactRange = 2f;
+    public float interactRange = 3f;
     public KeyCode interactKey = KeyCode.E;
 
     [Header("Exit (1, 2, or 3)")]
@@ -27,12 +27,14 @@ public class Door : MonoBehaviour
         GameObject promptObj = GameObject.Find("PromptText");
         if (promptObj != null)
             promptText = promptObj.GetComponent<TextMeshProUGUI>();
+        else
+            Debug.Log("[Door] Couldn't find UI");
     }
 
     // Update is called once per frame
     void Update()
     {
-         Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
+        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
         playerNearby = false;
 
         foreach (var hit in hits)
@@ -50,9 +52,10 @@ public class Door : MonoBehaviour
 
             if (Input.GetKeyDown(interactKey))
             {
-                CancelInvoke("HidePrompt");
+                CancelInvoke(nameof(HidePrompt));
                 doorSound.Play();
-                Invoke("NextScene", 1.5f);
+                Debug.Log("[Door] Invoking NextScene");
+                Invoke(nameof(NextScene), 1.5f);
             }
         }
         else
