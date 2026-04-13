@@ -250,6 +250,7 @@ MonoBehaviour:
   interactKey: 101
   exitNumber: 1
   doorSound: {fileID: 16286026}
+  playerNearby: 0
 --- !u!4 &16286028
 Transform:
   m_ObjectHideFlags: 0
@@ -1206,9 +1207,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1056130359}
-  - {fileID: 1323074757}
-  - {fileID: 992490545}
-  - {fileID: 1465390102}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &532161572
@@ -2307,12 +2305,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992490543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -4.12, y: 1.6, z: 11.07}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.06, y: 1.87, z: 7.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 532161571}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!82 &992490546
 AudioSource:
@@ -2968,12 +2966,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1323074755}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -4.12, y: 1.6, z: 3.35}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -3.887, y: 1.95, z: 11.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 532161571}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!82 &1323074758
 AudioSource:
@@ -3316,12 +3314,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1465390100}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.18, y: 1.52, z: 7.05}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -3.93, y: 2.144, z: 3.404}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 532161571}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!82 &1465390103
 AudioSource:
@@ -4601,10 +4599,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e371df8f89b9dd429fcd181a3081f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
-  interactRange: 3
+  interactRange: 1
   interactKey: 101
   exitNumber: 1
   doorSound: {fileID: 1770815115}
+  playerNearby: 0
 --- !u!4 &1770815117
 Transform:
   m_ObjectHideFlags: 0
@@ -5656,4 +5655,7 @@ SceneRoots:
   - {fileID: 2070559904}
   - {fileID: 1969574833}
   - {fileID: 532161571}
+  - {fileID: 1323074757}
+  - {fileID: 992490545}
+  - {fileID: 1465390102}
   - {fileID: 2011313574}
