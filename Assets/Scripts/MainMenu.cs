@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject tutorialPanel;
+
     void Start()
     {
         // Ensure menu can use the mouse
@@ -11,7 +13,11 @@ public class MainMenu : MonoBehaviour
 
         // Hide inventory on start screen
         if (InventoryManager.Instance != null)
-        InventoryManager.Instance.Hide();
+            InventoryManager.Instance.Hide();
+
+        // Make sure tutorial is hidden at start
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(false);
     }
 
     public void StartGame()
@@ -19,7 +25,17 @@ public class MainMenu : MonoBehaviour
         // Show inventory when game starts
         if (InventoryManager.Instance != null)
             InventoryManager.Instance.Show();
-            
+
         Room.SetScene("Tutorial");
+    }
+
+    public void OpenTutorial()
+    {
+        tutorialPanel.SetActive(true);
+    }
+
+    public void CloseTutorial()
+    {
+        tutorialPanel.SetActive(false);
     }
 }
