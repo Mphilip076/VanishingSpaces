@@ -14,9 +14,9 @@ public class PicturePuzzle : MonoBehaviour
     {
         isSolved = false;
 
-        pictureALocation = Picture.pos1;
-        pictureBLocation = Picture.pos2;
-        pictureCLocation = Picture.pos3;
+        pictureCLocation = Picture.pos1; // sun
+        pictureALocation = Picture.pos2; // moon
+        pictureBLocation = Picture.pos3; // star
     }
 
     void Update()
@@ -48,5 +48,8 @@ public class PicturePuzzle : MonoBehaviour
     {
         isSolved = true;
         Debug.Log("[PicturePuzzle] Puzzle Solved!");
+        Picture.A.canPickUp = false;
+        Picture.B.canPickUp = false;
+        Picture.C.canPickUp = false;
     }
 }
