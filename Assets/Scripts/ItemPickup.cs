@@ -45,6 +45,8 @@ public class ItemPickup : MonoBehaviour
 
         if (Input.GetKeyDown(flashlightKey))
             TryToggleFlashlight();
+
+        heldItem = InventoryManager.Instance.GetSelectedItem()?.GetComponent<PickableItem>();
     }
 
     void CheckNearbyItems()
@@ -58,9 +60,8 @@ public class ItemPickup : MonoBehaviour
         PickableItem nearest = null;
         float nearestDistance = float.MaxValue;
         ChestPuzzle nearestChest = null;
-        DoorLock nearestDoorLock = null;
-        Door nearestDoor = null;
         ScrollNote nearestScroll = null;
+        PictureSlot nearestSlot = null;
 
         foreach (var hit in hits)
         {
@@ -68,24 +69,7 @@ public class ItemPickup : MonoBehaviour
             ChestPuzzle chest = hit.GetComponentInParent<ChestPuzzle>();
             if (chest != null && !chest.IsSolved())
             {
-                Debug.Log("[ItemPickup] Found a chest");
                 nearestChest = chest;
-                break;
-            }
-
-            DoorLock door = hit.GetComponentInParent<DoorLock>();
-            if (door != null)
-            {
-                Debug.Log("[ItemPickup] Found a locked door");
-                nearestDoorLock = door;
-                break;
-            }
-
-            Door door1 = hit.GetComponentInParent<Door>();
-            if(door1 != null)
-            {
-                Debug.Log("[ItemPickup] Found a door");
-                nearestDoor = door1;
                 break;
             }
 
@@ -93,6 +77,14 @@ public class ItemPickup : MonoBehaviour
             if (scroll != null)
             {
                 nearestScroll = scroll;
+                break;
+            }
+
+            PictureSlot slot = hit.GetComponentInParent<PictureSlot>();
+            if(slot != null)
+            {
+                Debug.Log("[ItemPickup] Detected slot");
+                nearestSlot = slot;
                 break;
             }
 
@@ -114,9 +106,8 @@ public class ItemPickup : MonoBehaviour
         }
 
         if (nearestChest != null) SetMessage("Press O to unlock");
-        else if (nearestDoorLock != null) SetMessage("Press E to unlock");
-        else if (nearestDoor != null) SetMessage("Press E to open");
         else if (nearestScroll != null) SetMessage("Press E to read");
+        else if (nearestSlot != null) SetMessage("Press R to place picture");
         else if (nearest != null)
         {
             if (nearest.isFlashlight && heldItem == null) SetMessage("Press E to hold");

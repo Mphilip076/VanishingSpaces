@@ -4,7 +4,7 @@ using TMPro;
 public class DoorLock : MonoBehaviour
 {
     [Header("Settings")]
-    public float interactRange = 2f;
+    public float interactRange = 1f;
     public KeyCode interactKey = KeyCode.E;
     public string requiredKeyName = "Key";
     public int exitNum = 1;
@@ -23,16 +23,14 @@ public class DoorLock : MonoBehaviour
     {
         doorSound = GetComponent<AudioSource>();
 
-        pickupPromptUI = GameObject.Find("PickupPromptUI");
-        GameObject promptObj = GameObject.Find("PromptText");
+        pickupPromptUI = GameObject.Find("InteractPromptUI");
+        GameObject promptObj = GameObject.Find("InteractPromptText");
         if (promptObj != null)
             promptText = promptObj.GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
     {
-        if (isUnlocked) return;
-
         Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
         playerNearby = false;
 

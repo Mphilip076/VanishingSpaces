@@ -4,7 +4,7 @@ using TMPro;
 public class Door : MonoBehaviour
 {
     [Header("Settings")]
-    public float interactRange = 3f;
+    public float interactRange = 2f;
     public KeyCode interactKey = KeyCode.E;
 
     [Header("Exit (1, 2, or 3)")]
@@ -23,8 +23,8 @@ public class Door : MonoBehaviour
     {
         doorSound = GetComponent<AudioSource>();
 
-        pickupPromptUI = GameObject.Find("PickupPromptUI");
-        GameObject promptObj = GameObject.Find("PromptText");
+        pickupPromptUI = GameObject.Find("InteractPromptUI");
+        GameObject promptObj = GameObject.Find("InteractPromptText");
         if (promptObj != null)
             promptText = promptObj.GetComponent<TextMeshProUGUI>();
         else
