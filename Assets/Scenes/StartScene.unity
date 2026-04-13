@@ -1396,7 +1396,7 @@ Transform:
   m_GameObject: {fileID: 248682413}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.43798828, y: 2.6390076, z: 51.97968}
+  m_LocalPosition: {x: 0.25, y: 1.67, z: 51.257}
   m_LocalScale: {x: 0.8421853, y: 1.0106224, z: 0.8421853}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7655,7 +7655,7 @@ MonoBehaviour:
   doorOpenDistance: 6
   buttonAudio: {fileID: 1275234947}
   journalText: {fileID: 1402159006}
-  journalMessage: 'October 14th.
+  journalMessage: 'October 14th,
 
 
     I do not remember how I got here.
@@ -7670,7 +7670,7 @@ MonoBehaviour:
 
 
     Something
-    inside wants me to keep moving. I need to keep moving
+    inside wants me to keep moving. I need to keep moving.
 
 
     I need to make it
