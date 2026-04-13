@@ -12,9 +12,21 @@ public class MainMenu : MonoBehaviour
     public CanvasGroup menuGroup;
     public float fadeSpeed = 2f;
 
+    public CanvasGroup fadeGroup;
+    public float screenFadeSpeed = 1.5f;
+    public float fadeToBlackDistance = 1.5f;
+
+    public DoorOpen leftDoor;
+    public DoorOpen rightDoor;
+    public float doorOpenDistance = 2f;
+
+    public AudioSource buttonAudio; // ADDED
+
     private bool isMoving = false;
     private bool isFadingMenu = false;
+    private bool isFadingToBlack = false;
     private bool hasStarted = false;
+    private bool doorsOpened = false;
 
     void Start()
     {
@@ -26,18 +38,22 @@ public class MainMenu : MonoBehaviour
 
         if (tutorialPanel != null)
             tutorialPanel.SetActive(false);
+
+        if (menuGroup != null)
+            menuGroup.alpha = 1f;
+
+        if (fadeGroup != null)
+            fadeGroup.alpha = 0f;
     }
 
     void Update()
     {
-        // Press Enter to start
         if (!hasStarted && Input.GetKeyDown(KeyCode.Return))
         {
             StartGame();
         }
 
-        // Fade out UI
-        if (isFadingMenu)
+        if (isFadingMenu && menuGroup != null)
         {
             menuGroup.alpha -= fadeSpeed * Time.deltaTime;
 
@@ -48,7 +64,6 @@ public class MainMenu : MonoBehaviour
             }
         }
 
-        // Move camera
         if (isMoving)
         {
             cameraTransform.position = Vector3.MoveTowards(
@@ -63,8 +78,43 @@ public class MainMenu : MonoBehaviour
                 rotateSpeed * Time.deltaTime
             );
 
-            if (Vector3.Distance(cameraTransform.position, endPoint.position) < 0.05f)
+            float distance = Vector3.Distance(cameraTransform.position, endPoint.position);
+
+            if (!doorsOpened && distance <= doorOpenDistance)
             {
+                doorsOpened = true;
+
+                if (leftDoor != null)
+                    leftDoor.OpenDoor();
+
+                if (rightDoor != null)
+                    rightDoor.OpenDoor();
+            }
+
+            if (!isFadingToBlack && fadeGroup != null && distance <= fadeToBlackDistance)
+            {
+                isFadingToBlack = true;
+            }
+
+            if (distance < 0.05f && fadeGroup == null)
+            {
+                isMoving = false;
+
+                if (InventoryManager.Instance != null)
+                    InventoryManager.Instance.Show();
+
+                Room.SetScene("Tutorial");
+            }
+        }
+
+        if (isFadingToBlack && fadeGroup != null)
+        {
+            fadeGroup.alpha += screenFadeSpeed * Time.deltaTime;
+
+            if (fadeGroup.alpha >= 1f)
+            {
+                fadeGroup.alpha = 1f;
+                isFadingToBlack = false;
                 isMoving = false;
 
                 if (InventoryManager.Instance != null)
@@ -81,7 +131,10 @@ public class MainMenu : MonoBehaviour
 
         hasStarted = true;
 
-        // Disable UI interaction
+        // PLAY BUTTON SOUND (ADDED)
+        if (buttonAudio != null)
+            buttonAudio.PlayOneShot(buttonAudio.clip);
+
         if (menuGroup != null)
         {
             menuGroup.interactable = false;
@@ -89,7 +142,6 @@ public class MainMenu : MonoBehaviour
             isFadingMenu = true;
         }
 
-        // Delay before camera starts moving
         Invoke(nameof(BeginCameraMove), 0.5f);
     }
 
@@ -100,11 +152,13 @@ public class MainMenu : MonoBehaviour
 
     public void OpenTutorial()
     {
-        tutorialPanel.SetActive(true);
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(true);
     }
 
     public void CloseTutorial()
     {
-        tutorialPanel.SetActive(false);
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(false);
     }
 }
