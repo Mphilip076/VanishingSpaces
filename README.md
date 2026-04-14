@@ -47,3 +47,11 @@ Bhavani
 Sound design: Picture place sound: The sound made when the player places a picture in a slot. It is a soft thud, like putting a light object on wood; Ambient Sounds which give the player a feeling of tension. Also door creak sounds in all rooms but the tutorial room.
 
 UI design: Scroll open had no background so it was hard to see; added background so that the text could be seen clearly. When walking up to the door it would only tell you that you need a key in the split second you press E; modified so you need a key is the default and only shows e to open after unlocking. 
+
+James
+
+Sound Design: I added a chest opening sound effect that plays when the player successfully enters the correct code into the chest puzzle. I also added a door opening sound effect that plays when the player uses the key to unlock the exit door. Both sounds were implemented by adding AudioSource components to their respective GameObjects and triggering them in code at the right moment.
+
+UI Design: I fixed a critical bug where the inventory UI was showing on the start screen by adding Hide() and Show() methods to the InventoryManager. I also fixed the CodeBoxUI not appearing when the chest puzzle was opened by creating a separate Canvas for it, preventing it from being destroyed by DontDestroyOnLoad. I implemented the scroll note UI panel that opens when the player interacts with the scroll, displaying the code hint text clearly to the player.
+
+Puzzles: I implemented the chest puzzle system where the player must enter a correct 4-digit code to receive the key item. I also implemented the door lock system where the player must have the key in their inventory to unlock the exit door and progress to the next room. Additionally I created the scroll note system that allows the player to read in-game notes by pressing E near the scroll.
