@@ -5,13 +5,15 @@ public class MainMenuCameraMove : MonoBehaviour
     public Transform endPoint; 
     public float moveSpeed = 3f;
     public float rotateSpeed = 2f;
-
-    public MainMenu mainMenu;      
+    public MainMenu mainMenu;
 
     private bool isMoving = false;
+    private bool stopped = false;
 
     void Update()
     {
+        if (stopped) return;
+
         if (!isMoving && Input.GetKeyDown(KeyCode.Return))
         {
             StartMove();
@@ -41,6 +43,13 @@ public class MainMenuCameraMove : MonoBehaviour
 
     public void StartMove()
     {
+        if (stopped) return;
         isMoving = true;
+    }
+
+    public void StopIntro()
+    {
+        isMoving = false;
+        stopped = true;
     }
 }
