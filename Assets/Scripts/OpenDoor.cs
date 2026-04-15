@@ -5,6 +5,10 @@ public class DoorOpen : MonoBehaviour
     public Vector3 openRotation;
     public float openSpeed = 2f;
 
+    [Header("Sounds")]
+    public AudioClip doorOpenSound;
+    private AudioSource audioSource;
+
     private Quaternion closedRotation;
     private Quaternion targetRotation;
     private bool isOpening = false;
@@ -13,6 +17,7 @@ public class DoorOpen : MonoBehaviour
     {
         closedRotation = transform.rotation;
         targetRotation = Quaternion.Euler(transform.eulerAngles + openRotation);
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -27,8 +32,14 @@ public class DoorOpen : MonoBehaviour
         }
     }
 
-    public void OpenDoor()
+    public void OpenDoor(bool playSound = true)
     {
-        isOpening = true;
+        if (!isOpening)
+        {
+            isOpening = true;
+
+            if (playSound && audioSource != null && doorOpenSound != null)
+                audioSource.PlayOneShot(doorOpenSound);
+        }
     }
 }

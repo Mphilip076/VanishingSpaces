@@ -31,6 +31,9 @@ public class MainMenu : MonoBehaviour
     public float journalDelayBeforeLoad = 1.5f;
     public AudioSource typewriterAudio;
 
+    [Header("Skip Hint")]
+    public TMP_Text skipHintText; // drag your existing text mesh here
+
     private bool isMoving = false;
     private bool isFadingMenu = false;
     private bool isFadingToBlack = false;
@@ -60,6 +63,10 @@ public class MainMenu : MonoBehaviour
             journalText.text = "";
             journalText.gameObject.SetActive(false);
         }
+
+        // Hide hint text at start
+        if (skipHintText != null)
+            skipHintText.gameObject.SetActive(false);
     }
 
     void Update()
@@ -67,6 +74,12 @@ public class MainMenu : MonoBehaviour
         if (!hasStarted && Input.GetKeyDown(KeyCode.Return))
         {
             StartGame();
+        }
+
+        // Press ESC to skip the intro animation
+        if (isMoving && Input.GetKeyDown(KeyCode.Escape))
+        {
+            SkipIntro();
         }
 
         if (isFadingMenu && menuGroup != null)
@@ -156,6 +169,43 @@ public class MainMenu : MonoBehaviour
     void BeginCameraMove()
     {
         isMoving = true;
+
+        // Show ESC hint when camera starts moving
+        if (skipHintText != null)
+        {
+            skipHintText.gameObject.SetActive(true);
+            skipHintText.text = "Press ESC to Skip";
+        }
+    }
+
+    void SkipIntro()
+    {
+        isMoving = false;
+        isFadingMenu = false;
+        isFadingToBlack = false;
+
+        // Mark doors as opened and open them immediately without sound
+        if (!doorsOpened)
+        {
+            doorsOpened = true;
+            if (leftDoor != null) leftDoor.OpenDoor(false);
+            if (rightDoor != null) rightDoor.OpenDoor(false);
+        }
+
+        // Fade to black immediately
+        if (fadeGroup != null)
+            fadeGroup.alpha = 1f;
+
+        // Hide menu immediately
+        if (menuGroup != null)
+        {
+            menuGroup.alpha = 0f;
+            menuGroup.interactable = false;
+            menuGroup.blocksRaycasts = false;
+        }
+
+        // Jump straight to journal and load
+        StartJournalSequence();
     }
 
     void StartJournalSequence()
@@ -168,6 +218,13 @@ public class MainMenu : MonoBehaviour
 
     IEnumerator TypeJournalAndLoad()
     {
+        // Change hint text to Q when journal starts
+        if (skipHintText != null)
+        {
+            skipHintText.gameObject.SetActive(true);
+            skipHintText.text = "Hold Q to Speed Up";
+        }
+
         if (journalText != null)
         {
             journalText.gameObject.SetActive(true);
@@ -182,9 +239,17 @@ public class MainMenu : MonoBehaviour
                     typewriterAudio.PlayOneShot(typewriterAudio.clip);
                 }
 
-                yield return new WaitForSeconds(typeSpeed);
+                // Hold Q to speed up typing
+                if (Input.GetKey(KeyCode.Q))
+                    yield return new WaitForSeconds(typeSpeed * 0.1f); // 10x faster
+                else
+                    yield return new WaitForSeconds(typeSpeed);
             }
         }
+
+        // Hide hint text after journal finishes
+        if (skipHintText != null)
+            skipHintText.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(journalDelayBeforeLoad);
 

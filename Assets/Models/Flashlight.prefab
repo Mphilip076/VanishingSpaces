@@ -110,9 +110,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24bba98ad7943eb46b260191c80bb364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickableItem
+  interactKey: 101
+  interactMessage: Press E to interact
+  interactRange: 3
+  canInteract: 1
+  isPickable: 0
   itemName: Flashlight
-  itemIcon: {fileID: 21300000, guid: 6473357a82d3b4c4086a0be9d87b049e, type: 3}
+  itemIcon: {fileID: 21300000, guid: d018400a1f8134b84913a1b0a6a8ca0f, type: 3}
   isFlashlight: 1
+  canDrop: 1
+  canPickUp: 1
+  flashlightLight: {fileID: 3498294803282130861}
 --- !u!54 &2986303534005608207
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -233,7 +241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 10800000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
       propertyPath: m_Range
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 10800000, guid: 7c4cfd35d7e78fb44a0f5522e37c35b1, type: 3}
       propertyPath: m_Color.b
