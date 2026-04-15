@@ -695,12 +695,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
   interactKey: 101
+  interactMessage: 
   interactRange: 3
   canInteract: 1
   isPickable: 0
-  pickupPromptUI: {fileID: 0}
-  promptText: {fileID: 0}
-  interactMessage: 
   exitNumber: 1
   doorSound: {fileID: 117295529}
 --- !u!1001 &125861504
@@ -1621,12 +1619,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
   interactKey: 101
+  interactMessage: 
   interactRange: 3
   canInteract: 1
   isPickable: 0
-  pickupPromptUI: {fileID: 0}
-  promptText: {fileID: 0}
-  interactMessage: 
   exitNumber: 1
   doorSound: {fileID: 283727479}
 --- !u!1001 &295081341
@@ -3770,12 +3766,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
   interactKey: 101
+  interactMessage: 
   interactRange: 3
   canInteract: 1
   isPickable: 0
-  pickupPromptUI: {fileID: 0}
-  promptText: {fileID: 0}
-  interactMessage: 
   exitNumber: 1
   doorSound: {fileID: 538819484}
 --- !u!1001 &545015511
@@ -4180,12 +4174,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
   interactKey: 101
+  interactMessage: 
   interactRange: 3
   canInteract: 1
   isPickable: 0
-  pickupPromptUI: {fileID: 0}
-  promptText: {fileID: 0}
-  interactMessage: 
   exitNumber: 1
   doorSound: {fileID: 586484569}
 --- !u!1001 &599933417
@@ -6804,12 +6796,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
   interactKey: 101
+  interactMessage: 
   interactRange: 3
   canInteract: 1
   isPickable: 0
-  pickupPromptUI: {fileID: 0}
-  promptText: {fileID: 0}
-  interactMessage: 
   exitNumber: 1
   doorSound: {fileID: 1274112918}
 --- !u!4 &1293687826 stripped
@@ -7636,12 +7626,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
   interactKey: 101
+  interactMessage: 
   interactRange: 3
   canInteract: 1
   isPickable: 0
-  pickupPromptUI: {fileID: 0}
-  promptText: {fileID: 0}
-  interactMessage: 
   exitNumber: 1
   doorSound: {fileID: 1551718040}
 --- !u!1 &1564303670
@@ -8763,7 +8751,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
