@@ -1,13 +1,10 @@
 using UnityEngine;
 using TMPro;
 
-public class ChestPuzzle : MonoBehaviour
+public class ChestPuzzle : InteractableItem
 {
-    [Header("Settings")]
+    [Header("Passcode")]
     public string correctCode = "1234";
-    public float interactRange = 2f;
-    public KeyCode interactKey = KeyCode.O;
-    private AudioSource chestSound;
 
     [Header("Key Item to Give Player")]
     public GameObject keyPrefab;
@@ -19,14 +16,19 @@ public class ChestPuzzle : MonoBehaviour
     public TMP_InputField codeInput;
     public TextMeshProUGUI feedbackText;
 
+    // Private variables 
     private bool isOpen = false;
-    private bool isSolved = false;
+    private AudioSource chestSound;
     private Animation chestAnimation;
 
     void Start()
     {
         chestSound = GetComponent<AudioSource>();
         chestAnimation = GetComponent<Animation>();
+
+        interactKey = KeyCode.O;
+        interactRange = 2f;
+        interactMessage = "Press O to open";
 
         if (codeUI == null)
             codeUI = GameObject.Find("CodeBoxUI");
@@ -35,34 +37,12 @@ public class ChestPuzzle : MonoBehaviour
             codeUI.SetActive(false);
     }
 
-    void Update()
+    public override void OnInteract()
     {
-        if (isSolved) return;
-
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
-        bool playerNearby = false;
-
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                playerNearby = true;
-                break;
-            }
-        }
-
-        if (playerNearby && Input.GetKeyDown(interactKey))
-        {
-            if (!isOpen)
-                OpenCodeUI();
-            else
-                CloseCodeUI();
-        }
-    }
-
-    public bool IsSolved()
-    {
-        return isSolved;
+        if (!isOpen)
+            OpenCodeUI();
+        else
+            CloseCodeUI();
     }
 
     void OpenCodeUI()
@@ -111,6 +91,8 @@ public class ChestPuzzle : MonoBehaviour
             keyIcon,
             keyItemName
         );
+
+        canInteract = false;
     }
 
     public void SubmitCode()
@@ -124,8 +106,6 @@ public class ChestPuzzle : MonoBehaviour
                 feedbackText.text = "Correct!";
                 feedbackText.color = Color.green;
             }
-
-            isSolved = true;
 
             if (chestAnimation != null)
                 chestAnimation.Play("ChestAnim");
