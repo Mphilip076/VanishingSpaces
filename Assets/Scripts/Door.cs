@@ -12,6 +12,7 @@ public class Door : InteractableItem
     {
         doorSound = GetComponent<AudioSource>();
         interactMessage = "Press E to use door";
+        interactRange = 3f;
     }
 
     public override void OnInteract()

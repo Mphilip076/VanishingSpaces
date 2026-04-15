@@ -706,8 +706,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e07cbf4e1141477dab7e03b06b08bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScrollNote
-  interactRange: 1
   interactKey: 101
+  interactMessage: Press E to interact
+  interactRange: 1
+  canInteract: 1
+  isPickable: 0
   noteText: The code is 1234
   notePanel: {fileID: 715056271}
   noteTextUI: {fileID: 1197223236}
@@ -1814,11 +1817,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc33ad1125c0e9245a4c92ce457fe3d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorLock
-  interactRange: 3
   interactKey: 101
+  interactMessage: Press E to interact
+  interactRange: 3
+  canInteract: 1
+  isPickable: 0
   requiredKeyName: Key
   exitNum: 1
-  unlockSound: {fileID: 0}
+  unlockSound: {fileID: 8300000, guid: 0b38c587fa7e34acbbe6fec9eeee2953, type: 3}
 --- !u!82 &743313130
 AudioSource:
   m_ObjectHideFlags: 0

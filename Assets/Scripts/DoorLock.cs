@@ -11,12 +11,12 @@ public class DoorLock : InteractableItem
     public AudioClip unlockSound;
     private AudioSource doorSound;
 
-    private static bool isUnlocked = false;
+    private bool isUnlocked = false;
 
     void Start()
     {
         doorSound = GetComponent<AudioSource>();
-        interactRange = 1f;
+        interactRange = 3f;
         interactKey = KeyCode.E;
         if(isUnlocked) interactMessage = "Press E to use door";
         else interactMessage = "The door is locked (Press E to use key)";
