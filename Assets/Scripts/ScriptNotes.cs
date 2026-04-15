@@ -1,12 +1,8 @@
 using UnityEngine;
 using TMPro;
 
-public class ScrollNote : MonoBehaviour
+public class ScrollNote : InteractableItem
 {
-    [Header("Settings")]
-    public float interactRange = 3f;
-    public KeyCode interactKey = KeyCode.E;
-
     [Header("Content")]
     [TextArea(3, 10)]
     public string noteText = "The code is 1234";
@@ -25,25 +21,15 @@ public class ScrollNote : MonoBehaviour
 
     void Update()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
-        bool playerNearby = false;
+        interactRange = 3f;
+        interactKey = KeyCode.E;
+        interactMessage = "Press E to read";
+    }
 
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                playerNearby = true;
-                break;
-            }
-        }
-
-        if (playerNearby && Input.GetKeyDown(interactKey))
-        {
-            if (!isOpen)
-                OpenNote();
-            else
-                CloseNote();
-        }
+    public override void OnInteract()
+    {
+        if (!isOpen) OpenNote();
+        else CloseNote();
     }
 
     void OpenNote()
