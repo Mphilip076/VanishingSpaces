@@ -82,10 +82,6 @@ public class InventoryManager : MonoBehaviour
         slotBackgrounds[selectedSlot].color = normalColor;
         selectedSlot = index;
         slotBackgrounds[selectedSlot].color = selectedColor;
-
-        ItemPickup itemPickup = FindAnyObjectByType<ItemPickup>();
-        if (itemPickup != null)
-            itemPickup.TurnOffFlashlight();
     }
 
     public bool AddItem(GameObject item, Sprite icon, string itemName)
