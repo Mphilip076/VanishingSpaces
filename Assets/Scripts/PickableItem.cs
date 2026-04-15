@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PickableItem : MonoBehaviour
+public class PickableItem : InteractableItem
 {
     [Header("Item Info")]
     public string itemName = "Item";
@@ -18,11 +18,19 @@ public class PickableItem : MonoBehaviour
         col = GetComponent<Collider>();
     }
 
+    public override void Start()
+    {
+        base.Start();
+        interactMessage = "Press E to pick up";
+        interactKey = KeyCode.E;
+        isPickable = true;
+    }
+
     public virtual void OnPickup(Transform holdPosition)
     {
         if (rb != null) rb.isKinematic = true;
         if (col != null) col.enabled = false;
-
+        
         transform.SetParent(holdPosition);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;

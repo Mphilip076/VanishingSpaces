@@ -931,9 +931,9 @@ GameObject:
   - component: {fileID: 8275838484321301654}
   - component: {fileID: 2932129378992927190}
   - component: {fileID: 8643117465929265723}
-  - component: {fileID: 4001704878789628391}
   - component: {fileID: 6805536734376594412}
   - component: {fileID: 2584252214216839007}
+  - component: {fileID: 8874569471352858570}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1038,25 +1038,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f0261db310ab74f408b955664cbd3491, type: 3}
   walkStepInterval: 0.5
   runStepInterval: 0.3
---- !u!114 &4001704878789628391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3418886571602474070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030ac776759478c48898bef6dd7b6dc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
-  holdPosition: {fileID: 4807268095610542591}
-  pickupRange: 2
-  pickupKey: 101
-  dropKey: 113
-  flashlightKey: 102
-  pickupPromptUI: {fileID: 0}
-  promptText: {fileID: 0}
 --- !u!65 &6805536734376594412
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1175,6 +1156,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8874569471352858570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3418886571602474070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b33d239fffc1e42accafbac1d3d7cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemInteract
+  holdPosition: {fileID: 4807268095610542591}
+  maxInteractRange: 10
+  pickupKey: 101
+  dropKey: 113
 --- !u!1 &3437872967390173144
 GameObject:
   m_ObjectHideFlags: 0
