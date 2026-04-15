@@ -16,15 +16,12 @@ public class Door : InteractableItem
 
     public override void OnInteract()
     {
-        Debug.Log("[Door] Player interacted with door");
         if(doorSound != null) doorSound.Play();
         Invoke("LoadNextScene", 1.5f);
     }
 
     void LoadNextScene()
     {
-        Debug.Log("[Door] its heeeerrrreeeeeeee");
-        Debug.Log("[door] room.currentRoom " + Room.currentRoom.SceneName());
         Room.currentRoom.UseExit(exitNumber);
     }
 

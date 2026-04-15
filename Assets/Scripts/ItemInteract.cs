@@ -16,11 +16,6 @@ public class ItemInteract : MonoBehaviour
     // Private stuff:
     private InteractableItem closest = null;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         CheckNearbyItems();
@@ -155,8 +150,6 @@ public class ItemInteract : MonoBehaviour
         // If you drop it, you cannot get it back?! ->
         // Don't drop it.
     }
-
-
 
     void OnDrawGizmosSelected()
     {
