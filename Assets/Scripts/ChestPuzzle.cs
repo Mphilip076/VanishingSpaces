@@ -26,9 +26,9 @@ public class ChestPuzzle : InteractableItem
         chestSound = GetComponent<AudioSource>();
         chestAnimation = GetComponent<Animation>();
 
-        interactKey = KeyCode.O;
+        interactKey = KeyCode.E;
         interactRange = 2f;
-        interactMessage = "Press O to open";
+        interactMessage = "Press E to open";
 
         if (codeUI == null)
             codeUI = GameObject.Find("CodeBoxUI");
