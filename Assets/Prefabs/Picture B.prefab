@@ -126,8 +126,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c4ae09d8bcd1d4c82035a3c40d6ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Picture
+  interactKey: 101
+  interactMessage: Press E to interact
+  interactRange: 3
+  canInteract: 1
+  isPickable: 1
   itemName: Picture B
-  itemIcon: {fileID: -1886405070, guid: 83ede5d1c229fec4d86946fdaaab4fbc, type: 3}
+  itemIcon: {fileID: -2003544866, guid: fa2b5e145861d994682366888ec50262, type: 3}
   isFlashlight: 0
   canDrop: 1
   canPickUp: 1

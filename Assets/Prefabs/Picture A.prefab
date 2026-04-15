@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3360921273843827249}
   - component: {fileID: 8911544481701566666}
   - component: {fileID: 1361023856224668123}
-  - component: {fileID: -1403881175626958143}
+  - component: {fileID: 4468754439604994560}
   m_Layer: 0
   m_Name: Picture A
   m_TagString: Pickupable
@@ -114,7 +114,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2530988280945247426, guid: 023de7066c8cb4f4b8fac239aa224628, type: 3}
---- !u!114 &-1403881175626958143
+--- !u!114 &4468754439604994560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,8 +126,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c4ae09d8bcd1d4c82035a3c40d6ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Picture
+  interactKey: 101
+  interactMessage: Press E to interact
+  interactRange: 3
+  canInteract: 1
+  isPickable: 1
   itemName: Picture A
-  itemIcon: {fileID: -447101686, guid: 3317d62150ac78e489bf15bd7aab8185, type: 3}
+  itemIcon: {fileID: 500300774, guid: 16abbe60537f60240ae6034f7677b02d, type: 3}
   isFlashlight: 0
   canDrop: 1
   canPickUp: 1

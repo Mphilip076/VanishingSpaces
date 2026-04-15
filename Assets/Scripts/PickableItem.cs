@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PickableItem : InteractableItem
 {
-    [Header("Item Info")]
+    [Header("Pickable Item Settings")]
     public string itemName = "Item";
     public Sprite itemIcon;
     public bool isFlashlight = false;
@@ -18,7 +18,7 @@ public class PickableItem : InteractableItem
         col = GetComponent<Collider>();
     }
 
-    void Start()
+    public virtual void Start()
     {
         interactMessage = "Press E to pick up";
         interactKey = KeyCode.E;

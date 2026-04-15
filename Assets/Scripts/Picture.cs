@@ -13,41 +13,34 @@ public class Picture : PickableItem
     public static PictureSlot slot2;
     public static PictureSlot slot3;
 
-    void Start()
-    {
-        Debug.Log("[Picture] " + this.name + " started, A = " + A);
-        
+    public override void Start()
+    {      
+        base.Start();  
+
         // Prevent duplicates
         if(this.name == "Picture A" && A == null)
         {
             Debug.Log("[Picture] Assigned Picture A");
             A = this;
+            DontDestroyOnLoad(this);
         }
         else if(this.name == "Picture B" && B == null)
         {
             Debug.Log("[Picture] Assigned Picture B");
             B = this;
+            DontDestroyOnLoad(this);
         }
         else if(this.name == "Picture C" && C == null)
         {
             Debug.Log("[Picture] Assigned Picture C");
             C = this;
-        }
-        else if (this == A || this == B || this == C)
-        {
-            // Do nothing
+            DontDestroyOnLoad(this);
         }
         else
         {
             Debug.Log("[Picture] Duplicate picture found, destroying");
             Destroy(gameObject);
         }
-    }
-
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.R))
-            SnapDrop();
     }
 
     public static bool CanPlace()
@@ -132,10 +125,14 @@ public class Picture : PickableItem
 
     public override void OnPickup(Transform holdPosition)
     {
+        Debug.Log("[Picture] hold = " + holdPosition);
         // Mark position as not in use when picked up
-        if(transform.position == slot1.transform.position) slot1.inUse = false;
-        if(transform.position == slot2.transform.position) slot2.inUse = false;
-        if(transform.position == slot3.transform.position) slot3.inUse = false;
+
+        if(Room.currentRoom.SceneName() == "LivingRoom"){
+            if(transform.position == slot1.transform.position) slot1.inUse = false;
+            if(transform.position == slot2.transform.position) slot2.inUse = false;
+            if(transform.position == slot3.transform.position) slot3.inUse = false;
+        }
 
         base.OnPickup(holdPosition);
     }
