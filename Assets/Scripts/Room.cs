@@ -282,10 +282,11 @@ public class Room
     // Sets the scene to the new scene
     public void UseExit(int exitNumber)
     {
+        Debug.Log("[Room.cs] Attempting to use exit " + exitNumber + " from room " + sceneName);
         if(exitNumber < 0 || exitNumber > 3) return;
 
         if(exitNumber == 1 && exit1 != null) SetScene(GetExit1().sceneName);
-        if(exitNumber == 2 && exit1 != null) SetScene(GetExit2().sceneName);
-        if(exitNumber == 3 && exit1 != null) SetScene(GetExit3().sceneName);
+        if(exitNumber == 2 && exit2 != null) SetScene(GetExit2().sceneName);
+        if(exitNumber == 3 && exit3 != null) SetScene(GetExit3().sceneName);
     }
 }

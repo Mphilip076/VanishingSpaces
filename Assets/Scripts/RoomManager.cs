@@ -49,8 +49,8 @@ public class RoomManager : MonoBehaviour
             s.LockInPlace();
 
             t.SetExit1(dr);
-            lr.SetExit1(dr);
-            dr.SetExit1(t);
+            lr.SetExit1(t);
+            dr.SetExit1(lr);
 
             Debug.Log("[RoomManager.cs] Room list size " + Room.allRooms.Count);
 
@@ -59,6 +59,14 @@ public class RoomManager : MonoBehaviour
             Debug.Log("[RoomManager.cs] Finished loading rooms");
         }
 
+    }
+
+    void Update()
+    {
+         if (Input.GetKeyDown(KeyCode.R))
+        {
+            Room.currentRoom.UseExit(1);
+        }
     }
 
 }

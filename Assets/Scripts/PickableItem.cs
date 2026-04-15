@@ -18,9 +18,8 @@ public class PickableItem : InteractableItem
         col = GetComponent<Collider>();
     }
 
-    public override void Start()
+    void Start()
     {
-        base.Start();
         interactMessage = "Press E to pick up";
         interactKey = KeyCode.E;
         isPickable = true;

@@ -8,9 +8,8 @@ public class Door : InteractableItem
     [Header("Sounds")]
     public AudioSource doorSound;
 
-    public override void Start()
+    void Start()
     {
-        base.Start();
         doorSound = GetComponent<AudioSource>();
         interactMessage = "Press E to use door";
     }

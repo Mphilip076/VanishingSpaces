@@ -10,11 +10,6 @@ public class InteractableItem : MonoBehaviour
     public bool canInteract = true;
     public bool isPickable = false;
 
-    public virtual void Start()
-    {
-        
-    }
-
     public virtual void OnInteract()
     {
         // Override with the item's function
