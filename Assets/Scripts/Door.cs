@@ -1,59 +1,31 @@
 using UnityEngine;
-using TMPro;
 
-public class Door : MonoBehaviour
+public class Door : InteractableItem
 {
-    [Header("Settings")]
-    public float interactRange = 2f;
-    public KeyCode interactKey = KeyCode.E;
-
     [Header("Exit (1, 2, or 3)")]
-    public int exitNumber;
+    public int exitNumber = 1;
 
     [Header("Sounds")]
     public AudioSource doorSound;
-    public volatile bool playerNearby = false;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void Start()
     {
+        base.Start();
         doorSound = GetComponent<AudioSource>();
+        interactMessage = "Press E to use door";
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnInteract()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
-        playerNearby = false;
-
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                playerNearby = true;
-                break;
-            }
-        }
-
-        if (playerNearby)
-        {
-            if (Input.GetKeyDown(interactKey))
-            {
-                doorSound.Play();
-                Invoke(nameof(NextScene), 1.5f);
-            }
-        }
+        Debug.Log("[Door] Player interacted with door");
+        if(doorSound != null) doorSound.Play();
+        Invoke("LoadNextScene", 1.5f);
     }
 
-    void NextScene()
+    void LoadNextScene()
     {
-        if(exitNumber < 0 || exitNumber > 3) return;
-        Room nextRoom;
-        if(exitNumber == 1) nextRoom = Room.currentRoom.GetExit1();
-        if(exitNumber == 2) nextRoom = Room.currentRoom.GetExit2();
-        if(exitNumber == 3) nextRoom = Room.currentRoom.GetExit3();
-
+        Debug.Log("[Door] its heeeerrrreeeeeeee");
+        Debug.Log("[door] room.currentRoom " + Room.currentRoom.SceneName());
         Room.currentRoom.UseExit(exitNumber);
     }
 
