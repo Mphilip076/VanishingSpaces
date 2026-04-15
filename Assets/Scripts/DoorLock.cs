@@ -1,68 +1,49 @@
 using UnityEngine;
 using TMPro;
 
-public class DoorLock : MonoBehaviour
+public class DoorLock : InteractableItem
 {
     [Header("Settings")]
-    public float interactRange = 1f;
-    public KeyCode interactKey = KeyCode.E;
     public string requiredKeyName = "Key";
     public int exitNum = 1;
 
     [Header("Sounds")]
     public AudioClip unlockSound;
-
     private AudioSource doorSound;
 
     private static bool isUnlocked = false;
-    private bool playerNearby = false;
 
     void Start()
     {
         doorSound = GetComponent<AudioSource>();
+        interactRange = 1f;
+        interactKey = KeyCode.E;
+        if(isUnlocked) interactMessage = "Press E to use door";
+        else interactMessage = "The door is locked (Press E to use key)";
     }
 
-    void Update()
+    public override void OnInteract()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
-        playerNearby = false;
-
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                playerNearby = true;
-                break;
-            }
-        }
-
-        if (playerNearby)
-        {
-            if (Input.GetKeyDown(interactKey))
-            {
-                TryUnlock();
-            }
-        }
+        if(isUnlocked) UseDoor();
+        else TryUnlock();
     }
 
-    public bool IsUnlocked()
+    private void UseDoor()
     {
-        return isUnlocked;
+        if (doorSound != null && unlockSound != null)
+        {
+            doorSound.clip = unlockSound;
+            doorSound.Play();
+        }
+
+        Invoke("LoadNextScene", 1.5f);
     }
 
     void TryUnlock()
     {        
-        if (InventoryManager.Instance.HasItem(requiredKeyName))
-        {
+        if (InventoryManager.Instance.HasItem(requiredKeyName)){
             isUnlocked = true;
-
-            if (doorSound != null && unlockSound != null)
-            {
-                doorSound.clip = unlockSound;
-                doorSound.Play();
-            }
-
-            Invoke("LoadNextScene", 1.5f);
+            interactMessage = "Press E to use door";
         }
     }
 
