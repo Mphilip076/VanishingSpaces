@@ -45,6 +45,7 @@ public class Room
     private Room exit1;  
     private Room exit2;
     private Room exit3;
+    private Room exit4;
 
     public Room(string sceneName)
     {
@@ -61,6 +62,7 @@ public class Room
         exit1 = null;
         exit2 = null;
         exit3 = null;
+        exit4 = null;
 
         // Update the lists
         allRooms.Add(this);
@@ -163,6 +165,12 @@ public class Room
         exit3 = exit;
     }
 
+    // Set the fourth exit
+    public void SetExit4(Room exit)
+    {
+        exit4 = exit;
+    }
+
     /* ------------------------------------ EXIT GETTERS ------------------------------------ 
         The exits can be accessed using the GetExit1, GetExit2, and GetExit3 functions.
         
@@ -180,6 +188,7 @@ public class Room
         if (exitNum == 1) return exit1;
         else if (exitNum == 2) return exit2;
         else if (exitNum == 3) return exit3;
+        else if (exitNum == 4) return exit4;
         else return null; // Invalid exit number
     }
 
@@ -277,6 +286,28 @@ public class Room
         return GetRandomExit();
     }
 
+    public Room GetExit4()
+    {
+        // If the exit is not set, return null
+        if(exit4 == null) {
+            Debug.Log("[Room.cs] Room " + sceneName + "'s exit 4 cannot be used because it does not exist.");
+            return null;
+        }
+
+        // If this room is locked, then always return the right exit
+        if (lockedInPlace) {
+            return exit4;
+        }
+
+        // If the room you are exiting to is locked, then always return the right exit
+        if (exit4.lockedInPlace) {
+            return exit4;
+        }
+
+        // None of the conditions for returning the right exit are met, so return a random exit which is not locked
+        return GetRandomExit();
+    }
+
     // Use the exit corresponding to the exit number
     // This does use the exit logic
     // Sets the scene to the new scene
@@ -288,5 +319,8 @@ public class Room
         if(exitNumber == 1 && exit1 != null) SetScene(GetExit1().sceneName);
         if(exitNumber == 2 && exit2 != null) SetScene(GetExit2().sceneName);
         if(exitNumber == 3 && exit3 != null) SetScene(GetExit3().sceneName);
+        if(exitNumber == 4 && exit4 != null) SetScene(GetExit3().sceneName);
+
+        Debug.Log("[Room] UseExit failed to execute");
     }
 }

@@ -32,26 +32,55 @@ public class RoomManager : MonoBehaviour
             Debug.Log("[RoomManager.cs] Adding rooms");
 
             // Add all the rooms here:
-            Room t = new Room("Tutorial");
-            Room dr = new Room("DiningRoom");
-            Room lr = new Room("LivingRoom");
-            Room s = new Room("StartScene");
+            Room start = new Room("StartScene");
+            Room tutorial = new Room("Tutorial");
+            Room diningRoom = new Room("DiningRoom");
+            Room livingRoom = new Room("LivingRoom");
+            Room library = new Room("Library");
+            Room masterBedroom = new Room("MasterBedroom");
+            Room bathroom = new Room("Bathroom");
 
             // Make rooms accessible
-            dr.AllowRandomEntry();
-            lr.AllowRandomEntry();
-            t.AllowRandomEntry();
+            tutorial.AllowRandomEntry();
+            diningRoom.AllowRandomEntry();
+            livingRoom.AllowRandomEntry();
+            library.AllowRandomEntry();
+            masterBedroom.AllowRandomEntry();
+            bathroom.AllowRandomEntry();
 
-            // Set exits
+            /* Set exits BOTH WAYS
+                dining -> living
+                dining -> bedroom
+                dining -> bathroom
+                dining -> tutorial
+
+                living -> dining
+                living -> library            
+            */
+
+            // Tutorial Room
+            tutorial.SetExit1(diningRoom);
+            // Dining Room
+            diningRoom.SetExit1(livingRoom);
+            diningRoom.SetExit2(masterBedroom);
+            diningRoom.SetExit3(bathroom);
+            diningRoom.SetExit4(tutorial);
+            // Living Room
+            livingRoom.SetExit1(diningRoom);
+            livingRoom.SetExit2(library);
+            // Library
+            library.SetExit1(livingRoom);
+            // Master Bedroom
+            masterBedroom.SetExit1(diningRoom);
+            // Bathroom
+            bathroom.SetExit1(diningRoom);
 
             // Start scene will always exit to tutorial
-            s.SetExit1(t);
-            s.LockInPlace();
-
-            t.SetExit1(dr);
-            lr.SetExit1(t);
-            dr.SetExit1(lr);
-
+            // After that it is inaccessible to the user
+            //      because it isn't linked from the accessible rooms
+            start.SetExit1(tutorial);
+            start.LockInPlace();
+            
             Debug.Log("[RoomManager.cs] Room list size " + Room.allRooms.Count);
 
             Room.SetScene("StartScene");
