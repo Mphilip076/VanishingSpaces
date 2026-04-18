@@ -60,9 +60,6 @@ public class InventoryManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
                 SelectSlot(i);
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-            SelectSlot(9);
     }
 
     public void Hide()
