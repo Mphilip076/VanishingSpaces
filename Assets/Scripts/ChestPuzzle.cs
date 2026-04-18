@@ -4,12 +4,13 @@ using TMPro;
 public class ChestPuzzle : InteractableItem
 {
     [Header("Passcode")]
-    public string correctCode = "1234";
+    public string correctCode = "4920";
 
     [Header("Key Item to Give Player")]
     public GameObject keyPrefab;
     public Sprite keyIcon;
     public string keyItemName = "Key";
+    public GameObject flashlight;
 
     [Header("UI")]
     public GameObject codeUI;
@@ -37,6 +38,7 @@ public class ChestPuzzle : InteractableItem
         interactKey = KeyCode.E;
         interactRange = 2f;
         interactMessage = "Press E to open";
+        flashlight.SetActive(false);
 
         if (codeUI == null)
             codeUI = GameObject.Find("CodeBoxUI");
@@ -103,6 +105,7 @@ public class ChestPuzzle : InteractableItem
         );
 
         canInteract = false;
+        flashlight.SetActive(true);
     }
 
     public void SubmitCode()

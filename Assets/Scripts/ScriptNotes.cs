@@ -3,10 +3,6 @@ using TMPro;
 
 public class ScrollNote : InteractableItem
 {
-    [Header("Content")]
-    [TextArea(3, 10)]
-    public string noteText = "The code is 1234";
-
     [Header("UI")]
     public GameObject notePanel;
     public TextMeshProUGUI noteTextUI;
@@ -38,9 +34,6 @@ public class ScrollNote : InteractableItem
 
         isOpen = true;
         notePanel.SetActive(true);
-
-        if (noteTextUI != null)
-            noteTextUI.text = noteText;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
