@@ -11,15 +11,25 @@ public class DoorLock : InteractableItem
     public AudioClip unlockSound;
     private AudioSource doorSound;
 
-    private bool isUnlocked = false;
+    private static bool isUnlocked = false;
+    private static DoorLock instance;
 
     void Start()
     {
+        if(instance == null) instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         doorSound = GetComponent<AudioSource>();
         interactRange = 3f;
         interactKey = KeyCode.E;
         if(isUnlocked) interactMessage = "Press E to use door";
         else interactMessage = "The door is locked (Press E to use key)";
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public override void OnInteract()
@@ -44,6 +54,7 @@ public class DoorLock : InteractableItem
         if (InventoryManager.Instance.HasItem(requiredKeyName)){
             isUnlocked = true;
             interactMessage = "Press E to use door";
+            InventoryManager.Instance.RemoveItemByName(requiredKeyName);
         }
     }
 

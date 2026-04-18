@@ -20,9 +20,17 @@ public class ChestPuzzle : InteractableItem
     private bool isOpen = false;
     private AudioSource chestSound;
     private Animation chestAnimation;
+    private static ChestPuzzle instance;
 
     void Start()
     {
+        if(instance == null) instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
         chestSound = GetComponent<AudioSource>();
         chestAnimation = GetComponent<Animation>();
 
@@ -35,6 +43,8 @@ public class ChestPuzzle : InteractableItem
 
         if (codeUI != null)
             codeUI.SetActive(false);
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public override void OnInteract()

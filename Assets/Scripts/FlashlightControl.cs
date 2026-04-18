@@ -22,6 +22,7 @@ public class FlashlightControl : MonoBehaviour
         if (isOn && Time.deltaTime > drainTime)
         {
             batteryLevel--;
+            Debug.Log("[Flashlight] Battery decreasing... Current battery " + batteryLevel + "%");
 
             if(batteryLevel <= 0)
             {
