@@ -10,7 +10,6 @@ public class ChestPuzzle : InteractableItem
     public GameObject keyPrefab;
     public Sprite keyIcon;
     public string keyItemName = "Key";
-    public GameObject flashlight;
 
     [Header("UI")]
     public GameObject codeUI;
@@ -36,9 +35,8 @@ public class ChestPuzzle : InteractableItem
         chestAnimation = GetComponent<Animation>();
 
         interactKey = KeyCode.E;
-        interactRange = 2f;
+        interactRange = 3f;
         interactMessage = "Press E to open";
-        flashlight.SetActive(false);
 
         if (codeUI == null)
             codeUI = GameObject.Find("CodeBoxUI");
@@ -105,7 +103,6 @@ public class ChestPuzzle : InteractableItem
         );
 
         canInteract = false;
-        flashlight.SetActive(true);
     }
 
     public void SubmitCode()
