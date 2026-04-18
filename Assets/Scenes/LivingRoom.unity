@@ -1639,8 +1639,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PicturePuzzle
   completionReward: {fileID: 157733734484016851, guid: 937ccd9682405db4b951a12131039eff, type: 3}
   completionRewardSprite: {fileID: 21300000, guid: bcf0d4e599365974f9c5b39f75340e07, type: 3}
-  completionRewardName: Gem
-  completeSound: {fileID: 0}
+  completionRewardName: Blue Gem
+  completeSound: {fileID: 532161572}
 --- !u!4 &532161571
 Transform:
   m_ObjectHideFlags: 0
@@ -1668,7 +1668,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 3777b5eea1dd3da4395538a32ea30fc5, type: 3}
+  m_Resource: {fileID: 8300000, guid: ea9d3fce63f0dce47b57557bdd774ef0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2799,7 +2799,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 0b38c587fa7e34acbbe6fec9eeee2953, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -5113,7 +5113,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 0b38c587fa7e34acbbe6fec9eeee2953, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
