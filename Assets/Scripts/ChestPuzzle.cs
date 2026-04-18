@@ -95,6 +95,7 @@ public class ChestPuzzle : InteractableItem
     void GiveKey()
     {
         if (keyPrefab == null) return;
+        if(InventoryManager.Instance.HasItem(keyItemName)) return;
 
         InventoryManager.Instance.AddItem(
             keyPrefab,
