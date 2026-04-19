@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
     public AudioSource typewriterAudio;
 
     [Header("Skip Hint")]
-    public TMP_Text skipHintText; // drag your existing text mesh here
+    public TMP_Text skipHintText;
 
     private bool isMoving = false;
     private bool isFadingMenu = false;
@@ -40,10 +40,14 @@ public class MainMenu : MonoBehaviour
     private bool hasStarted = false;
     private bool doorsOpened = false;
     private bool journalStarted = false;
+
     public GameObject creditsPanel;
 
     public void OpenCredits()
     {
+        if (fadeGroup != null)
+            fadeGroup.alpha = 1f;
+
         if (creditsPanel != null)
             creditsPanel.SetActive(true);
     }
@@ -52,6 +56,10 @@ public class MainMenu : MonoBehaviour
     {
         if (creditsPanel != null)
             creditsPanel.SetActive(false);
+
+        // Remove black screen
+        if (fadeGroup != null)
+            fadeGroup.alpha = 0f;
     }
 
     void Start()
@@ -77,7 +85,6 @@ public class MainMenu : MonoBehaviour
             journalText.gameObject.SetActive(false);
         }
 
-        // Hide hint text at start
         if (skipHintText != null)
             skipHintText.gameObject.SetActive(false);
     }
@@ -89,7 +96,6 @@ public class MainMenu : MonoBehaviour
             StartGame();
         }
 
-        // Press ESC to skip the intro animation
         if (isMoving && Input.GetKeyDown(KeyCode.Escape))
         {
             SkipIntro();
@@ -183,7 +189,6 @@ public class MainMenu : MonoBehaviour
     {
         isMoving = true;
 
-        // Show ESC hint when camera starts moving
         if (skipHintText != null)
         {
             skipHintText.gameObject.SetActive(true);
@@ -197,7 +202,6 @@ public class MainMenu : MonoBehaviour
         isFadingMenu = false;
         isFadingToBlack = false;
 
-        // Mark doors as opened and open them immediately without sound
         if (!doorsOpened)
         {
             doorsOpened = true;
@@ -205,11 +209,9 @@ public class MainMenu : MonoBehaviour
             if (rightDoor != null) rightDoor.OpenDoor(false);
         }
 
-        // Fade to black immediately
         if (fadeGroup != null)
             fadeGroup.alpha = 1f;
 
-        // Hide menu immediately
         if (menuGroup != null)
         {
             menuGroup.alpha = 0f;
@@ -217,7 +219,6 @@ public class MainMenu : MonoBehaviour
             menuGroup.blocksRaycasts = false;
         }
 
-        // Jump straight to journal and load
         StartJournalSequence();
     }
 
@@ -231,7 +232,6 @@ public class MainMenu : MonoBehaviour
 
     IEnumerator TypeJournalAndLoad()
     {
-        // Change hint text to Q when journal starts
         if (skipHintText != null)
         {
             skipHintText.gameObject.SetActive(true);
@@ -252,15 +252,13 @@ public class MainMenu : MonoBehaviour
                     typewriterAudio.PlayOneShot(typewriterAudio.clip);
                 }
 
-                // Hold Q to speed up typing
                 if (Input.GetKey(KeyCode.Q))
-                    yield return new WaitForSeconds(typeSpeed * 0.1f); // 10x faster
+                    yield return new WaitForSeconds(typeSpeed * 0.1f);
                 else
                     yield return new WaitForSeconds(typeSpeed);
             }
         }
 
-        // Hide hint text after journal finishes
         if (skipHintText != null)
             skipHintText.gameObject.SetActive(false);
 
