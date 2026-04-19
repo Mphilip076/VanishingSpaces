@@ -32,7 +32,6 @@ Ghost Monster Animator Controller handling its movement and idle animations.
 NPC Butler has an idle animation in the dining room.
 
 
-
 Assignment 7:
 
 Matthew:I edited the game by adding more rooms and more detail work to each of them.
@@ -55,3 +54,13 @@ Sound Design: I added a chest opening sound effect that plays when the player su
 UI Design: I fixed a critical bug where the inventory UI was showing on the start screen by adding Hide() and Show() methods to the InventoryManager. I also fixed the CodeBoxUI not appearing when the chest puzzle was opened by creating a separate Canvas for it, preventing it from being destroyed by DontDestroyOnLoad. I implemented the scroll note UI panel that opens when the player interacts with the scroll, displaying the code hint text clearly to the player.
 
 Puzzles: I implemented the chest puzzle system where the player must enter a correct 4-digit code to receive the key item. I also implemented the door lock system where the player must have the key in their inventory to unlock the exit door and progress to the next room. Additionally I created the scroll note system that allows the player to read in-game notes by pressing E near the scroll.
+
+
+Assignment 8:
+
+James
+
+- Implemented a **Rim Lighting shader** (`RimLighting.shader`) using URP HLSL
+- Applied rim lighting materials to objects in the game:
+  - `PictureLightMaterial` - applied to picture frame
+  - `ScrollLightMaterial` - applied to scroll item

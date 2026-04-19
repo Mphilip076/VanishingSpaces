@@ -738,6 +738,10 @@ PrefabInstance:
       propertyPath: itemName
       value: Picture A
       objectReference: {fileID: 0}
+    - target: {fileID: 8911544481701566666, guid: 8fffa1cb77b87bb438d6c546b78acaa4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e5765752ac9200149a0d977550e461df, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1232,6 +1236,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 64b310f82265cdc4daade6b48db4d485, type: 2}
     - target: {fileID: 919132149155446097, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_Name
       value: Scroll

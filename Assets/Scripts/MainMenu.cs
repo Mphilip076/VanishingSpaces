@@ -40,6 +40,19 @@ public class MainMenu : MonoBehaviour
     private bool hasStarted = false;
     private bool doorsOpened = false;
     private bool journalStarted = false;
+    public GameObject creditsPanel;
+
+    public void OpenCredits()
+    {
+        if (creditsPanel != null)
+            creditsPanel.SetActive(true);
+    }
+
+    public void CloseCredits()
+    {
+        if (creditsPanel != null)
+            creditsPanel.SetActive(false);
+    }
 
     void Start()
     {
