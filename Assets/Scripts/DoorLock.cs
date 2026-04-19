@@ -26,8 +26,7 @@ public class DoorLock : InteractableItem
         doorSound = GetComponent<AudioSource>();
         interactRange = 3f;
         interactKey = KeyCode.E;
-        if(isUnlocked) interactMessage = "Press E to use door";
-        else interactMessage = "The door is locked (Press E to use key)";
+        interactMessage = "Press E to use door";
 
         DontDestroyOnLoad(gameObject);
     }
@@ -55,6 +54,10 @@ public class DoorLock : InteractableItem
             isUnlocked = true;
             interactMessage = "Press E to use door";
             InventoryManager.Instance.RemoveItemByName(requiredKeyName);
+        }
+        else
+        {
+            ShowShortMessage("You need a key!", 2);
         }
     }
 
