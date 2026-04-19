@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: eca2fcac997383d46a335444395759a7, type: 3}
       propertyPath: m_Name
-      value: Fireplace_01
+      value: Fireplace
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: eca2fcac997383d46a335444395759a7, type: 3}
       propertyPath: m_LocalScale.x
@@ -75,6 +75,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: eca2fcac997383d46a335444395759a7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5353969922225575500}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: eca2fcac997383d46a335444395759a7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5059688490597016692}
   m_SourcePrefab: {fileID: 100100000, guid: eca2fcac997383d46a335444395759a7, type: 3}
 --- !u!1 &1781312281092362221 stripped
 GameObject:
@@ -103,3 +106,25 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: eca2fcac997383d46a335444395759a7, type: 3}
+--- !u!114 &5059688490597016692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781312281092362221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc3d018eae1f83428d12f7e2d64f7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fireplace
+  interactKey: 101
+  interactMessage: Press E to interact
+  interactRange: 3
+  canInteract: 1
+  isPickable: 0
+  anchorItemName: 
+  lightItemName: Matches
+  lightSound: {fileID: 0}
+  fireSound: {fileID: 0}
+  lockSound: {fileID: 0}
