@@ -126,5 +126,5 @@ MonoBehaviour:
   anchorItemName: 
   lightItemName: Matches
   lightSound: {fileID: 0}
-  fireSound: {fileID: 0}
+  fireSound: {fileID: 8300000, guid: 079df0609381f5b4c85e2041ab773adf, type: 3}
   lockSound: {fileID: 0}
