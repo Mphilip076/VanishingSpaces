@@ -28,7 +28,6 @@ public class ItemInteract : MonoBehaviour
         }
         else
         {
-            Debug.Log("[ItemInteract] Closest = " + closest.name);
             // there is an item
             closest.ShowPrompt(); 
 
@@ -98,7 +97,6 @@ public class ItemInteract : MonoBehaviour
 
     void TryPickUp()
     {
-        Debug.Log("[ItemInteract] in trypickup");
         if(closest == null) return; // nothing to interact with
         if(!closest.isPickable) return; // not a PickableItem
 
@@ -120,15 +118,11 @@ public class ItemInteract : MonoBehaviour
 
         if (!added) return;
 
-        Debug.Log("[ItemInteract] hold = " + holdPosition + " and " + (holdPosition == null));
         item.OnPickup(holdPosition);
-
-        Debug.Log("[ItemInteract] Picked up successfully");
     }
 
     void DropItem()
     {
-        Debug.Log("[ItemInteract] Dropping item");
 
         // What are we dropping?
         GameObject selectedItem = InventoryManager.Instance.GetSelectedItem();
@@ -143,7 +137,6 @@ public class ItemInteract : MonoBehaviour
             // Drop it!
             item.OnDrop();
             InventoryManager.Instance.RemoveItem(selectedItem);
-            Debug.Log("[ItemInteract] Dropping " + selectedItem.name);
         }
 
         // Not a pickable item ->
