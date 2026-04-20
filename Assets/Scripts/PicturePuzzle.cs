@@ -79,7 +79,12 @@ public class PicturePuzzle : MonoBehaviour
         PictureSlot.s3.canInteract = false;
         
         // Give the player the reward
-        InventoryManager.Instance.AddItem(completionReward, completionRewardSprite, completionRewardName);
         completeSound.Play();
+        Invoke("Givegem", 1.5f);
+    }
+
+    void Givegem()
+    {
+        InventoryManager.Instance.AddItem(completionReward, completionRewardSprite, completionRewardName);
     }
 }

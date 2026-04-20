@@ -124,7 +124,7 @@ MonoBehaviour:
   canInteract: 1
   isPickable: 0
   anchorItemName: 
-  lightItemName: Matches
-  lightSound: {fileID: 0}
+  lightItemName: Lighter
+  lightSound: {fileID: 8300000, guid: 1149f40febe72fc48a61f3db53323db0, type: 3}
   fireSound: {fileID: 8300000, guid: 079df0609381f5b4c85e2041ab773adf, type: 3}
   lockSound: {fileID: 0}
