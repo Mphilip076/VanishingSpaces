@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_picture_frames
-  m_Shader: {fileID: 4800000, guid: 23ccb457b1a35fa4487e18d4e1db24bd, type: 3}
+  m_Shader: {fileID: 4800000, guid: 996b639512e6d584e9f18af3ff8d7a32, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -113,6 +113,8 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _FogEnd: 15
+    - _FogStart: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -135,6 +137,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FogColor: {r: 0.24705884, g: 0.23529413, b: 0.18823531, a: 1}
     - _RimColor: {r: 0, g: 0.5, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
