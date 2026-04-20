@@ -273,12 +273,6 @@ public class MainMenu : MonoBehaviour
     public void OpenTutorial()
     {
         if (tutorialPanel != null)
-            tutorialPanel.SetActive(true);
-    }
-
-    public void CloseTutorial()
-    {
-        if (tutorialPanel != null)
-            tutorialPanel.SetActive(false);
+            tutorialPanel.SetActive(!tutorialPanel.activeSelf);
     }
 }
