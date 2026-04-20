@@ -1300,23 +1300,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 174376, guid: 1e627c2e1810cde4897b566ba90fd986, type: 3}
   m_PrefabInstance: {fileID: 505806776}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &264617436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264617435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666debc546fd14831ad5a392f128cedf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  pointA: {fileID: 1170455645}
-  pointB: {fileID: 1059949546}
-  moveSpeed: 1
-  unseenDelay: 0.5
-  flashlight: {fileID: 0}
 --- !u!4 &264617438 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 481948, guid: 1e627c2e1810cde4897b566ba90fd986, type: 3}
@@ -3471,9 +3454,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1059949546}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 174376, guid: 1e627c2e1810cde4897b566ba90fd986, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 264617436}
     - targetCorrespondingSourceObject: {fileID: 174376, guid: 1e627c2e1810cde4897b566ba90fd986, type: 3}
       insertIndex: -1
       addedObject: {fileID: 264617439}
