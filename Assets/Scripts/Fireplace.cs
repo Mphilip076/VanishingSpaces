@@ -5,7 +5,7 @@ public class Fireplace : InteractableItem
 {
     [Header("Settings")]
     public string anchorItemName;
-    public string lightItemName = "Matches";
+    public string lightItemName = "Lighter";
 
     [Header("Sounds")]
     public AudioClip lightSound;
