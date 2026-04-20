@@ -255,4 +255,4 @@ MonoBehaviour:
   lightItemName: Lighter
   lightSound: {fileID: 8300000, guid: 1149f40febe72fc48a61f3db53323db0, type: 3}
   fireSound: {fileID: 8300000, guid: 079df0609381f5b4c85e2041ab773adf, type: 3}
-  lockSound: {fileID: 0}
+  lockSound: {fileID: 8300000, guid: 9a9a1846773e43544994b690fe21e4fe, type: 3}
