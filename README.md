@@ -72,7 +72,10 @@ Matthew
 - Created and tuned a material (`StatueMaterial`) with adjustable color and glow strength
 - Applied the material to statue enemy models across scenes
 
-
+  Bhavani
+- Implemented a simple fog shader which obscures items the further away you go from them
+- Added to a material (`Fog`) with adjustable fog distance and color
+- Applied to a picture frame so the player cannot see it until they get close, forcing them to move around
 
 Feedback from Alpha Release and Response
 
