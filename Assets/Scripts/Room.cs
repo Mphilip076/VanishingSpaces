@@ -213,6 +213,12 @@ public class Room
         return ret;
     }
 
+    public static void GoToRandomRoom()
+    {
+        Room room = unlockedRooms[Random.Range(0, unlockedRooms.Count)];
+        Room.SetScene(room.SceneName());
+    }
+
     // Use the first exit
     // See notes on exit getters for more information on how the exit is determined
     public Room GetExit1()
