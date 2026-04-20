@@ -64,3 +64,78 @@ James
 - Applied rim lighting materials to objects in the game:
   - `PictureLightMaterial` - applied to picture frame
   - `ScrollLightMaterial` - applied to scroll item
+
+Matthew
+
+- Implemented a simple custom shader (`SimpleStatueShader.shader`) for statue enemies
+- Designed a subtle edge glow effect to enhance visibility and create a horror aesthetic
+- Created and tuned a material (`StatueMaterial`) with adjustable color and glow strength
+- Applied the material to statue enemy models across scenes
+
+
+
+Feedback from Alpha Release and Response
+
+Control guide is not large enough
+- Players complained they were unable to read the text on the control guide because it was too small
+- Solution: The tutorial screen was made bigger so that players can read it
+
+Make interactable items more obvious
+- Interactable items looked the same as non-interactable items
+- Solution: Certain key items now appear highlighted to distinguish them
+
+Make sure that players are not trapped in certain rooms
+- One of the scenes could not be exited (Bug)
+- The bug has been fixed. Players can now move freely between all rooms.
+
+Make users have to interact with every part of a set of motions
+- Users got confused when opening a chest when the item went straight into their inventory.
+- Solution: Make users pick up the item from the chest after they have unlocked it to make it feel like they get to see inside the chest and grab what they find.
+
+Make UI larger and easier to read
+- Users had a hard time reading the control guide, instructions, or seeing their inventory
+- Solution: Increase the size of all of these things to be easier to read
+
+Make flashlight a part of base mobility rather than an item
+- Users were confused that in control screen it said press F to turn on flashlight but they had to have the item selected to use the flashlight
+- Solution: Make the flashlight a part of the base movement and remove it from the inventory.
+
+Make items in inventory easier to know on first glance what it is
+- User had a hard time discerning what items were in their inventory so they didn’t know what was in each slot
+- Solution: Adjusted item images to be more clear and more easily discernable
+
+Sensitivity on track pad should be higher
+- Users had a hard time turning the screen to look around or keep the statue at bay
+- Solution: Make mouse sensitivity higher so that users could look around more freely
+
+Get rid of redundant items
+- Users found that there were multiple places to pick up flashlights but no use to having more than one
+- Solution: remove the extra flashlights and implement a battery life system for the flashlight
+
+Make the monster faster / Make statue scarier 
+- Players said that the monster was too slow for it to be a real threat
+- Solution: The monster’s speed was increased and it jumpscares the player if they are caught
+
+Add monster in all rooms
+- The player commented that after having the monster chasing them in one scene, it felt odd to have the monster not in the next room; it lowered the tension
+- Solution: Monsters were added into more rooms to make the game more difficult
+
+Make sure object movement is intentional
+- Users found a couch that had a rigid body and a collider where it had no reason to move
+- Solution: Removed these to make sure that object movement is only intentional.
+
+
+Beta Release - Changes Made
+- Made controls and prompts larger 
+- Fixed room swapping to ensure that players are able to move between rooms 
+- Added statues to multiple rooms so that the challenging aspect remains throughout 
+- Increased the speed of the statues so that there is more fear involved
+- Made UI more user friendly by making it more legible
+- Added higher sensitivity to make the game easier to maneuver
+- Added flashlight as part of games base functionality 
+- Added better icons for inventory
+- Added several more rooms to improve experience 
+- Added puzzles increase difficulty of game
+- Removed unnecessary object movement
+- Made some rooms larger to let users feel less cramped 
+- Added shader to statues to make them appear like ghosts
