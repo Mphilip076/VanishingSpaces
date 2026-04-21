@@ -6,17 +6,14 @@ public class ChestPuzzle : InteractableItem
     [Header("Passcode")]
     public string correctCode = "4920";
 
-    [Header("Key Item to Give Player")]
-    public GameObject keyPrefab;
-    public Sprite keyIcon;
-    public string keyItemName = "Key";
+    [Header("Key Item")]
+    public GameObject keyInsideChest; // drag your key GameObject here
 
     [Header("UI")]
     public GameObject codeUI;
     public TMP_InputField codeInput;
     public TextMeshProUGUI feedbackText;
 
-    // Private variables 
     private bool isOpen = false;
     private AudioSource chestSound;
     private Animation chestAnimation;
@@ -24,13 +21,13 @@ public class ChestPuzzle : InteractableItem
 
     void Start()
     {
-        if(instance == null) instance = this;
+        if (instance == null) instance = this;
         else
         {
             Destroy(gameObject);
             return;
         }
-        
+
         chestSound = GetComponent<AudioSource>();
         chestAnimation = GetComponent<Animation>();
 
@@ -43,6 +40,10 @@ public class ChestPuzzle : InteractableItem
 
         if (codeUI != null)
             codeUI.SetActive(false);
+
+        // Hide key at start
+        if (keyInsideChest != null)
+            keyInsideChest.SetActive(false);
 
         DontDestroyOnLoad(gameObject);
     }
@@ -92,16 +93,11 @@ public class ChestPuzzle : InteractableItem
         if (pm != null) pm.enabled = true;
     }
 
-    void GiveKey()
+    // Shows the key inside the chest
+    void ShowKey()
     {
-        if (keyPrefab == null) return;
-        if(InventoryManager.Instance.HasItem(keyItemName)) return;
-
-        InventoryManager.Instance.AddItem(
-            keyPrefab,
-            keyIcon,
-            keyItemName
-        );
+        if (keyInsideChest != null)
+            keyInsideChest.SetActive(true);
 
         canInteract = false;
     }
@@ -125,7 +121,7 @@ public class ChestPuzzle : InteractableItem
                 chestSound.Play();
 
             Invoke("CloseCodeUI", 1.5f);
-            Invoke("GiveKey", 2f);
+            Invoke("ShowKey", 2f); // show key after chest opens
         }
         else
         {
