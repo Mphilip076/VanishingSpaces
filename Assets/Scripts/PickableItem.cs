@@ -58,6 +58,11 @@ public class PickableItem : InteractableItem
 
         // Mark as picked up so flashlight toggle works
         isPickedUp = true;
+
+        if (isFlashlight)
+        {
+            FlashlightManager.OnFlashlightPickup();
+        }
     }
 
     public virtual void OnDrop()
