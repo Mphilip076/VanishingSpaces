@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pickupable
   - Interactable
+  - JumpscarePoint
   layers:
   - Default
   - TransparentFX
