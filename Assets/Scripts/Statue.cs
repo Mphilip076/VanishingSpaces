@@ -27,6 +27,7 @@ public class WeepingStatue : MonoBehaviour
     public float jumpscareForwardOffset = 0.05f;
 
     public Transform jumpscarePoint;
+    public CanvasGroup blackScreenGroup;
 
     private bool whisperWaitingToPlay = false;
     private bool isAttacking = false;
@@ -44,6 +45,13 @@ public class WeepingStatue : MonoBehaviour
             animator = GetComponent<Animator>();
 
         FindRuntimeReferences();
+
+        if (blackScreenGroup != null)
+        {
+            blackScreenGroup.alpha = 0f;
+            blackScreenGroup.blocksRaycasts = false;
+            blackScreenGroup.interactable = false;
+        }
     }
 
     void Update()
@@ -55,7 +63,6 @@ public class WeepingStatue : MonoBehaviour
 
         bool hitByLight = IsHitByFlashlight();
 
-        // flashlight hit sound only when light first touches statue
         if (hitByLight && !wasHitByLightLastFrame)
         {
             if (flashlightHitAudioSource != null)
@@ -128,6 +135,13 @@ public class WeepingStatue : MonoBehaviour
             if (pointObject != null)
                 jumpscarePoint = pointObject.transform;
         }
+
+        if (blackScreenGroup == null)
+        {
+            GameObject blackScreenObject = GameObject.FindGameObjectWithTag("BlackScreen");
+            if (blackScreenObject != null)
+                blackScreenGroup = blackScreenObject.GetComponent<CanvasGroup>();
+        }
     }
 
     IEnumerator AttackSequence()
@@ -142,18 +156,9 @@ public class WeepingStatue : MonoBehaviour
 
         StopWhisperImmediately();
 
-        // make sure statue is no longer frozen
         if (animator != null)
             animator.speed = 1f;
 
-        // snap statue right into the camera area
-        if (jumpscarePoint != null)
-        {
-            transform.position = jumpscarePoint.position + jumpscarePoint.forward * jumpscareForwardOffset;
-            transform.rotation = jumpscarePoint.rotation;
-        }
-
-        // play attack animation
         if (animator != null)
         {
             animator.ResetTrigger("Attack");
@@ -161,14 +166,27 @@ public class WeepingStatue : MonoBehaviour
             animator.Update(0f);
         }
 
-        // play actual attack scare sound
         if (attackJumpscareAudioSource != null)
         {
             attackJumpscareAudioSource.Stop();
             attackJumpscareAudioSource.Play();
         }
 
+        if (blackScreenGroup != null)
+        {
+            blackScreenGroup.alpha = 1f;
+            blackScreenGroup.blocksRaycasts = true;
+            blackScreenGroup.interactable = true;
+        }
+
         yield return new WaitForSeconds(jumpscareDuration);
+
+        if (blackScreenGroup != null)
+        {
+            blackScreenGroup.alpha = 0f;
+            blackScreenGroup.blocksRaycasts = false;
+            blackScreenGroup.interactable = false;
+        }
 
         SendPlayerToRandomRoom();
     }

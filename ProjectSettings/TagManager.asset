@@ -7,6 +7,7 @@ TagManager:
   - Pickupable
   - Interactable
   - JumpscarePoint
+  - BlackScreen
   layers:
   - Default
   - TransparentFX

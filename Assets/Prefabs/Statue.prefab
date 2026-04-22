@@ -193,10 +193,11 @@ MonoBehaviour:
   minWhisperVolume: 0.05
   maxWhisperVolume: 0.35
   attackDistance: 2
-  jumpscareDuration: 1.2
+  jumpscareDuration: 4
   attackDelayAfterSpawn: 2
   jumpscareForwardOffset: 0.05
   jumpscarePoint: {fileID: 0}
+  blackScreenGroup: {fileID: 0}
 --- !u!82 &3034569138085319580
 AudioSource:
   m_ObjectHideFlags: 0
@@ -499,8 +500,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 534c6a88498e2034da2140adbb9e831c, type: 3}
-  m_PlayOnAwake: 1
+  m_Resource: {fileID: 8300000, guid: 95805c217e9e6c948b6e78bb4ad4870a, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -520,23 +521,23 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.002
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
-      time: 1
+      time: 0.5689697
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -1.002004
+      outSlope: -1.002004
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
