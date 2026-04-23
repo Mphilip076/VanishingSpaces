@@ -7,7 +7,7 @@ public class ChestPuzzle : InteractableItem
     public string correctCode = "4920";
 
     [Header("Key Item")]
-    public GameObject keyInsideChest; // drag your key GameObject here
+    public GameObject keyInsideChest;
 
     [Header("UI")]
     public GameObject codeUI;
@@ -44,6 +44,15 @@ public class ChestPuzzle : InteractableItem
         // Hide key at start
         if (keyInsideChest != null)
             keyInsideChest.SetActive(false);
+
+        // If chest was already solved before, show key immediately
+        if (PlayerPrefs.GetInt("chest_solved", 0) == 1)
+        {
+            ShowKey();
+
+            if (chestAnimation != null)
+                chestAnimation.Play("ChestAnim");
+        }
 
         DontDestroyOnLoad(gameObject);
     }
@@ -93,7 +102,6 @@ public class ChestPuzzle : InteractableItem
         if (pm != null) pm.enabled = true;
     }
 
-    // Shows the key inside the chest
     void ShowKey()
     {
         if (keyInsideChest != null)
@@ -120,8 +128,12 @@ public class ChestPuzzle : InteractableItem
             if (chestSound != null)
                 chestSound.Play();
 
+            // Save that chest has been solved
+            PlayerPrefs.SetInt("chest_solved", 1);
+            PlayerPrefs.Save();
+
             Invoke("CloseCodeUI", 1.5f);
-            Invoke("ShowKey", 2f); // show key after chest opens
+            Invoke("ShowKey", 2f);
         }
         else
         {

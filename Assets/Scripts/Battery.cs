@@ -7,8 +7,18 @@ public class Battery : InteractableItem
     public int maxCharge = 50;
     private int currentCharge;
 
+    [Header("Identity")]
+    public string batteryID; // Give each battery a unique ID in Inspector!
+
     void Start()
     {
+        // If this battery was already picked up, destroy it immediately
+        if (PlayerPrefs.GetInt(batteryID, 0) == 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         currentCharge = Random.Range(minCharge, maxCharge);
         interactMessage = "Press E to pick up battery";
         interactRange = 3f;
@@ -24,22 +34,16 @@ public class Battery : InteractableItem
         {
             if (hit.CompareTag("Player"))
             {
-                // Show different message if player doesn't have flashlight
                 if (!FlashlightManager.hasFlashlight)
-                {
                     interactMessage = "You need a flashlight first!";
-                }
                 else
-                {
                     interactMessage = "Press E to pick up battery";
-                }
 
                 ShowPrompt();
 
                 if (Input.GetKeyDown(KeyCode.E))
-                {
                     OnInteract();
-                }
+
                 return;
             }
         }
@@ -49,15 +53,16 @@ public class Battery : InteractableItem
 
     public override void OnInteract()
     {
-        // Block pickup if no flashlight
         if (!FlashlightManager.hasFlashlight)
-        {
             return;
-        }
 
         FlashlightManager.batteryLevel += currentCharge;
         if (FlashlightManager.batteryLevel > 100)
             FlashlightManager.batteryLevel = 100;
+
+        // Save that this battery has been picked up
+        PlayerPrefs.SetInt(batteryID, 1);
+        PlayerPrefs.Save();
 
         Debug.Log("Battery picked up! +" + currentCharge + "%");
         PersistCanvas.HidePrompt();

@@ -172,6 +172,9 @@ public class MainMenu : MonoBehaviour
 
         hasStarted = true;
 
+        PlayerPrefs.DeleteAll(); // Clear saved data for testing purposes
+        PlayerPrefs.Save();
+
         if (buttonAudio != null && buttonAudio.clip != null)
             buttonAudio.PlayOneShot(buttonAudio.clip);
 
