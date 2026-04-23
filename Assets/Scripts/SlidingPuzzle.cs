@@ -1,302 +1,276 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-/// <summary>
-/// 4x4 Picture Sliding Puzzle — Horror Game Mini-Puzzle
-/// Attach this script to a GameObject in your scene (e.g., "PuzzleManager")
-/// No move counter or timer — solve to trigger the next event.
-/// </summary>
 public class SlidingPuzzle : MonoBehaviour
 {
-    [Header("Grid Settings")]
-    public int gridSize = 4;                        // 4x4 grid
+    [Header("Puzzle Settings")]
+    public Sprite puzzleImage;
+    public GameObject spawnItem;
+    public Transform spawnPoint;
 
-    [Header("UI References")]
-    public Transform gridParent;                    // The Grid Layout Group parent
-    public GameObject tilePrefab;                   // Prefab: Button + Image
-    public Texture2D puzzleImage;                   // The image to slice into tiles
-    public Image previewImage;                      // Small corner preview of full image
-    public GameObject winPanel;                     // Panel shown on solve
-    public TMP_Text winMessageText;                 // Win message text (optional)
+    [Header("Interaction")]
+    public float interactRange = 3f;
+    public string interactMessage = "Press E to open puzzle";
 
-    [Header("Shuffle Settings")]
-    [Range(50, 500)]
-    public int shuffleMoves = 200;                  // Higher = harder puzzle
+    [Header("UI")]
+    public GameObject puzzleUI;
+    public GridLayoutGroup gridLayout;
 
-    [Header("Animation")]
-    public float slideSpeed = 0.12f;                // Tile slide duration in seconds
-
-    // ── Internal State ────────────────────────────────────────────────
-    private int totalTiles;                         // gridSize * gridSize
-    private int emptyIndex;                         // Current index of the empty slot
-    private int[] tileOrder;                        // tileOrder[boardPos] = correctTileIndex
-    private GameObject[] tileObjects;               // UI tile GameObjects
-    private Sprite[] tileSprites;                   // Sliced image sprites
-
-    private bool gameActive = false;
-    private bool isAnimating = false;
-
-    // ─────────────────────────────────────────────────────────────────
+    private const int size = 4;
+    private int[,] board = new int[size, size];
+    private int[,] initialBoard = new int[size, size];
+    private GameObject[] tiles;
+    private int emptyRow, emptyCol;
+    private bool isSolved = false;
+    private bool isUIOpen = false;
+    private bool playerNearby = false;
 
     void Start()
     {
-        totalTiles = gridSize * gridSize;
-        tileOrder = new int[totalTiles];
-        tileObjects = new GameObject[totalTiles];
+        if (puzzleUI != null)
+            puzzleUI.SetActive(false);
 
-        SliceImage();
-        BuildBoard();
-        SetupPreview();
-
-        winPanel.SetActive(false);
-        StartCoroutine(ShuffleAndBegin());
-    }
-
-
-
-    // ── Image Slicing ──────────────────────────────────────────────────
-
-    /// <summary>
-    /// Slices puzzleImage into gridSize*gridSize sprites.
-    /// Tiles are indexed left-to-right, bottom-to-top (Unity texture origin).
-    /// </summary>
-    void SliceImage()
-    {
-        tileSprites = new Sprite[totalTiles];
-
-        int tileW = puzzleImage.width / gridSize;
-        int tileH = puzzleImage.height / gridSize;
-
-        for (int row = 0; row < gridSize; row++)
+        if (PlayerPrefs.GetInt("sliding_puzzle_solved", 0) == 1)
         {
-            for (int col = 0; col < gridSize; col++)
-            {
-                int index = row * gridSize + col;
-
-                Texture2D tileTex = new Texture2D(tileW, tileH);
-                Color[] pixels = puzzleImage.GetPixels(col * tileW, row * tileH, tileW, tileH);
-                tileTex.SetPixels(pixels);
-                tileTex.Apply();
-
-                tileSprites[index] = Sprite.Create(
-                    tileTex,
-                    new Rect(0, 0, tileW, tileH),
-                    new Vector2(0.5f, 0.5f)
-                );
-            }
+            isSolved = true;
+            SpawnItem();
         }
     }
 
-    // ── Board Construction ─────────────────────────────────────────────
-
-    /// <summary>
-    /// Instantiates tile GameObjects and sets them to the solved state.
-    /// The last tile (index totalTiles-1) starts as the empty slot.
-    /// </summary>
-    void BuildBoard()
+    void Update()
     {
-        // Clear any existing children
-        foreach (Transform child in gridParent)
+        if (isSolved) return;
+
+        // Check if player is nearby
+        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
+        playerNearby = false;
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.CompareTag("Player"))
+            {
+                playerNearby = true;
+                break;
+            }
+        }
+
+        if (playerNearby)
+        {
+            PersistCanvas.ShowPrompt(interactMessage);
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (!isUIOpen)
+                    OpenPuzzleUI();
+                else
+                    ClosePuzzleUI();
+            }
+        }
+        else
+        {
+            if (!isUIOpen)
+                PersistCanvas.HidePrompt();
+        }
+    }
+
+    void OpenPuzzleUI()
+    {
+        isUIOpen = true;
+        puzzleUI.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        PlayerMovement pm = FindAnyObjectByType<PlayerMovement>();
+        if (pm != null) pm.enabled = false;
+
+        GeneratePuzzle();
+    }
+
+    public void ClosePuzzleUI()
+    {
+        isUIOpen = false;
+        puzzleUI.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        PlayerMovement pm = FindAnyObjectByType<PlayerMovement>();
+        if (pm != null) pm.enabled = true;
+    }
+
+    void GeneratePuzzle()
+    {
+        foreach (Transform child in gridLayout.transform)
             Destroy(child.gameObject);
 
-        emptyIndex = totalTiles - 1;
+        tiles = new GameObject[size * size];
 
-        for (int i = 0; i < totalTiles; i++)
+        int num = 1;
+        for (int r = 0; r < size; r++)
+            for (int c = 0; c < size; c++)
+                board[r, c] = num++;
+
+        board[size - 1, size - 1] = 0;
+        emptyRow = size - 1;
+        emptyCol = size - 1;
+
+        ShuffleBoard();
+
+        for (int r = 0; r < size; r++)
+            for (int c = 0; c < size; c++)
+                initialBoard[r, c] = board[r, c];
+
+        RenderBoard();
+    }
+
+    void ShuffleBoard()
+    {
+        for (int i = 0; i < 200; i++)
         {
-            tileOrder[i] = i;
+            int dir = Random.Range(0, 4);
+            int newRow = emptyRow, newCol = emptyCol;
 
-            GameObject tile = Instantiate(tilePrefab, gridParent);
-            tile.name = "Tile_" + i;
-            tileObjects[i] = tile;
+            if (dir == 0) newRow--;
+            else if (dir == 1) newRow++;
+            else if (dir == 2) newCol--;
+            else newCol++;
 
-            int capturedIndex = i;
-            tile.GetComponent<Button>().onClick.AddListener(() => OnTileClicked(capturedIndex));
-
-            if (i == emptyIndex)
+            if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size)
             {
-                // Empty tile: invisible
-                tile.GetComponent<Image>().color = Color.clear;
-                tile.GetComponent<Button>().interactable = false;
-            }
-            else
-            {
-                tile.GetComponent<Image>().sprite = tileSprites[i];
-                tile.GetComponent<Image>().color = Color.white;
-            }
-        }
-    }
-
-    void SetupPreview()
-    {
-        if (previewImage != null && puzzleImage != null)
-        {
-            previewImage.sprite = Sprite.Create(
-                puzzleImage,
-                new Rect(0, 0, puzzleImage.width, puzzleImage.height),
-                new Vector2(0.5f, 0.5f)
-            );
-        }
-    }
-
-    // ── Shuffling ──────────────────────────────────────────────────────
-
-    /// <summary>
-    /// Shuffles by making random valid moves — guarantees solvability.
-    /// </summary>
-    IEnumerator ShuffleAndBegin()
-    {
-        yield return new WaitForSeconds(0.3f);
-
-        int lastMoved = -1;
-        for (int i = 0; i < shuffleMoves; i++)
-        {
-            List<int> neighbors = GetAdjacentToEmpty();
-            neighbors.Remove(lastMoved); // Avoid immediate reversal
-
-            int chosen = neighbors[Random.Range(0, neighbors.Count)];
-            SwapWithEmpty(chosen, animate: false);
-            lastMoved = emptyIndex; // After swap, emptyIndex moved to old chosen
-        }
-
-        RefreshAllTileVisuals();
-        gameActive = true;
-    }
-
-    // ── Tile Interaction ───────────────────────────────────────────────
-
-    void OnTileClicked(int boardPosition)
-    {
-        if (!gameActive || isAnimating) return;
-        if (!IsAdjacentToEmpty(boardPosition)) return;
-
-        StartCoroutine(AnimateSlide(boardPosition));
-    }
-
-    IEnumerator AnimateSlide(int boardPosition)
-    {
-        isAnimating = true;
-
-        RectTransform movingTile = tileObjects[boardPosition].GetComponent<RectTransform>();
-        RectTransform emptySlot  = tileObjects[emptyIndex].GetComponent<RectTransform>();
-
-        Vector3 startPos = movingTile.localPosition;
-        Vector3 endPos   = emptySlot.localPosition;
-
-        float elapsed = 0f;
-        while (elapsed < slideSpeed)
-        {
-            elapsed += Time.deltaTime;
-            float t = Mathf.SmoothStep(0f, 1f, elapsed / slideSpeed);
-            movingTile.localPosition = Vector3.Lerp(startPos, endPos, t);
-            yield return null;
-        }
-        movingTile.localPosition = endPos;
-
-        SwapWithEmpty(boardPosition, animate: false);
-        RefreshAllTileVisuals();
-
-        isAnimating = false;
-
-        if (CheckWin())
-            OnPuzzleSolved();
-    }
-
-    // ── Core Logic ─────────────────────────────────────────────────────
-
-    bool IsAdjacentToEmpty(int index)
-    {
-        int row  = index / gridSize,      col  = index % gridSize;
-        int eRow = emptyIndex / gridSize, eCol = emptyIndex % gridSize;
-        return Mathf.Abs(row - eRow) + Mathf.Abs(col - eCol) == 1;
-    }
-
-    List<int> GetAdjacentToEmpty()
-    {
-        List<int> result = new List<int>();
-        int eRow = emptyIndex / gridSize;
-        int eCol = emptyIndex % gridSize;
-
-        if (eRow > 0)            result.Add((eRow - 1) * gridSize + eCol); // Above
-        if (eRow < gridSize - 1) result.Add((eRow + 1) * gridSize + eCol); // Below
-        if (eCol > 0)            result.Add(eRow * gridSize + (eCol - 1)); // Left
-        if (eCol < gridSize - 1) result.Add(eRow * gridSize + (eCol + 1)); // Right
-
-        return result;
-    }
-
-    /// <summary>
-    /// Swaps tileOrder values at boardPosition and emptyIndex,
-    /// then updates emptyIndex.
-    /// </summary>
-    void SwapWithEmpty(int boardPosition, bool animate = true)
-    {
-        int temp = tileOrder[boardPosition];
-        tileOrder[boardPosition] = tileOrder[emptyIndex];
-        tileOrder[emptyIndex] = temp;
-        emptyIndex = boardPosition;
-    }
-
-    bool CheckWin()
-    {
-        for (int i = 0; i < totalTiles; i++)
-            if (tileOrder[i] != i) return false;
-        return true;
-    }
-
-    // ── Visuals ────────────────────────────────────────────────────────
-
-    /// <summary>
-    /// Re-assigns sprites to tile GameObjects based on current tileOrder.
-    /// </summary>
-    void RefreshAllTileVisuals()
-    {
-        for (int i = 0; i < totalTiles; i++)
-        {
-            Image img    = tileObjects[i].GetComponent<Image>();
-            Button btn   = tileObjects[i].GetComponent<Button>();
-
-            int correctTile = tileOrder[i];
-
-            if (i == emptyIndex)
-            {
-                img.sprite = null;
-                img.color  = Color.clear;
-                btn.interactable = false;
-            }
-            else
-            {
-                img.sprite = tileSprites[correctTile];
-                img.color  = Color.white;
-                btn.interactable = true;
+                board[emptyRow, emptyCol] = board[newRow, newCol];
+                board[newRow, newCol] = 0;
+                emptyRow = newRow;
+                emptyCol = newCol;
             }
         }
     }
 
-    // ── Win / Lose ─────────────────────────────────────────────────────
-
-    void OnPuzzleSolved()
+    void RenderBoard()
     {
-        gameActive = false;
-        winPanel.SetActive(true);
+        for (int r = 0; r < size; r++)
+        {
+            for (int c = 0; c < size; c++)
+            {
+                int num = board[r, c];
+                int index = r * size + c;
 
-        if (winMessageText != null)
-            winMessageText.text = "Puzzle Solved...";
+                GameObject tile = new GameObject("Tile_" + num);
+                tile.transform.SetParent(gridLayout.transform, false);
 
-        // TODO: Trigger your next horror event here
-        // e.g.: GameManager.instance.OnPuzzleComplete();
+                Image img = tile.AddComponent<Image>();
+
+                if (num == 0)
+                {
+                    img.color = new Color(0, 0, 0, 0);
+                }
+                else
+                {
+                    img.sprite = CreateTileSprite(num - 1);
+                    img.color = Color.white;
+
+                    Button btn = tile.AddComponent<Button>();
+                    int capturedRow = r;
+                    int capturedCol = c;
+                    btn.onClick.AddListener(() => OnTileClick(capturedRow, capturedCol));
+                }
+
+                tiles[index] = tile;
+            }
+        }
     }
 
-    // ── Public Buttons ─────────────────────────────────────────────────
+    Sprite CreateTileSprite(int tileIndex)
+    {
+        int row = tileIndex / size;
+        int col = tileIndex % size;
 
-    /// <summary>Call from a "Restart" button in the UI.</summary>
+        float tileW = puzzleImage.texture.width / (float)size;
+        float tileH = puzzleImage.texture.height / (float)size;
+
+        Rect rect = new Rect(col * tileW, puzzleImage.texture.height - (row + 1) * tileH, tileW, tileH);
+        return Sprite.Create(puzzleImage.texture, rect, new Vector2(0.5f, 0.5f));
+    }
+
+    void OnTileClick(int row, int col)
+    {
+        bool isAdjacent = (Mathf.Abs(row - emptyRow) + Mathf.Abs(col - emptyCol)) == 1;
+        if (!isAdjacent) return;
+
+        board[emptyRow, emptyCol] = board[row, col];
+        board[row, col] = 0;
+
+        int clickedIndex = row * size + col;
+        int emptyIndex = emptyRow * size + emptyCol;
+
+        Image clickedImg = tiles[clickedIndex].GetComponent<Image>();
+        Image emptyImg = tiles[emptyIndex].GetComponent<Image>();
+
+        emptyImg.sprite = clickedImg.sprite;
+        emptyImg.color = Color.white;
+
+        Button emptyBtn = tiles[emptyIndex].GetComponent<Button>();
+        if (emptyBtn == null) emptyBtn = tiles[emptyIndex].AddComponent<Button>();
+        int newEmptyRow = emptyRow, newEmptyCol = emptyCol;
+        emptyBtn.onClick.RemoveAllListeners();
+        emptyBtn.onClick.AddListener(() => OnTileClick(newEmptyRow, newEmptyCol));
+
+        clickedImg.sprite = null;
+        clickedImg.color = new Color(0, 0, 0, 0);
+
+        Button clickedBtn = tiles[clickedIndex].GetComponent<Button>();
+        if (clickedBtn != null) clickedBtn.onClick.RemoveAllListeners();
+
+        emptyRow = row;
+        emptyCol = col;
+
+        CheckWin();
+    }
+
+    void CheckWin()
+    {
+        int num = 1;
+        for (int r = 0; r < size; r++)
+        {
+            for (int c = 0; c < size; c++)
+            {
+                if (r == size - 1 && c == size - 1) break;
+                if (board[r, c] != num++) return;
+            }
+        }
+
+        isSolved = true;
+        PlayerPrefs.SetInt("sliding_puzzle_solved", 1);
+        PlayerPrefs.Save();
+
+        Invoke("ClosePuzzleUI", 1f);
+        Invoke("SpawnItem", 1.5f);
+    }
+
+    void SpawnItem()
+    {
+        if (spawnItem == null || spawnPoint == null) return;
+        Instantiate(spawnItem, spawnPoint.position, Quaternion.identity);
+    }
+
     public void RestartPuzzle()
     {
-        winPanel.SetActive(false);
-        gameActive = false;
-        BuildBoard();
-        StartCoroutine(ShuffleAndBegin());
+        for (int r = 0; r < size; r++)
+            for (int c = 0; c < size; c++)
+                board[r, c] = initialBoard[r, c];
+
+        for (int r = 0; r < size; r++)
+            for (int c = 0; c < size; c++)
+                if (board[r, c] == 0)
+                {
+                    emptyRow = r;
+                    emptyCol = c;
+                }
+
+        foreach (Transform child in gridLayout.transform)
+            Destroy(child.gameObject);
+
+        tiles = new GameObject[size * size];
+        RenderBoard();
     }
 }
