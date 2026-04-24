@@ -35,9 +35,9 @@ public class PictureSlot : InteractableItem
             Destroy(gameObject);
         }
 
-        interactKey = KeyCode.R;
+        interactKey = KeyCode.E;
         interactRange = 4f;
-        interactMessage = "Press E to place an item on the table";
+        interactMessage = "Press E to place item on the table";
         placed = null;
     }
 
@@ -65,7 +65,7 @@ public class PictureSlot : InteractableItem
         placed.canPickUp = true;
         placed.canInteract = true;
         interactKey = KeyCode.E;
-        interactMessage = "Press E to place an item on the table";
+        interactMessage = "Press E to place item on the table";
         
         // Finally, reset placed:
         placed = null;
@@ -104,18 +104,18 @@ public class PictureSlot : InteractableItem
         // "drop" the item
 
         // Re-enable movement
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if(rb != null) rb.isKinematic = false;
+        // Rigidbody rb = item.GetComponent<Rigidbody>();
+        // if(rb != null) rb.isKinematic = false;
 
         // Re-enable collider
-        Collider col = GetComponent<Collider>();
+        Collider col = item.GetComponent<Collider>();
         if (col != null) col.enabled = true;
 
         // Remove from HeldItem parent
-        transform.SetParent(gameObject.transform);
+        item.transform.SetParent(null);
 
         // Set the position and rotation to match this
-        item.transform.SetPositionAndRotation(this.transform.position, this.transform.rotation);
+        item.transform.SetPositionAndRotation(transform.position, transform.rotation);
 
         // Remove the item from the inventory        
         InventoryManager.Instance.RemoveItem(toPlace);
@@ -126,8 +126,7 @@ public class PictureSlot : InteractableItem
         // You can't place an item anymore
         // Make it look like the player is interacting with the item
         // even though they're interacting with this:
-        interactKey = KeyCode.E;
-        interactMessage = "Press E to pick up";
+        interactMessage = "Press E to pick up item from table";
         // The keycode being different prevents place->immediate pickup
 
         // Void the item's message:
