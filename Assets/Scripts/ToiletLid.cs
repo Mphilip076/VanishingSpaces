@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.LowLevelPhysics2D;
+using UnityEngine.UIElements;
 
-public class toilet : InteractableItem
+public class ToiletLid : InteractableItem
 {
     public int correctPosition = 2;
     static int position = 1;
-    private static toilet instance;
+    private static ToiletLid instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,17 +22,10 @@ public class toilet : InteractableItem
         interactRange = 4f;
     }
 
-    void Update()
-    {
-        
-    }
-
     public override void OnInteract()
     {
         position++;
         if(position > 4) position = 1;
-
-        Debug.Log("Position = " + position);
 
         if(position == 1)
         {
@@ -46,7 +40,10 @@ public class toilet : InteractableItem
         {
             transform.rotation = Quaternion.Euler(0, 90, 270);
         }
+    }
 
-        Debug.Log("Rotation (Euler Z) = " + transform.eulerAngles.z);
+    public static int GetPosition()
+    {
+        return position;
     }
 }
