@@ -20,41 +20,17 @@ public class Battery : InteractableItem
         }
 
         currentCharge = Random.Range(minCharge, maxCharge);
-        interactMessage = "Press E to pick up battery";
+        interactMessage = "Press E to use battery";
         interactRange = 3f;
         canInteract = true;
     }
 
-    void Update()
-    {
-        if (!canInteract) return;
-
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
-        foreach (Collider hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                if (!FlashlightManager.hasFlashlight)
-                    interactMessage = "You need a flashlight first!";
-                else
-                    interactMessage = "Press E to pick up battery";
-
-                ShowPrompt();
-
-                if (Input.GetKeyDown(KeyCode.E))
-                    OnInteract();
-
-                return;
-            }
-        }
-
-        PersistCanvas.HidePrompt();
-    }
-
     public override void OnInteract()
     {
-        if (!FlashlightManager.hasFlashlight)
+        if (!FlashlightManager.hasFlashlight){
+            ShowShortMessage("You need a flashlight first!", 2);
             return;
+        }
 
         FlashlightManager.batteryLevel += currentCharge;
         if (FlashlightManager.batteryLevel > 100)
@@ -65,7 +41,6 @@ public class Battery : InteractableItem
         PlayerPrefs.Save();
 
         Debug.Log("Battery picked up! +" + currentCharge + "%");
-        PersistCanvas.HidePrompt();
         Destroy(gameObject);
     }
 }
