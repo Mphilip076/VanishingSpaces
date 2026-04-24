@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1164603166913248891}
   - component: {fileID: 7202609496524666171}
   - component: {fileID: 2382993925272195847}
-  - component: {fileID: 3786251531237331186}
   m_Layer: 0
   m_Name: BatteryAA
   m_TagString: Untagged
@@ -75,29 +74,7 @@ MonoBehaviour:
   isPickable: 0
   minCharge: 20
   maxCharge: 50
---- !u!114 &3786251531237331186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567147022187255751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24bba98ad7943eb46b260191c80bb364, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickableItem
-  interactKey: 101
-  interactMessage: Press E to pick up
-  interactRange: 3
-  canInteract: 1
-  isPickable: 0
-  itemName: Battery
-  itemIcon: {fileID: 0}
-  isFlashlight: 0
-  canDrop: 0
-  canPickUp: 1
-  flashlightLight: {fileID: 0}
+  batteryID: 
 --- !u!1001 &8221469822224922768
 PrefabInstance:
   m_ObjectHideFlags: 0
