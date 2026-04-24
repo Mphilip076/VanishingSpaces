@@ -10,7 +10,7 @@ public class PicturePuzzle : MonoBehaviour
     public string completionRewardName;
     public AudioSource completeSound;
 
-    private static bool isSolved;
+    private static bool isSolved = false;
     private static PicturePuzzle instance;
 
     void Start()
@@ -22,7 +22,7 @@ public class PicturePuzzle : MonoBehaviour
             return;
         }
 
-        isSolved = false;
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -39,6 +39,8 @@ public class PicturePuzzle : MonoBehaviour
 
     private void CheckPuzzle()
     {
+
+        if(isSolved) return;
         // make sure everything exists
         if( Picture.A == null || Picture.B == null || Picture.C == null ||
             PictureSlot.s1 == null || PictureSlot.s2 == null || PictureSlot.s3 == null)
