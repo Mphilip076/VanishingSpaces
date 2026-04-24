@@ -37,7 +37,7 @@ public class PictureSlot : InteractableItem
 
         interactKey = KeyCode.R;
         interactRange = 4f;
-        interactMessage = "Press R to place an item";
+        interactMessage = "Press E to place an item on the table";
         placed = null;
     }
 
@@ -64,8 +64,8 @@ public class PictureSlot : InteractableItem
         // Undo the changes on placing:
         placed.canPickUp = true;
         placed.canInteract = true;
-        interactKey = KeyCode.R;
-        interactMessage = "Press R to place an item";
+        interactKey = KeyCode.E;
+        interactMessage = "Press E to place an item on the table";
         
         // Finally, reset placed:
         placed = null;
@@ -96,13 +96,23 @@ public class PictureSlot : InteractableItem
         }
 
         // Cant that item be dropped?
-        if(!item.canDrop || item.isFlashlight){
-            Debug.Log("[PictureSlot] Player is trying to place in item that cannot leave the inventory");
+        if(item.isFlashlight){
+            Debug.Log("[PictureSlot] Player is trying to place the flashlight");
             return;
         }
 
         // "drop" the item
-        item.OnDrop();
+
+        // Re-enable movement
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if(rb != null) rb.isKinematic = false;
+
+        // Re-enable collider
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = true;
+
+        // Remove from HeldItem parent
+        transform.SetParent(gameObject.transform);
 
         // Set the position and rotation to match this
         item.transform.SetPositionAndRotation(this.transform.position, this.transform.rotation);
@@ -123,8 +133,6 @@ public class PictureSlot : InteractableItem
         // Void the item's message:
         placed.canPickUp = false;
         placed.canInteract = false;
-
-        Debug.Log("[PictureSlot] Placing " + toPlace.name);
     }
 
 }
