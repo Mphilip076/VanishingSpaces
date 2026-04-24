@@ -6,7 +6,6 @@ public class PickableItem : InteractableItem
     public string itemName = "Item";
     public Sprite itemIcon;
     public bool isFlashlight = false;
-    public bool canDrop = true;
     public bool canPickUp = true;
 
     [Header("Flashlight Settings")]
@@ -62,24 +61,6 @@ public class PickableItem : InteractableItem
         if (isFlashlight)
         {
             FlashlightManager.OnFlashlightPickup();
-        }
-    }
-
-    public virtual void OnDrop()
-    {
-        if (rb != null) rb.isKinematic = false;
-        if (col != null) col.enabled = true;
-
-        transform.SetParent(null);
-
-        // Mark as dropped so flashlight toggle stops working
-        isPickedUp = false;
-
-        // Turn off flashlight when dropped
-        if (isFlashlight && flashlightLight != null)
-        {
-            isFlashlightOn = false;
-            flashlightLight.enabled = false;
         }
     }
 }

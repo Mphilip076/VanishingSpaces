@@ -11,7 +11,6 @@ public class ItemInteract : MonoBehaviour
 
     [Header("Keys")]
     public KeyCode pickupKey = KeyCode.E;
-    public KeyCode dropKey = KeyCode.Q;
 
     // Private stuff:
     private InteractableItem closest = null;
@@ -50,11 +49,7 @@ public class ItemInteract : MonoBehaviour
                     closest.OnInteract();
                 }
             }
-        }        
-
-        // Item dropping is independent of interact
-        if (Input.GetKeyDown(dropKey) && InventoryManager.Instance.GetSelectedItem() != null)
-            DropItem();
+        }
     }
 
     // Check a radius of maxInteractRange from the player's position for items that can be interacted with
@@ -119,29 +114,6 @@ public class ItemInteract : MonoBehaviour
         if (!added) return;
 
         item.OnPickup(holdPosition);
-    }
-
-    void DropItem()
-    {
-
-        // What are we dropping?
-        GameObject selectedItem = InventoryManager.Instance.GetSelectedItem();
-        if(selectedItem == null) return; // nothing to drop
-
-        PickableItem item = selectedItem.GetComponentInParent<PickableItem>();
-        if(item != null)
-        {
-            // This is a pickable item
-            if(!item.canDrop) return; // Don't drop this...
-
-            // Drop it!
-            item.OnDrop();
-            InventoryManager.Instance.RemoveItem(selectedItem);
-        }
-
-        // Not a pickable item ->
-        // If you drop it, you cannot get it back?! ->
-        // Don't drop it.
     }
 
     void OnDrawGizmosSelected()
