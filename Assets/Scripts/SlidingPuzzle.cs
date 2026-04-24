@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,11 @@ public class SlidingPuzzle : InteractableItem
     public GameObject puzzleUI;
     public GridLayoutGroup gridLayout;
 
+    [Header("Auto Solve")]
+    public float autoSolveDelay = 60f;
+    public TextMeshProUGUI timerText;
+    public GameObject autoSolveButton;
+
     private const int size = 4;
     private int[,] board = new int[size, size];
     private int[,] initialBoard = new int[size, size];
@@ -19,6 +25,7 @@ public class SlidingPuzzle : InteractableItem
     private int emptyRow, emptyCol;
     private bool isSolved = false;
     private bool isUIOpen = false;
+    private float timeOpen = 0f;
 
     void Start()
     {
@@ -36,6 +43,28 @@ public class SlidingPuzzle : InteractableItem
         interactRange = 3f;
     }
 
+    void Update()
+    {
+        if (!isUIOpen || isSolved) return;
+
+        timeOpen += Time.deltaTime;
+        float remaining = Mathf.Max(0f, autoSolveDelay - timeOpen);
+
+        if (timeOpen < autoSolveDelay)
+        {
+            if (timerText != null)
+                timerText.text = $"Auto-solve unlocks in {Mathf.CeilToInt(remaining)}s";
+        }
+        else
+        {
+            if (timerText != null)
+                timerText.text = "Auto-solve available!";
+
+            if (autoSolveButton != null && !autoSolveButton.activeSelf)
+                autoSolveButton.SetActive(true);
+        }
+    }
+
     public override void OnInteract()
     {
         if (isUIOpen) ClosePuzzleUI();
@@ -45,7 +74,12 @@ public class SlidingPuzzle : InteractableItem
     void OpenPuzzleUI()
     {
         isUIOpen = true;
+        timeOpen = 0f;
+        if (autoSolveButton != null) autoSolveButton.SetActive(false);
         puzzleUI.SetActive(true);
+
+        Canvas.ForceUpdateCanvases();
+        FitGridToPanel();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -56,10 +90,32 @@ public class SlidingPuzzle : InteractableItem
         GeneratePuzzle();
     }
 
+    void FitGridToPanel()
+    {
+        RectTransform gridRect = gridLayout.GetComponent<RectTransform>();
+        RectTransform panelRect = gridRect.parent as RectTransform;
+        if (panelRect == null) return;
+
+        float boardSize = Mathf.Min(panelRect.rect.width, panelRect.rect.height) * 0.85f;
+        float cellSize  = boardSize / size;
+
+        gridRect.anchorMin        = new Vector2(0.5f, 0.5f);
+        gridRect.anchorMax        = new Vector2(0.5f, 0.5f);
+        gridRect.pivot            = new Vector2(0.5f, 0.5f);
+        gridRect.anchoredPosition = Vector2.zero;
+        gridRect.sizeDelta        = new Vector2(boardSize, boardSize);
+
+        gridLayout.cellSize = new Vector2(cellSize, cellSize);
+        gridLayout.spacing  = Vector2.zero;
+    }
+
     public void ClosePuzzleUI()
     {
         isUIOpen = false;
         puzzleUI.SetActive(false);
+
+        if (timerText != null)
+            timerText.text = "";
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -218,10 +274,39 @@ public class SlidingPuzzle : InteractableItem
         canInteract = false;
     }
 
+    public void AutoSolve()
+    {
+        int num = 1;
+        for (int r = 0; r < size; r++)
+            for (int c = 0; c < size; c++)
+                board[r, c] = (r == size - 1 && c == size - 1) ? 0 : num++;
+
+        emptyRow = size - 1;
+        emptyCol = size - 1;
+
+        foreach (Transform child in gridLayout.transform)
+            Destroy(child.gameObject);
+
+        tiles = new GameObject[size * size];
+        RenderBoard();
+
+        CheckWin();
+    }
+
     void SpawnItem()
     {
         if (spawnItem == null || spawnPoint == null) return;
-        Instantiate(spawnItem, spawnPoint.position, Quaternion.identity);
+
+        Vector3 spawnPos = spawnPoint.position + Vector3.up * 1.2f;
+        GameObject item = Instantiate(spawnItem, spawnPos, Random.rotation);
+
+        Rigidbody rb = item.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            Vector3 popDir = new Vector3(Random.Range(-0.5f, 0.5f), 1f, Random.Range(-0.5f, 0.5f)).normalized;
+            rb.AddForce(popDir * 4f, ForceMode.Impulse);
+            rb.AddTorque(Random.insideUnitSphere * 3f, ForceMode.Impulse);
+        }
     }
 
     public void RestartPuzzle()
@@ -237,6 +322,9 @@ public class SlidingPuzzle : InteractableItem
                     emptyRow = r;
                     emptyCol = c;
                 }
+
+        timeOpen = 0f;
+        if (autoSolveButton != null) autoSolveButton.SetActive(false);
 
         foreach (Transform child in gridLayout.transform)
             Destroy(child.gameObject);
