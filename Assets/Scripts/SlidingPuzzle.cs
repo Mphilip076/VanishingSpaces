@@ -1,16 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlidingPuzzle : MonoBehaviour
+public class SlidingPuzzle : InteractableItem
 {
     [Header("Puzzle Settings")]
     public Sprite puzzleImage;
     public GameObject spawnItem;
     public Transform spawnPoint;
-
-    [Header("Interaction")]
-    public float interactRange = 3f;
-    public string interactMessage = "Press E to open puzzle";
 
     [Header("UI")]
     public GameObject puzzleUI;
@@ -23,7 +19,6 @@ public class SlidingPuzzle : MonoBehaviour
     private int emptyRow, emptyCol;
     private bool isSolved = false;
     private bool isUIOpen = false;
-    private bool playerNearby = false;
 
     void Start()
     {
@@ -35,42 +30,16 @@ public class SlidingPuzzle : MonoBehaviour
             isSolved = true;
             SpawnItem();
         }
+
+        interactMessage = "Press E to open puzzle";
+        interactKey = KeyCode.E;
+        interactRange = 3f;
     }
 
-    void Update()
+    public override void OnInteract()
     {
-        if (isSolved) return;
-
-        // Check if player is nearby
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
-        playerNearby = false;
-
-        foreach (Collider hit in hits)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                playerNearby = true;
-                break;
-            }
-        }
-
-        if (playerNearby)
-        {
-            PersistCanvas.ShowPrompt(interactMessage);
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (!isUIOpen)
-                    OpenPuzzleUI();
-                else
-                    ClosePuzzleUI();
-            }
-        }
-        else
-        {
-            if (!isUIOpen)
-                PersistCanvas.HidePrompt();
-        }
+        if (isUIOpen) ClosePuzzleUI();
+        else OpenPuzzleUI();
     }
 
     void OpenPuzzleUI()
@@ -245,6 +214,8 @@ public class SlidingPuzzle : MonoBehaviour
 
         Invoke("ClosePuzzleUI", 1f);
         Invoke("SpawnItem", 1.5f);
+
+        canInteract = false;
     }
 
     void SpawnItem()
