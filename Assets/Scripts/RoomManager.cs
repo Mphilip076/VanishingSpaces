@@ -90,12 +90,4 @@ public class RoomManager : MonoBehaviour
 
     }
 
-    void Update()
-    {
-         if (Input.GetKeyDown(KeyCode.R))
-        {
-            Room.currentRoom.UseExit(1);
-        }
-    }
-
 }
