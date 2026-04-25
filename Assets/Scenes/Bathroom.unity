@@ -2680,7 +2680,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Add your text in here
+  m_text: 'To whom it may concern,\n\nI''ve found six rooms, including this one.
+    I''m still not quite sure how these doors work, but I think it might have something
+    to do with the fireplaces. Luckily, I had my lighter with me, and the fireplaces
+    seem to already have fuel, but isn''t it strange for a house that looks abandoned?\n\nIt''s
+    the gems. The fireplaces were missing the gems. But why were they hidden in such
+    a way? Every new thing I uncover leads to another two questions. Will answering
+    those questions help me escape?\n\n-M
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 42df1c7856584b6b8db9a509b6b10074, type: 2}
@@ -2707,12 +2715,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.4
+  m_fontSize: 18
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -2746,7 +2754,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -219.24731, w: 0}
+  m_margin: {x: 0.9379654, y: -22.045563, z: -186.40039, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4205,31 +4213,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.86
+      value: -16.355793
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.779
+      value: 2.726
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20.202
+      value: -12.089371
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.64085644
+      value: 0.7070505
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.64085644
+      value: 0.70705056
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.29883623
+      value: 0.008919397
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.29883623
+      value: -0.008919476
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4237,11 +4245,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -1.446
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 5e76cbf2750ae0843936d551b070d0f7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
