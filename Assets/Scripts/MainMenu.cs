@@ -25,8 +25,10 @@ public class MainMenu : MonoBehaviour
     public AudioSource buttonAudio;
 
     public TMP_Text journalText;
+
     [TextArea(3, 10)]
     public string journalMessage;
+
     public float typeSpeed = 0.05f;
     public float journalDelayBeforeLoad = 1.5f;
     public AudioSource typewriterAudio;
@@ -34,33 +36,14 @@ public class MainMenu : MonoBehaviour
     [Header("Skip Hint")]
     public TMP_Text skipHintText;
 
+    public GameObject creditsPanel;
+
     private bool isMoving = false;
     private bool isFadingMenu = false;
     private bool isFadingToBlack = false;
     private bool hasStarted = false;
     private bool doorsOpened = false;
     private bool journalStarted = false;
-
-    public GameObject creditsPanel;
-
-    public void OpenCredits()
-    {
-        if (fadeGroup != null)
-            fadeGroup.alpha = 1f;
-
-        if (creditsPanel != null)
-            creditsPanel.SetActive(true);
-    }
-
-    public void CloseCredits()
-    {
-        if (creditsPanel != null)
-            creditsPanel.SetActive(false);
-
-        // Remove black screen
-        if (fadeGroup != null)
-            fadeGroup.alpha = 0f;
-    }
 
     void Start()
     {
@@ -72,6 +55,9 @@ public class MainMenu : MonoBehaviour
 
         if (tutorialPanel != null)
             tutorialPanel.SetActive(false);
+
+        if (creditsPanel != null)
+            creditsPanel.SetActive(false);
 
         if (menuGroup != null)
             menuGroup.alpha = 1f;
@@ -172,7 +158,15 @@ public class MainMenu : MonoBehaviour
 
         hasStarted = true;
 
-        PlayerPrefs.DeleteAll(); // Clear saved data for testing purposes
+        // Close tutorial/controls panel when Start is pressed
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(false);
+
+        // Also close credits if it was open
+        if (creditsPanel != null)
+            creditsPanel.SetActive(false);
+
+        PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
 
         if (buttonAudio != null && buttonAudio.clip != null)
@@ -205,11 +199,18 @@ public class MainMenu : MonoBehaviour
         isFadingMenu = false;
         isFadingToBlack = false;
 
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(false);
+
         if (!doorsOpened)
         {
             doorsOpened = true;
-            if (leftDoor != null) leftDoor.OpenDoor(false);
-            if (rightDoor != null) rightDoor.OpenDoor(false);
+
+            if (leftDoor != null)
+                leftDoor.OpenDoor(false);
+
+            if (rightDoor != null)
+                rightDoor.OpenDoor(false);
         }
 
         if (fadeGroup != null)
@@ -228,8 +229,8 @@ public class MainMenu : MonoBehaviour
     void StartJournalSequence()
     {
         if (journalStarted) return;
-        journalStarted = true;
 
+        journalStarted = true;
         StartCoroutine(TypeJournalAndLoad());
     }
 
@@ -251,9 +252,7 @@ public class MainMenu : MonoBehaviour
                 journalText.text += letter;
 
                 if (typewriterAudio != null && typewriterAudio.clip != null && !char.IsWhiteSpace(letter))
-                {
                     typewriterAudio.PlayOneShot(typewriterAudio.clip);
-                }
 
                 if (Input.GetKey(KeyCode.Q))
                     yield return new WaitForSeconds(typeSpeed * 0.1f);
@@ -277,5 +276,23 @@ public class MainMenu : MonoBehaviour
     {
         if (tutorialPanel != null)
             tutorialPanel.SetActive(!tutorialPanel.activeSelf);
+    }
+
+    public void OpenCredits()
+    {
+        if (fadeGroup != null)
+            fadeGroup.alpha = 1f;
+
+        if (creditsPanel != null)
+            creditsPanel.SetActive(true);
+    }
+
+    public void CloseCredits()
+    {
+        if (creditsPanel != null)
+            creditsPanel.SetActive(false);
+
+        if (fadeGroup != null)
+            fadeGroup.alpha = 0f;
     }
 }
