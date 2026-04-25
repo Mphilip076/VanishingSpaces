@@ -62,5 +62,10 @@ public class PickableItem : InteractableItem
         {
             FlashlightManager.OnFlashlightPickup();
         }
+
+        LionWhisper whisper = GetComponent<LionWhisper>();
+        if (whisper != null){
+            whisper.enabled = false;
+        }
     }
 }
