@@ -4,7 +4,6 @@ using UnityEngine;
 public class Fireplace : InteractableItem
 {
     [Header("Settings")]
-    public string anchorItemName;
     public string lightItemName = "Lighter";
 
     [Header("Sounds")]
@@ -12,12 +11,16 @@ public class Fireplace : InteractableItem
     public AudioClip fireSound;
     public AudioClip lockSound;
 
+    [Header("Fire")]
+    public GameObject fire;
+
 
     // Component that plays sound
     private AudioSource audioSource;
 
     // Keep track of all fireplaces to prevent dupes
     private static List<Fireplace> fireplaces = new List<Fireplace>();
+    private static int numAnchored = 0;
     
     // The room the fireplace is in
     private string roomName;
@@ -31,9 +34,12 @@ public class Fireplace : InteractableItem
     {
         roomName = Room.currentRoom.SceneName();
         CheckForDupe();
+
         audioSource = GetComponent<AudioSource>();
+        if(fire != null) fire.SetActive(false);
 
         interactMessage = "Press E to light the fire";
+        interactRange = 4f;
     }
 
     void Update(){
@@ -46,6 +52,11 @@ public class Fireplace : InteractableItem
         {
             if(isLit && audioSource.isPlaying == false) 
                 audioSource.Play();
+        }
+
+        if(isLit && isAnchored)
+        {
+            interactMessage = $"The fireplace is anchored ({numAnchored}/5)";
         }
     }
 
@@ -80,7 +91,7 @@ public class Fireplace : InteractableItem
         }
         else
         {
-            ShowShortMessage("You need a tool", 2);
+            ShowShortMessage("You need a tool to light this!", 2);
         }
     }
 
@@ -101,13 +112,46 @@ public class Fireplace : InteractableItem
             audioSource.loop = true;
             audioSource.Play();
         }
+
+        if(fire != null)
+        {
+            fire.SetActive(true);
+        }
         
-        interactMessage = "Press E to place an item";
+        interactMessage = "Press E to place a gem";
     }
 
     void TryAnchor()
     {
-        
+        InventoryManager i = InventoryManager.Instance;
+        string itemName = null;
+
+        if(i.HasItem("Red Gem")){
+            itemName = "Red Gem";
+        }
+        else if(i.HasItem("Blue Gem"))
+        {
+            itemName = "Blue Gem";
+        }
+        else if(i.HasItem("Green Gem"))
+        {
+            itemName = "Green Gem";
+        }
+        else if(i.HasItem("Yellow Gem"))
+        {
+            itemName = "Yellow Gem";
+        }
+        else if(i.HasItem("White Gem"))
+        {
+            itemName = "White Gem";
+        }
+
+        if(itemName != null)
+        {
+            // Take the item and do the magic
+            i.RemoveItemByName(itemName);
+            OnAnchor();
+        }
     }
 
     // The player placed the anchor item
@@ -122,7 +166,7 @@ public class Fireplace : InteractableItem
             audioSource.PlayOneShot(lockSound);
         }
 
-        canInteract = false;
+        numAnchored++;
     }
 
     public override void OnInteract()

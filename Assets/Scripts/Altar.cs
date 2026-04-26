@@ -22,7 +22,7 @@ public class Altar : InteractableItem
         }
 
         interactMessage = "Press E to place lion";
-        interactRange = 2f;
+        interactRange = 3f;
 
         // Was there a statue?
         if(altars[altarID] == 0)
