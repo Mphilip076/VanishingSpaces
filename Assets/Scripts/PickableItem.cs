@@ -57,6 +57,8 @@ public class PickableItem : InteractableItem
 
         // Mark as picked up so flashlight toggle works
         isPickedUp = true;
+        canInteract = false;
+        canPickUp = false;
 
         if (isFlashlight)
         {
@@ -64,8 +66,9 @@ public class PickableItem : InteractableItem
         }
 
         LionWhisper whisper = GetComponent<LionWhisper>();
-        if (whisper != null){
-            whisper.enabled = false;
-        }
+        if (whisper != null) whisper.enabled = false;
+        
+        AudioSource audio = GetComponent<AudioSource>();
+        if (audio != null) audio.Stop();
     }
 }

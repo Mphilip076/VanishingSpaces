@@ -1,34 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LionPickup : PickableItem
 {
-    [Header("Identity")]
-    public string lionID; // Give each lion a unique ID in Inspector
+    public string lionID;
 
-    void Start()
+    private static List<string> existing = new List<string>();
+
+    public override void Start()
     {
-        if (PlayerPrefs.GetInt(lionID, 0) == 1)
+        if(existing.Exists(x => lionID == x))
         {
+            // This item already exists in the inventory or on a statue
             Destroy(gameObject);
             return;
         }
+
+        interactMessage = "Press E to pick up lion statue";
+        base.Start();
     }
 
     public override void OnPickup(Transform holdPosition)
     {
         base.OnPickup(holdPosition);
 
-        AudioSource audio = GetComponent<AudioSource>();
-        if (audio != null)
-            audio.Stop();
-
-        LionWhisper whisper = GetComponent<LionWhisper>();
-        if (whisper != null)
-            whisper.enabled = false;
-
-        PlayerPrefs.SetInt(lionID, 1);
-        PlayerPrefs.Save();
-
+        existing.Add(lionID);
         Destroy(gameObject);
     }
 }

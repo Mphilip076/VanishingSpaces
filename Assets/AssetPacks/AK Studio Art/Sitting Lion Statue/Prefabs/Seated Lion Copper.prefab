@@ -124,9 +124,8 @@ GameObject:
   - component: {fileID: 6833471795022239174}
   - component: {fileID: 1769705528230748855}
   - component: {fileID: 3584787919486372671}
-  - component: {fileID: -8664462642161691559}
-  - component: {fileID: -827278569357323281}
   - component: {fileID: -8590854715223211189}
+  - component: {fileID: -8664462642161691559}
   - component: {fileID: -5420003972043740406}
   m_Layer: 0
   m_Name: Seated Lion Copper
@@ -277,42 +276,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-8664462642161691559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6169525533320400764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb47115fc16574c83a441afe6b876a5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LionWhisper
-  maxDistance: 18
-  minDistance: 2
-  minVolume: 0.05
-  maxVolume: 0.6
-  usePulse: 1
-  pulseSpeed: 2
-  pulseAmount: 0.15
---- !u!114 &-827278569357323281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6169525533320400764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcf693a8bfbe80d44a714c4093d977cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableItem
-  interactKey: 101
-  interactMessage: Press E to interact
-  interactRange: 3
-  canInteract: 1
-  isPickable: 1
 --- !u!65 &-8590854715223211189
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -334,6 +297,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-8664462642161691559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6169525533320400764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb47115fc16574c83a441afe6b876a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LionWhisper
+  maxDistance: 18
+  minDistance: 2
+  minVolume: 0.05
+  maxVolume: 0.6
+  usePulse: 1
+  pulseSpeed: 2
+  pulseAmount: 0.15
 --- !u!114 &-5420003972043740406
 MonoBehaviour:
   m_ObjectHideFlags: 0
