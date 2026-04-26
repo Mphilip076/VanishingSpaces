@@ -56,7 +56,26 @@ public class WeepingStatue : MonoBehaviour
 
     void Update()
     {
+
         FindRuntimeReferences();
+
+        if (Fireplace.IsCurrentRoomAnchored())
+{
+            if (agent != null)
+                agent.isStopped = true;
+
+            if (animator != null)
+                animator.speed = 0f;
+
+            if (moveAudioSource != null && moveAudioSource.isPlaying)
+                moveAudioSource.Stop();
+
+            StopWhisperImmediately();
+
+            isAttacking = false;
+
+            return;
+        }
 
         if (agent == null || !agent.isActiveAndEnabled || !agent.isOnNavMesh || player == null || isAttacking)
             return;

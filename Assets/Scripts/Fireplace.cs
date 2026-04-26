@@ -169,6 +169,17 @@ public class Fireplace : InteractableItem
         numAnchored++;
     }
 
+    public static bool IsCurrentRoomAnchored(){
+        foreach (Fireplace f in fireplaces)
+        {
+            if (f != null && f.roomName == Room.currentRoom.SceneName())
+            {
+                return f.isAnchored;
+            }
+        }
+
+        return false;
+    }
     public override void OnInteract()
     {
         if(!isLit) TryLight();
