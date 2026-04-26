@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class EndAnimationManager : MonoBehaviour
 {
@@ -16,6 +17,17 @@ public class EndAnimationManager : MonoBehaviour
     public float doorOpenDistance = 2f;
 
     public AudioSource runningAudio;
+
+    [Header("End Text")]
+    public TMP_Text storyEndText;
+    [TextArea(3, 10)]
+    public string storyEndMessage = "You made it outside.\nBut the house is still watching.";
+
+    public TMP_Text thankYouText;
+    public string thankYouMessage = "Thank you for playing.";
+
+    public float storyTextDelay = 1f;
+    public float thankYouDelay = 4f;
 
     private bool isMoving = true;
     private bool isFadingToBlack = false;
@@ -35,6 +47,18 @@ public class EndAnimationManager : MonoBehaviour
 
         if (fadeGroup != null)
             fadeGroup.alpha = 0f;
+
+        if (storyEndText != null)
+        {
+            storyEndText.text = "";
+            storyEndText.gameObject.SetActive(false);
+        }
+
+        if (thankYouText != null)
+        {
+            thankYouText.text = "";
+            thankYouText.gameObject.SetActive(false);
+        }
 
         if (runningAudio != null)
             runningAudio.Play();
@@ -97,6 +121,9 @@ public class EndAnimationManager : MonoBehaviour
 
     void FinishEnding()
     {
+        if (endingFinished)
+            return;
+
         endingFinished = true;
         isMoving = false;
         isFadingToBlack = false;
@@ -104,7 +131,25 @@ public class EndAnimationManager : MonoBehaviour
         if (runningAudio != null)
             runningAudio.Stop();
 
-        // Leave the screen black here.
-        // If you want to go to credits or menu later, add it here.
+        Invoke(nameof(ShowStoryEndText), storyTextDelay);
+        Invoke(nameof(ShowThankYouText), storyTextDelay + thankYouDelay);
+    }
+
+    void ShowStoryEndText()
+    {
+        if (storyEndText != null)
+        {
+            storyEndText.gameObject.SetActive(true);
+            storyEndText.text = storyEndMessage;
+        }
+    }
+
+    void ShowThankYouText()
+    {
+        if (thankYouText != null)
+        {
+            thankYouText.gameObject.SetActive(true);
+            thankYouText.text = thankYouMessage;
+        }
     }
 }
