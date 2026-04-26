@@ -3,7 +3,7 @@ using UnityEngine;
 public class FallenVase : InteractableItem
 {
     public static bool isUpright;
-    private static FallenVase instance;
+    private static FallenVase instance = null;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public class ToiletLid : InteractableItem
 {
-    static bool isOpen = false;
+    static int position = 1;
     private static ToiletLid instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,22 +23,26 @@ public class ToiletLid : InteractableItem
 
     public override void OnInteract()
     {
-        if (isOpen)
+        position++;
+        if(position > 4) position = 1;
+
+        if(position == 1)
         {
-            // close
+            transform.rotation = Quaternion.Euler(0, 90, 180);
+        }else if(position == 2)
+        {
+            transform.rotation = Quaternion.Euler(0, 90, 210);
+        }else if(position == 3)
+        {
+            transform.rotation = Quaternion.Euler(0, 90, 240);
+        }else if(position == 4)
+        {
             transform.rotation = Quaternion.Euler(0, 90, 270);
         }
-        else
-        {
-            // open
-            transform.rotation = Quaternion.Euler(0, 90, 180);
-        }
-
-        isOpen = !isOpen;
     }
 
-    public static bool IsOpen()
+    public static int GetPosition()
     {
-        return isOpen;
+        return position;
     }
 }
