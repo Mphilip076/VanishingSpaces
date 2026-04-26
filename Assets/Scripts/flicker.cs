@@ -24,6 +24,8 @@ public class LightFlicker : MonoBehaviour
     public int minFlashCount = 1;
     public int maxFlashCount = 3;
 
+    private Coroutine flickerRoutine;
+
     void Start()
     {
         if (lightSource == null)
@@ -31,22 +33,28 @@ public class LightFlicker : MonoBehaviour
 
         lightSource.intensity = 0f;
 
-        StartCoroutine(Flicker());
+        flickerRoutine = StartCoroutine(Flicker());
     }
 
     IEnumerator Flicker()
     {
-        // random startup delay so lights do not sync
         yield return new WaitForSeconds(Random.Range(0f, 5f));
 
         while (true)
         {
+
+            if (Fireplace.IsCurrentRoomAnchored())
+            {
+
+                lightSource.intensity = maxFlashIntensity;
+
+                yield break; 
+            }
+
             lightSource.intensity = 0f;
 
-            // wait in darkness for a random amount of time
             yield return new WaitForSeconds(Random.Range(minOffTime, maxOffTime));
 
-            // sometimes do nothing this cycle
             if (Random.value > flashChance)
                 continue;
 
@@ -54,6 +62,12 @@ public class LightFlicker : MonoBehaviour
 
             for (int i = 0; i < flashCount; i++)
             {
+                if (Fireplace.IsCurrentRoomAnchored())
+                {
+                    lightSource.intensity = maxFlashIntensity;
+                    yield break;
+                }
+
                 lightSource.intensity = Random.Range(minFlashIntensity, maxFlashIntensity);
                 yield return new WaitForSeconds(Random.Range(minFlashTime, maxFlashTime));
 
