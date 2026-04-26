@@ -11239,7 +11239,7 @@ MonoBehaviour:
   filledAltars: 0
   gemItemPrefab: {fileID: 1501433250573881312, guid: cb152a132fb8d4301969770401e9e99f, type: 3}
   gemIcon: {fileID: 21300000, guid: 8e56a6fea635b4a9ea1bbdd29e2877c9, type: 3}
-  gemItemName: Gem
+  gemItemName: White Gem
   completionSound: {fileID: 674254123}
 --- !u!4 &674254122
 Transform:
