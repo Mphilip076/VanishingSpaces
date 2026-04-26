@@ -8,7 +8,7 @@ public class BathroomPuzzle : MonoBehaviour
 
     
 
-    private static BathroomPuzzle instance;
+    private static BathroomPuzzle instance = null;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,6 +31,8 @@ public class BathroomPuzzle : MonoBehaviour
 
     void CheckPuzzleCompletion()
     {
-        
+        if(!FallenVase.isUpright) return;
+        if(ToiletLid.GetPosition() != correctToiletPosition) return;
+
     }
 }
