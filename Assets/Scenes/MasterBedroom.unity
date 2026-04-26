@@ -2616,8 +2616,9 @@ MonoBehaviour:
   canInteract: 1
   isPickable: 0
   puzzleImage: {fileID: 21300000, guid: 725e2a616c59641819338ad9a3b34594, type: 3}
-  spawnItem: {fileID: 0}
-  spawnPoint: {fileID: 1079793488}
+  gemItemPrefab: {fileID: 1501433250573881312, guid: 998383175bea1704fafb8d9a266f119d, type: 3}
+  gemIcon: {fileID: 21300000, guid: d251e08a28bc78b41b72884e1def2e04, type: 3}
+  gemItemName: Yellow Gem
   puzzleUI: {fileID: 132732301}
   gridLayout: {fileID: 1547219307}
   autoSolveDelay: 60

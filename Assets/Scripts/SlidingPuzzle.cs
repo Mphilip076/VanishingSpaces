@@ -6,8 +6,11 @@ public class SlidingPuzzle : InteractableItem
 {
     [Header("Puzzle Settings")]
     public Sprite puzzleImage;
-    public GameObject spawnItem;
-    public Transform spawnPoint;
+
+    [Header("Gem Reward")]
+    public GameObject gemItemPrefab;
+    public Sprite gemIcon;
+    public string gemItemName = "White Gem";
 
     [Header("UI")]
     public GameObject puzzleUI;
@@ -25,6 +28,7 @@ public class SlidingPuzzle : InteractableItem
     private int emptyRow, emptyCol;
     private bool isSolved = false;
     private bool isUIOpen = false;
+    private bool gemGiven = false;
     private float timeOpen = 0f;
 
     void Start()
@@ -35,7 +39,8 @@ public class SlidingPuzzle : InteractableItem
         if (PlayerPrefs.GetInt("sliding_puzzle_solved", 0) == 1)
         {
             isSolved = true;
-            SpawnItem();
+            gemGiven = true;
+            canInteract = false;
         }
 
         interactMessage = "Press E to open puzzle";
@@ -73,9 +78,14 @@ public class SlidingPuzzle : InteractableItem
 
     void OpenPuzzleUI()
     {
+        if (isSolved) return;
+
         isUIOpen = true;
         timeOpen = 0f;
-        if (autoSolveButton != null) autoSolveButton.SetActive(false);
+
+        if (autoSolveButton != null)
+            autoSolveButton.SetActive(false);
+
         puzzleUI.SetActive(true);
 
         Canvas.ForceUpdateCanvases();
@@ -97,22 +107,24 @@ public class SlidingPuzzle : InteractableItem
         if (panelRect == null) return;
 
         float boardSize = Mathf.Min(panelRect.rect.width, panelRect.rect.height) * 0.85f;
-        float cellSize  = boardSize / size;
+        float cellSize = boardSize / size;
 
-        gridRect.anchorMin        = new Vector2(0.5f, 0.5f);
-        gridRect.anchorMax        = new Vector2(0.5f, 0.5f);
-        gridRect.pivot            = new Vector2(0.5f, 0.5f);
+        gridRect.anchorMin = new Vector2(0.5f, 0.5f);
+        gridRect.anchorMax = new Vector2(0.5f, 0.5f);
+        gridRect.pivot = new Vector2(0.5f, 0.5f);
         gridRect.anchoredPosition = Vector2.zero;
-        gridRect.sizeDelta        = new Vector2(boardSize, boardSize);
+        gridRect.sizeDelta = new Vector2(boardSize, boardSize);
 
         gridLayout.cellSize = new Vector2(cellSize, cellSize);
-        gridLayout.spacing  = Vector2.zero;
+        gridLayout.spacing = Vector2.zero;
     }
 
     public void ClosePuzzleUI()
     {
         isUIOpen = false;
-        puzzleUI.SetActive(false);
+
+        if (puzzleUI != null)
+            puzzleUI.SetActive(false);
 
         if (timerText != null)
             timerText.text = "";
@@ -154,7 +166,8 @@ public class SlidingPuzzle : InteractableItem
         for (int i = 0; i < 200; i++)
         {
             int dir = Random.Range(0, 4);
-            int newRow = emptyRow, newCol = emptyCol;
+            int newRow = emptyRow;
+            int newCol = emptyCol;
 
             if (dir == 0) newRow--;
             else if (dir == 1) newRow++;
@@ -213,7 +226,13 @@ public class SlidingPuzzle : InteractableItem
         float tileW = puzzleImage.texture.width / (float)size;
         float tileH = puzzleImage.texture.height / (float)size;
 
-        Rect rect = new Rect(col * tileW, puzzleImage.texture.height - (row + 1) * tileH, tileW, tileH);
+        Rect rect = new Rect(
+            col * tileW,
+            puzzleImage.texture.height - (row + 1) * tileH,
+            tileW,
+            tileH
+        );
+
         return Sprite.Create(puzzleImage.texture, rect, new Vector2(0.5f, 0.5f));
     }
 
@@ -236,7 +255,10 @@ public class SlidingPuzzle : InteractableItem
 
         Button emptyBtn = tiles[emptyIndex].GetComponent<Button>();
         if (emptyBtn == null) emptyBtn = tiles[emptyIndex].AddComponent<Button>();
-        int newEmptyRow = emptyRow, newEmptyCol = emptyCol;
+
+        int newEmptyRow = emptyRow;
+        int newEmptyCol = emptyCol;
+
         emptyBtn.onClick.RemoveAllListeners();
         emptyBtn.onClick.AddListener(() => OnTileClick(newEmptyRow, newEmptyCol));
 
@@ -255,6 +277,7 @@ public class SlidingPuzzle : InteractableItem
     void CheckWin()
     {
         int num = 1;
+
         for (int r = 0; r < size; r++)
         {
             for (int c = 0; c < size; c++)
@@ -265,18 +288,40 @@ public class SlidingPuzzle : InteractableItem
         }
 
         isSolved = true;
+
         PlayerPrefs.SetInt("sliding_puzzle_solved", 1);
         PlayerPrefs.Save();
 
+        GiveGemReward();
+
         Invoke("ClosePuzzleUI", 1f);
-        Invoke("SpawnItem", 1.5f);
 
         canInteract = false;
+    }
+
+    void GiveGemReward()
+    {
+        if (gemGiven) return;
+
+        if (InventoryManager.Instance == null)
+        {
+            Debug.LogWarning("InventoryManager.Instance was not found. Gem was not added.");
+            return;
+        }
+
+        InventoryManager.Instance.AddItem(
+            gemItemPrefab,
+            gemIcon,
+            gemItemName
+        );
+
+        gemGiven = true;
     }
 
     public void AutoSolve()
     {
         int num = 1;
+
         for (int r = 0; r < size; r++)
             for (int c = 0; c < size; c++)
                 board[r, c] = (r == size - 1 && c == size - 1) ? 0 : num++;
@@ -293,24 +338,10 @@ public class SlidingPuzzle : InteractableItem
         CheckWin();
     }
 
-    void SpawnItem()
-    {
-        if (spawnItem == null || spawnPoint == null) return;
-
-        Vector3 spawnPos = spawnPoint.position + Vector3.up * 1.2f;
-        GameObject item = Instantiate(spawnItem, spawnPos, Random.rotation);
-
-        Rigidbody rb = item.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            Vector3 popDir = new Vector3(Random.Range(-0.5f, 0.5f), 1f, Random.Range(-0.5f, 0.5f)).normalized;
-            rb.AddForce(popDir * 4f, ForceMode.Impulse);
-            rb.AddTorque(Random.insideUnitSphere * 3f, ForceMode.Impulse);
-        }
-    }
-
     public void RestartPuzzle()
     {
+        if (isSolved) return;
+
         for (int r = 0; r < size; r++)
             for (int c = 0; c < size; c++)
                 board[r, c] = initialBoard[r, c];
@@ -324,7 +355,9 @@ public class SlidingPuzzle : InteractableItem
                 }
 
         timeOpen = 0f;
-        if (autoSolveButton != null) autoSolveButton.SetActive(false);
+
+        if (autoSolveButton != null)
+            autoSolveButton.SetActive(false);
 
         foreach (Transform child in gridLayout.transform)
             Destroy(child.gameObject);
