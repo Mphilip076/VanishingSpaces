@@ -9,12 +9,18 @@ public class ChestPuzzle : InteractableItem
     [Header("Key Item")]
     public GameObject keyInsideChest;
 
+    [Header("Gem Reward")]
+    public GameObject gemItemPrefab;
+    public Sprite gemIcon;
+    public string gemItemName = "White Gem";
+
     [Header("UI")]
     public GameObject codeUI;
     public TMP_InputField codeInput;
     public TextMeshProUGUI feedbackText;
 
     private bool isOpen = false;
+    private bool gemGiven = false;
     private AudioSource chestSound;
     private Animation chestAnimation;
     private static ChestPuzzle instance;
@@ -41,17 +47,17 @@ public class ChestPuzzle : InteractableItem
         if (codeUI != null)
             codeUI.SetActive(false);
 
-        // Hide key at start
         if (keyInsideChest != null)
             keyInsideChest.SetActive(false);
 
-        // If chest was already solved before, show key immediately
         if (PlayerPrefs.GetInt("chest_solved", 0) == 1)
         {
             ShowKey();
 
             if (chestAnimation != null)
                 chestAnimation.Play("ChestAnim");
+
+            gemGiven = true;
         }
 
         DontDestroyOnLoad(gameObject);
@@ -110,6 +116,25 @@ public class ChestPuzzle : InteractableItem
         canInteract = false;
     }
 
+    void GiveGemReward()
+    {
+        if (gemGiven) return;
+
+        if (InventoryManager.Instance == null)
+        {
+            Debug.LogWarning("InventoryManager.Instance was not found. Gem was not added.");
+            return;
+        }
+
+        InventoryManager.Instance.AddItem(
+            gemItemPrefab,
+            gemIcon,
+            gemItemName
+        );
+
+        gemGiven = true;
+    }
+
     public void SubmitCode()
     {
         if (codeInput == null) return;
@@ -128,9 +153,10 @@ public class ChestPuzzle : InteractableItem
             if (chestSound != null)
                 chestSound.Play();
 
-            // Save that chest has been solved
             PlayerPrefs.SetInt("chest_solved", 1);
             PlayerPrefs.Save();
+
+            GiveGemReward();
 
             Invoke("CloseCodeUI", 1.5f);
             Invoke("ShowKey", 2f);

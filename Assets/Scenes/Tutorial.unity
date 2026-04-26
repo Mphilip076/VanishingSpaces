@@ -4876,6 +4876,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 682534988}
     - target: {fileID: 7446964067829864268, guid: 97a5370926a5afe459de07335829d2d3, type: 3}
+      propertyPath: gemIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 3673614ef2e3f0342a298a084ac491e6, type: 3}
+    - target: {fileID: 7446964067829864268, guid: 97a5370926a5afe459de07335829d2d3, type: 3}
       propertyPath: codeInput
       value: 
       objectReference: {fileID: 677725585}
@@ -4892,6 +4896,10 @@ PrefabInstance:
       value: 4920
       objectReference: {fileID: 0}
     - target: {fileID: 7446964067829864268, guid: 97a5370926a5afe459de07335829d2d3, type: 3}
+      propertyPath: gemItemName
+      value: Green Gem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446964067829864268, guid: 97a5370926a5afe459de07335829d2d3, type: 3}
       propertyPath: interactKey
       value: 101
       objectReference: {fileID: 0}
@@ -4899,6 +4907,10 @@ PrefabInstance:
       propertyPath: feedbackText
       value: 
       objectReference: {fileID: 1508685727}
+    - target: {fileID: 7446964067829864268, guid: 97a5370926a5afe459de07335829d2d3, type: 3}
+      propertyPath: gemItemPrefab
+      value: 
+      objectReference: {fileID: 5343106370968100332, guid: 60f92f0accfa9a04f91b66a3c30bcf41, type: 3}
     - target: {fileID: 7446964067829864268, guid: 97a5370926a5afe459de07335829d2d3, type: 3}
       propertyPath: interactRange
       value: 3
