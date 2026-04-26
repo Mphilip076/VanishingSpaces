@@ -122,22 +122,43 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void RemoveItemByName(string name)
-    {
+    // public void RemoveItemByName(string name)
+    // {
+    //     Debug.Log("[Inventory Manager] Removing item " + name);
+    //     for (int i = 0; i < heldItems.Length; i++)
+    //     {
+    //         if(heldItems[i] == null) continue;
+    //         if (heldItemNames[i] == name)
+    //         {
+    //             heldItems[i] = null;
+    //             heldItemNames[i] = null;
+    //             heldItemIcons[i] = null;
+    //             slotIcons[i].sprite = null;
+    //             slotIcons[i].enabled = false;
+    //             return;
+    //         }
+    //     }
+    // }
+    public void RemoveItemByName(string name){
         Debug.Log("[Inventory Manager] Removing item " + name);
-        for (int i = 0; i < heldItems.Length; i++)
+
+        for (int i = 0; i < heldItemNames.Length; i++)
         {
-            if(heldItems[i] == null) continue;
             if (heldItemNames[i] == name)
             {
                 heldItems[i] = null;
                 heldItemNames[i] = null;
                 heldItemIcons[i] = null;
+
                 slotIcons[i].sprite = null;
                 slotIcons[i].enabled = false;
+
+                Debug.Log("[Inventory Manager] Removed " + name + " from slot " + i);
                 return;
             }
         }
+
+        Debug.Log("[Inventory Manager] Could not find item named " + name);
     }
 
     public void RefreshUI()
