@@ -9,7 +9,7 @@ public class Lighter : PickableItem
     {
         base.Start();
 
-        if(exists)
+        if (exists)
         {
             Destroy(gameObject);
             return;
@@ -17,5 +17,10 @@ public class Lighter : PickableItem
 
         DontDestroyOnLoad(gameObject);
         exists = true;
+    }
+
+    void OnDestroy()
+    {
+        exists = false;
     }
 }
