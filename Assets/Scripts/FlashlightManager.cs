@@ -20,6 +20,9 @@ public class FlashlightManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        // Load saved state — defaults to 100%/no flashlight on fresh game (PlayerPrefs cleared by BackToMainMenu)
+        batteryLevel = PlayerPrefs.GetFloat("fl_battery", 100f);
+        hasFlashlight = PlayerPrefs.GetInt("fl_hasFlashlight", 0) == 1;
     }
 
     void Start()
@@ -27,23 +30,20 @@ public class FlashlightManager : MonoBehaviour
         if (flashlightLight != null)
             flashlightLight.enabled = false;
 
-        // Hide battery UI by default
         if (batteryText != null)
-            batteryText.gameObject.SetActive(false);
+            batteryText.gameObject.SetActive(hasFlashlight);
     }
 
     void Update()
     {
-        // Only allow flashlight toggle if player has flashlight
         if (hasFlashlight && Input.GetKeyDown(KeyCode.F))
-        {
             ToggleFlashlight();
-        }
 
         if (isOn)
         {
             batteryLevel -= drainRate * Time.deltaTime;
             batteryLevel = Mathf.Clamp(batteryLevel, 0f, 100f);
+            PlayerPrefs.SetFloat("fl_battery", batteryLevel);
 
             if (batteryLevel <= 0f)
             {
@@ -78,12 +78,11 @@ public class FlashlightManager : MonoBehaviour
         else TurnOn();
     }
 
-    // Call this when player picks up flashlight
     public static void OnFlashlightPickup()
     {
         hasFlashlight = true;
+        PlayerPrefs.SetInt("fl_hasFlashlight", 1);
 
-        // Show battery UI
         if (Instance != null && Instance.batteryText != null)
             Instance.batteryText.gameObject.SetActive(true);
     }

@@ -7,6 +7,7 @@ public class AltarManager : MonoBehaviour
     public int totalAltars = 5;
     public int filledAltars = 0;
     private bool isComplete = false;
+    private bool gemGiven = false;
 
     [Header("Gem Reward")]
     public GameObject gemItemPrefab;
@@ -16,8 +17,7 @@ public class AltarManager : MonoBehaviour
 
     void Awake()
     {
-        // Singleton
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -28,24 +28,28 @@ public class AltarManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (isComplete && !gemGiven)
+            TryGiveGem();
+    }
+
     public void RegisterAltar()
     {
-        if(isComplete) return;
+        if (isComplete) return;
 
         filledAltars++;
-
         Debug.Log("Altars filled: " + filledAltars + "/" + totalAltars);
 
         if (filledAltars == totalAltars)
         {
-            if(completionSound != null)
-            {
+            if (completionSound != null)
                 completionSound.Play();
-            }
-            
+
             isComplete = true;
             Invoke("CompletePuzzle", 2);
-        }else if (filledAltars > totalAltars)
+        }
+        else if (filledAltars > totalAltars)
         {
             Debug.LogWarning("There are more filled altars than total altars!");
         }
@@ -53,15 +57,19 @@ public class AltarManager : MonoBehaviour
 
     void CompletePuzzle()
     {
-        Debug.Log("All altars filled. Adding gem to inventory.");
+        Debug.Log("All altars filled. Attempting to add gem to inventory.");
+        TryGiveGem();
+    }
 
-        if (InventoryManager.Instance == null)
-            return;
+    void TryGiveGem()
+    {
+        if (InventoryManager.Instance == null) return;
 
-        InventoryManager.Instance.AddItem(
-            gemItemPrefab,
-            gemIcon,
-            gemItemName
-        );
+        bool added = InventoryManager.Instance.AddItem(gemItemPrefab, gemIcon, gemItemName);
+        if (added)
+        {
+            gemGiven = true;
+            Debug.Log("[AltarManager] Gem added to inventory.");
+        }
     }
 }

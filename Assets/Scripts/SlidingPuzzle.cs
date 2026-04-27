@@ -45,11 +45,16 @@ public class SlidingPuzzle : InteractableItem
         if (PlayerPrefs.GetInt("sliding_puzzle_solved", 0) == 1)
         {
             isSolved = true;
-            gemGiven = true;
-            canInteract = false;
+            gemGiven = PlayerPrefs.GetInt("sliding_puzzle_gem_given", 0) == 1;
+            canInteract = !gemGiven; // stay interactable if gem still pending
+            interactMessage = "Inventory full! Make room to claim your gem.";
         }
 
-        interactMessage = "Press E to open puzzle";
+        if (gemGiven) canInteract = false;
+
+        interactMessage = isSolved && !gemGiven
+            ? "Inventory full! Make room to claim your gem."
+            : "Press E to open puzzle";
         interactKey = KeyCode.E;
         interactRange = 3f;
     }
@@ -78,6 +83,13 @@ public class SlidingPuzzle : InteractableItem
 
     public override void OnInteract()
     {
+        // Puzzle solved but gem not yet given (inventory was full) — retry
+        if (isSolved && !gemGiven)
+        {
+            GiveGemReward();
+            return;
+        }
+
         if (isUIOpen) ClosePuzzleUI();
         else OpenPuzzleUI();
     }
@@ -313,8 +325,7 @@ public class SlidingPuzzle : InteractableItem
         GiveGemReward();
 
         Invoke("ClosePuzzleUI", 1f);
-
-        canInteract = false;
+        // canInteract is set inside GiveGemReward based on whether inventory had space
     }
 
     void GiveGemReward()
@@ -327,13 +338,22 @@ public class SlidingPuzzle : InteractableItem
             return;
         }
 
-        InventoryManager.Instance.AddItem(
-            gemItemPrefab,
-            gemIcon,
-            gemItemName
-        );
+        bool added = InventoryManager.Instance.AddItem(gemItemPrefab, gemIcon, gemItemName);
 
-        gemGiven = true;
+        if (added)
+        {
+            gemGiven = true;
+            PlayerPrefs.SetInt("sliding_puzzle_gem_given", 1);
+            PlayerPrefs.Save();
+            canInteract = false;
+        }
+        else
+        {
+            // Inventory full — keep interactable so player can claim later
+            canInteract = true;
+            interactMessage = "Inventory full! Make room to claim your gem.";
+            ShowShortMessage("Inventory full! Clear a slot and come back.", 3);
+        }
     }
 
     public void AutoSolve()
