@@ -12,6 +12,9 @@ public class SlidingPuzzle : InteractableItem
     public Sprite gemIcon;
     public string gemItemName = "White Gem";
 
+    [Header("Reference Image")]
+    public Image referenceImage;
+
     [Header("UI")]
     public GameObject puzzleUI;
     public GridLayoutGroup gridLayout;
@@ -35,6 +38,9 @@ public class SlidingPuzzle : InteractableItem
     {
         if (puzzleUI != null)
             puzzleUI.SetActive(false);
+
+        if (referenceImage != null)
+            referenceImage.gameObject.SetActive(false);
 
         if (PlayerPrefs.GetInt("sliding_puzzle_solved", 0) == 1)
         {
@@ -88,6 +94,13 @@ public class SlidingPuzzle : InteractableItem
 
         puzzleUI.SetActive(true);
 
+        // Show reference image
+        if (referenceImage != null)
+        {
+            referenceImage.sprite = puzzleImage;
+            referenceImage.gameObject.SetActive(true);
+        }
+
         Canvas.ForceUpdateCanvases();
         FitGridToPanel();
 
@@ -106,7 +119,8 @@ public class SlidingPuzzle : InteractableItem
         RectTransform panelRect = gridRect.parent as RectTransform;
         if (panelRect == null) return;
 
-        float boardSize = Mathf.Min(panelRect.rect.width, panelRect.rect.height) * 0.85f;
+        // Use fixed size instead of panel size
+        float boardSize = 500f; // Change this number to adjust puzzle size
         float cellSize = boardSize / size;
 
         gridRect.anchorMin = new Vector2(0.5f, 0.5f);
@@ -125,6 +139,10 @@ public class SlidingPuzzle : InteractableItem
 
         if (puzzleUI != null)
             puzzleUI.SetActive(false);
+
+        // Hide reference image
+        if (referenceImage != null)
+            referenceImage.gameObject.SetActive(false);
 
         if (timerText != null)
             timerText.text = "";
