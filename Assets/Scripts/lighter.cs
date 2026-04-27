@@ -1,26 +1,20 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Lighter : PickableItem
 {
-    private static bool exists = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
     {
         base.Start();
 
-        if (exists)
-        {
+        // If already picked up this session, destroy this scene copy
+        if (PlayerPrefs.GetInt("lighter_picked_up", 0) == 1)
             Destroy(gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(gameObject);
-        exists = true;
     }
 
-    void OnDestroy()
+    public override void OnPickup(Transform holdPosition)
     {
-        exists = false;
+        PlayerPrefs.SetInt("lighter_picked_up", 1);
+        base.OnPickup(holdPosition);
+        // Lighter is now a child of the player (DontDestroyOnLoad) — persists without its own DontDestroyOnLoad
     }
 }
