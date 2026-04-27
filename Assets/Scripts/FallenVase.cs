@@ -2,23 +2,17 @@ using UnityEngine;
 
 public class FallenVase : InteractableItem
 {
-    public static bool isUpright;
-    private static FallenVase instance = null;
+    public static bool isUpright = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(instance == null) instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(gameObject);
-
-        interactMessage = "Press E to set upright";
         isUpright = false;
+        interactMessage = "Press E to set upright";
+
+        if(PlayerPrefs.HasKey("FallenVase")){
+            OnInteract();
+        }
     }
 
     public override void OnInteract()
@@ -28,5 +22,8 @@ public class FallenVase : InteractableItem
 
         isUpright = true;
         canInteract = false;
+
+        PlayerPrefs.SetInt("FallenVase", 1);
+        PlayerPrefs.Save();
     }
 }
