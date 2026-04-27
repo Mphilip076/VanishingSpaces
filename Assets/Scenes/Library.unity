@@ -26864,19 +26864,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 360558943284749298, guid: 68f5e3564ca58bf43a83d8d92cd8502d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.71007603
       objectReference: {fileID: 0}
     - target: {fileID: 360558943284749298, guid: 68f5e3564ca58bf43a83d8d92cd8502d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 360558943284749298, guid: 68f5e3564ca58bf43a83d8d92cd8502d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.70412505
       objectReference: {fileID: 0}
     - target: {fileID: 360558943284749298, guid: 68f5e3564ca58bf43a83d8d92cd8502d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 360558943284749298, guid: 68f5e3564ca58bf43a83d8d92cd8502d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -26884,7 +26884,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 360558943284749298, guid: 68f5e3564ca58bf43a83d8d92cd8502d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 89.518
       objectReference: {fileID: 0}
     - target: {fileID: 360558943284749298, guid: 68f5e3564ca58bf43a83d8d92cd8502d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -29493,6 +29493,7 @@ MonoBehaviour:
   isPickable: 0
   exitNumber: 1
   doorSound: {fileID: 1718940976}
+  endSceneName: EndScene
 --- !u!1001 &1720277283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34855,6 +34856,7 @@ MonoBehaviour:
   isPickable: 0
   exitNumber: 1
   doorSound: {fileID: 2086998699}
+  endSceneName: EndScene
 --- !u!1001 &2091499392
 PrefabInstance:
   m_ObjectHideFlags: 0
