@@ -79,8 +79,7 @@ public class RoomManager : MonoBehaviour
             hasStarted = true;
             Debug.Log("[RoomManager.cs] Finished loading rooms");
         }
-
-        Room.ResetRooms();
+        else Room.ResetRooms();
 
     }
 
