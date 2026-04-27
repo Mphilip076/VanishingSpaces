@@ -168,6 +168,7 @@ public class MainMenu : MonoBehaviour
 
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+        Fireplace.ResetFireplaces();
 
         if (buttonAudio != null && buttonAudio.clip != null)
             buttonAudio.PlayOneShot(buttonAudio.clip);

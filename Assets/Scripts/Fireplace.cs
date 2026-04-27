@@ -42,6 +42,11 @@ public class Fireplace : InteractableItem
         interactRange = 4f;
     }
 
+    public static void ResetFireplaces()
+    {
+        fireplaces.Clear();
+    }
+
     void Update(){
         if(Room.currentRoom.SceneName() != roomName && audioSource.isPlaying)
         {
