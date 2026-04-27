@@ -234,11 +234,6 @@ public class Room
             return exit1;
         }
 
-        // If the room you are exiting to is locked, then always return the right exit
-        if (exit1.lockedInPlace) {
-            return exit1;
-        }
-
         // None of the conditions for returning the right exit are met, so return a random exit which is not locked
         return GetRandomExit();
     }
@@ -256,11 +251,6 @@ public class Room
 
         // If this room is locked, then always return the right exit
         if (lockedInPlace) {
-            return exit2;
-        }
-
-        // If the room you are exiting to is locked, then always return the right exit
-        if (exit2.lockedInPlace) {
             return exit2;
         }
 
@@ -283,11 +273,6 @@ public class Room
             return exit3;
         }
 
-        // If the room you are exiting to is locked, then always return the right exit
-        if (exit3.lockedInPlace) {
-            return exit3;
-        }
-
         // None of the conditions for returning the right exit are met, so return a random exit which is not locked
         return GetRandomExit();
     }
@@ -302,11 +287,6 @@ public class Room
 
         // If this room is locked, then always return the right exit
         if (lockedInPlace) {
-            return exit4;
-        }
-
-        // If the room you are exiting to is locked, then always return the right exit
-        if (exit4.lockedInPlace) {
             return exit4;
         }
 
