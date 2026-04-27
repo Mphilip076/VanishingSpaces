@@ -4,21 +4,17 @@ using UnityEngine;
 public class ToiletRoll : InteractableItem
 {
     public static int rollsMoved = 0;
-    private static int id = 1;
+    public string id;
     private bool moved = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(id > 5)
+        if (PlayerPrefs.HasKey(id))
         {
             Destroy(gameObject);
             return;
         }
-
-        id++;
-
-        DontDestroyOnLoad(gameObject);
 
         interactMessage = "Press E to move toilet roll";
         interactKey = KeyCode.E;
@@ -31,6 +27,7 @@ public class ToiletRoll : InteractableItem
 
         moved = true;
         rollsMoved++;
+        PlayerPrefs.SetInt(id, 1);
         Invoke("FinishInteract", 1);
         ShowShortMessage($"Rolls found: {rollsMoved}/5", 1);
     }

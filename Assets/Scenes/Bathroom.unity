@@ -1420,6 +1420,7 @@ MonoBehaviour:
   interactRange: 3
   canInteract: 1
   isPickable: 0
+  id: BathroomRoll4
 --- !u!64 &280854226
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2012,6 +2013,7 @@ MonoBehaviour:
   interactRange: 3
   canInteract: 1
   isPickable: 0
+  id: BathroomRoll2
 --- !u!64 &532225192
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2634,6 +2636,7 @@ MonoBehaviour:
   interactRange: 3
   canInteract: 1
   isPickable: 0
+  id: BathroomRoll5
 --- !u!64 &931441889
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3368,6 +3371,7 @@ MonoBehaviour:
   interactRange: 3
   canInteract: 1
   isPickable: 0
+  id: BathroomRoll1
 --- !u!64 &1189209050
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3947,6 +3951,7 @@ MonoBehaviour:
   interactRange: 3
   canInteract: 1
   isPickable: 0
+  id: BathroomRoll3
 --- !u!64 &1334762770
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5747,6 +5752,7 @@ MonoBehaviour:
   isPickable: 0
   exitNumber: 1
   doorSound: {fileID: 1905915843}
+  endSceneName: EndScene
 --- !u!1001 &1932243429
 PrefabInstance:
   m_ObjectHideFlags: 0

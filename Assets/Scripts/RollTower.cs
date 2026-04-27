@@ -12,23 +12,10 @@ public class RollTower : MonoBehaviour
     public GameObject E;
 
     public static volatile bool trigger;
-    private static RollTower instance = null;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        DontDestroyOnLoad(gameObject);
-
         ModifyTower();
     }
 
