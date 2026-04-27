@@ -5,20 +5,12 @@ using UnityEngine.UIElements;
 public class ToiletLid : InteractableItem
 {
     static int position = 1;
-    private static ToiletLid instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(instance == null) instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(gameObject);
         interactMessage = "Press E to move lid";
         interactRange = 4f;
+        Render();
     }
 
     public override void OnInteract()
@@ -26,6 +18,11 @@ public class ToiletLid : InteractableItem
         position++;
         if(position > 4) position = 1;
 
+        Render();
+    }
+
+    private void Render()
+    {
         if(position == 1)
         {
             transform.rotation = Quaternion.Euler(0, 90, 180);
