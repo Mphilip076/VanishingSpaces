@@ -40,10 +40,20 @@ public class Fireplace : InteractableItem
 
         interactMessage = "Press E to light the fire";
         interactRange = 4f;
+        isLit = false;
+        isAnchored = false;
     }
 
     public static void ResetFireplaces()
     {
+        foreach(var f in fireplaces)
+        {
+            if(f != null && f.gameObject != null)
+            {
+                Destroy(f.gameObject);
+            }
+        }
+
         fireplaces.Clear();
     }
 
