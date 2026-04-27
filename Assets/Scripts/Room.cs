@@ -91,7 +91,8 @@ public class Room
     {
         foreach(var r in allRooms)
         {
-            r.AllowRandomEntry();
+            if(r.sceneName != "StartScene")
+                r.AllowRandomEntry();
         }
     }
 
