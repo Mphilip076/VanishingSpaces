@@ -71,4 +71,9 @@ public class BathroomPuzzle : MonoBehaviour
             Debug.Log("[BathroomPuzzle] Gem added to inventory.");
         }
     }
+
+    void OnDestroy()
+    {
+        puzzleComplete = false;
+    }
 }

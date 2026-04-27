@@ -86,4 +86,9 @@ public class PicturePuzzle : MonoBehaviour
             Debug.Log("[PicturePuzzle] Gem added to inventory.");
         }
     }
+
+    void OnDestroy()
+    {
+        isSolved = false;
+    }
 }
