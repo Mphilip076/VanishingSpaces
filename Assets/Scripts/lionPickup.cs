@@ -27,4 +27,9 @@ public class LionPickup : PickableItem
         existing.Add(lionID);
         Destroy(gameObject);
     }
+
+    public static void ResetAll()
+    {
+        existing.Clear();
+    }
 }

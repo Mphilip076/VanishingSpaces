@@ -63,6 +63,7 @@ public class AltarManager : MonoBehaviour
 
     void TryGiveGem()
     {
+        if (gemGiven) return;
         if (InventoryManager.Instance == null) return;
 
         bool added = InventoryManager.Instance.AddItem(gemItemPrefab, gemIcon, gemItemName);
@@ -71,5 +72,11 @@ public class AltarManager : MonoBehaviour
             gemGiven = true;
             Debug.Log("[AltarManager] Gem added to inventory.");
         }
+    }
+
+    void OnDestroy()
+    {
+        Altar.ResetAll();
+        LionPickup.ResetAll();
     }
 }

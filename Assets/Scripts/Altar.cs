@@ -72,10 +72,8 @@ public class Altar : InteractableItem
 
     void ActivateAltar()
     {
-        if (placedLionVisual != null){
+        if (placedLionVisual != null)
             placedLionVisual.SetActive(true);
-
-        }
 
         if (altarRenderer != null)
         {
@@ -87,5 +85,10 @@ public class Altar : InteractableItem
 
         if (AltarManager.Instance != null)
             AltarManager.Instance.RegisterAltar();
+    }
+
+    public static void ResetAll()
+    {
+        altars.Clear();
     }
 }
