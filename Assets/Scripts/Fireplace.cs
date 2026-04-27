@@ -44,6 +44,11 @@ public class Fireplace : InteractableItem
 
     public static void ResetFireplaces()
     {
+        foreach(var f in fireplaces)
+        {
+            Destroy(f.gameObject);
+        }
+
         fireplaces.Clear();
     }
 
