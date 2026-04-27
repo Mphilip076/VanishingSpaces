@@ -87,6 +87,14 @@ public class Room
         Debug.Log("[Room.cs] Loaded scene " + Name);
     }
 
+    public static void ResetRooms()
+    {
+        foreach(var r in allRooms)
+        {
+            r.AllowRandomEntry();
+        }
+    }
+
     
     // ------------------------------------ GETTERS ------------------------------------
 

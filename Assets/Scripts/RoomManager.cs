@@ -40,14 +40,6 @@ public class RoomManager : MonoBehaviour
             Room masterBedroom = new Room("MasterBedroom");
             Room bathroom = new Room("Bathroom");
 
-            // Make rooms accessible
-            tutorial.AllowRandomEntry();
-            diningRoom.AllowRandomEntry();
-            livingRoom.AllowRandomEntry();
-            library.AllowRandomEntry();
-            masterBedroom.AllowRandomEntry();
-            bathroom.AllowRandomEntry();
-
             /* Set exits BOTH WAYS
                 dining -> living
                 dining -> bedroom
@@ -87,6 +79,8 @@ public class RoomManager : MonoBehaviour
             hasStarted = true;
             Debug.Log("[RoomManager.cs] Finished loading rooms");
         }
+
+        Room.ResetRooms();
 
     }
 
