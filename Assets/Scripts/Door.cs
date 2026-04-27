@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Door : InteractableItem
 {
@@ -7,6 +8,9 @@ public class Door : InteractableItem
 
     [Header("Sounds")]
     public AudioSource doorSound;
+
+    [Header("End Scene Name")]
+    public string endSceneName = "EndScene";
 
     void Start()
     {
@@ -17,13 +21,19 @@ public class Door : InteractableItem
 
     public override void OnInteract()
     {
-        if(doorSound != null) doorSound.Play();
+        if (doorSound != null) doorSound.Play();
         Invoke("LoadNextScene", 1.5f);
     }
 
     void LoadNextScene()
     {
+
+        if (Fireplace.AllRoomsAnchored())
+        {
+            SceneManager.LoadScene("EndScene");
+            return;
+        }
+
         Room.currentRoom.UseExit(exitNumber);
     }
-
 }

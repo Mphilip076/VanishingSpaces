@@ -180,6 +180,11 @@ public class Fireplace : InteractableItem
 
         return false;
     }
+
+    public static bool AllRoomsAnchored()
+    {
+        return numAnchored >= 5;
+    }
     public override void OnInteract()
     {
         if(!isLit) TryLight();
