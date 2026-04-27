@@ -36,7 +36,7 @@ public class SettingsManager : MonoBehaviour
         if (sensitivitySlider != null)
         {
             sensitivitySlider.minValue = 10f;
-            sensitivitySlider.maxValue = 200f;
+            sensitivitySlider.maxValue = 500f;
             sensitivitySlider.value = mouseSensitivity; // This will now show 100 correctly!
         }
 
@@ -67,12 +67,14 @@ public class SettingsManager : MonoBehaviour
         masterVolume = volumeSlider.value;
         ApplyVolume();
         UpdateUI();
+        SaveSettings();
     }
 
     public void OnSensitivityChanged()
     {
         mouseSensitivity = sensitivitySlider.value;
         UpdateUI();
+        SaveSettings();
     }
 
     void ApplyVolume()

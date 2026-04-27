@@ -10,7 +10,6 @@ public class PickableItem : InteractableItem
 
     [Header("Flashlight Settings")]
     public Light flashlightLight;
-    private bool isFlashlightOn = false;
     private bool isPickedUp = false;
 
     private Rigidbody rb;
@@ -24,26 +23,19 @@ public class PickableItem : InteractableItem
 
     public virtual void Start()
     {
+        // Player already has the flashlight from a previous pickup — remove this scene copy
+        if (isFlashlight && FlashlightManager.hasFlashlight)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         interactMessage = "Press E to pick up";
         interactKey = KeyCode.E;
         isPickable = true;
 
-        // Make sure flashlight starts off
         if (isFlashlight && flashlightLight != null)
             flashlightLight.enabled = false;
-    }
-
-    void Update()
-    {
-        // Only toggle if this item is a flashlight AND it has been picked up
-        if (isFlashlight && isPickedUp && Input.GetKeyDown(KeyCode.F))
-        {
-            if (flashlightLight != null)
-            {
-                isFlashlightOn = !isFlashlightOn;
-                flashlightLight.enabled = isFlashlightOn;
-            }
-        }
     }
 
     public virtual void OnPickup(Transform holdPosition)
