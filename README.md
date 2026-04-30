@@ -1,6 +1,9 @@
 Vanishing Spaces
+
 Created for CS 426 Spring 2026 at UIC
+
 Design Document link: https://docs.google.com/document/d/1L-gJC_7u1B60RrOgDq0BcuWIfCJ1m-tXZyQgh-zSz-s/edit?usp=sharing
+
 Link to Game: https://mphilip.itch.io/vanishing-spaces 
 
 This game is a first person psychological horror game. An explorer enters an abandoned mansion and gets trapped as the building shifts around them. The mansion rearranges itself whenever the areas are out of sight of the player. The player must find "anchor objects". These objects continue the storyline while locking the rooms and the objects in them in place. All the while the player is haunted by the previous explorers who failed to escape.
