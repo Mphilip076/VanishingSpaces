@@ -1,3 +1,206 @@
+# Vanishing Spaces
+
+> A first-person psychological horror game where reality itself is the enemy. Rooms rearrange themselves the moment you look away — anchor the world, or be consumed by it.
+
+🎮 **[Play on itch.io](https://mphilip.itch.io/vanishing-spaces)** | 📄 **[Design Document](https://docs.google.com/document/d/1L-gJC_7u1B60RrOgDq0BcuWIfCJ1m-tXZyQgh-zSz-s/edit?usp=sharing)**
+
+---
+
+## Overview
+
+**Vanishing Spaces** is a first-person psychological horror game developed for **CS 426: Video Game Design (Spring 2026) at UIC**.
+
+An explorer enters an abandoned mansion and becomes trapped as the building shifts around them. The mansion rearranges itself whenever rooms fall out of the player's line of sight. The player must find **anchor objects** — items that lock rooms and their contents in place while advancing the storyline. All the while, the player is haunted by apparitions of those who failed to escape before them.
+
+With immersive sound design, perception-based mechanics, and environmental puzzles that require observation and timing, *Vanishing Spaces* challenges you to question what is real and what isn't.
+
+---
+
+## Core Mechanics
+
+- **Room Shifting** — Rooms rearrange themselves when they are not in the player's field of view, controlled by a Finite State Machine
+- **Anchor Objects** — Key interactable items that lock the surrounding environment in place and advance the narrative
+- **Statue Enemies** — Enemies that move freely in the dark but freeze the instant the player's flashlight makes contact with them
+- **Flashlight Mechanic** — The player's primary tool for both defense and navigation; integrated as base functionality (not an inventory item)
+- **Inventory System** — Item-based puzzle progression with a clear visual UI
+
+---
+
+## Features
+
+- First-person psychological horror experience
+- Dynamically rearranging mansion layout
+- Freeze-on-flashlight statue enemy system
+- Physics-based flashlight with battery mechanic
+- Environmental puzzles: chest codes, key locks, scroll notes
+- Reactive ambient and spatial audio design
+- Custom URP shaders: rim lighting, fog, statue edge glow
+- In-world narrative through scroll notes and anchor objects
+- Polished UI with animated start screen and control guide
+
+---
+
+## Technical Implementation
+
+### 3D Physics
+
+- Statue enemies use **Collider** components to physically interact with the player, including the ability to push them — the foundation for a future attack system
+- The flashlight uses a **Rigidbody** component with friction adjustments, allowing it to react realistically to gravity and physics forces when dropped
+- Removed unnecessary Rigidbody and Collider components from decorative objects (e.g., couches) to ensure all object movement is intentional
+
+---
+
+### Lighting
+
+- **Starting Room Lights** — Set the initial atmosphere of the mansion
+- **Flashlight** — Player-controlled directional light that doubles as the primary enemy defense mechanic
+- **Ceiling Lights** — Flickering ceiling lights reinforce the broken-down, horror atmosphere
+- **Point Light in Tutorial Room** — Illuminates the environment for onboarding
+
+All lighting contributes to a consistently dark and atmospheric experience with deliberate flicker and shadow design.
+
+---
+
+### Textures
+
+Applied to the following to reinforce the dilapidated mansion aesthetic:
+- Walls, floors, and roof surfaces
+- Cabinet furniture
+- Dining room set
+- Flashlight model
+- Tutorial room wallpaper
+
+---
+
+### AI & Pathfinding
+
+**Statue Enemies**
+- Use **NavMesh + NavMeshAgent** to pathfind around the level and follow the player
+- Freeze in place (animation and movement halted) when caught in the player's flashlight beam
+- Implemented using a **Finite State Machine** with the following states:
+
+| State | Behavior |
+|-------|----------|
+| **Patrol** | Monster moves between predefined patrol points using NavMesh pathfinding |
+| **Jumpscare** | When player is detected, monster teleports in front of player and plays a scream sound |
+| **Disappear** | After the jumpscare, monster vanishes after a short delay |
+
+**Room Swapping**
+- A separate **Finite State Machine** controls which room the player is routed to when the environment shifts
+
+---
+
+### Animation (Mecanim)
+
+| Animator Controller | States |
+|---------------------|--------|
+| **Statue** | Walking animation (visible outside flashlight beam) |
+| **Player** | Idle, Walking, Running — driven by movement speed parameter (first-person) |
+| **Ghost Monster** | Movement and idle animations |
+| **NPC Butler** | Idle animation in the dining room |
+
+---
+
+### Custom Shaders
+
+All shaders implemented using **URP HLSL**:
+
+| Shader | Developer | Description | Applied To |
+|--------|-----------|-------------|------------|
+| **RimLighting.shader** | James | Adds a glowing rim around objects to draw player attention | `PictureLightMaterial` (picture frame), `ScrollLightMaterial` (scroll item) |
+| **SimpleStatueShader.shader** | Matthew | Subtle edge glow for a ghostly horror aesthetic | `StatueMaterial` applied to all statue enemy models |
+| **Fog Shader** | Bhavani | Obscures objects at a distance, forcing the player to explore up close | `Fog` material applied to a picture frame |
+
+---
+
+### Sound Design
+
+| Sound | Developer | Description |
+|-------|-----------|-------------|
+| Statue footstep (stomp) | Matthew | Plays with each step of the statue; stops when flashlight is aimed at it |
+| Statue movement (whisper) | Matthew | Ambient whisper during statue movement; stops when flashlight is aimed |
+| Statue flashlight stinger | Matthew | Jumpscare sound when the flashlight hits the statue |
+| Start button stinger | Matthew | Jumpscare sound when start is pressed |
+| Picture placement sound | Bhavani | Soft thud when placing a picture in a slot |
+| Ambient tension sounds | Bhavani | Background audio creating a sense of dread |
+| Door creak sounds | Bhavani | Play in all rooms except the tutorial room |
+| Chest opening sound | James | Plays when the correct code is entered into the chest puzzle |
+| Exit door sound | James | Plays when the player unlocks the exit door with the key |
+
+---
+
+### UI Design
+
+- Animated **start screen** with a camera pan down the hallway; doors open and the screen fades to black before gameplay begins
+- **Hover effects** on start screen buttons — turn red on hover, white on press
+- **Controls screen** accessible from the start menu before the game begins
+- Title and buttons **fade out** before the camera pan begins
+- Fixed inventory UI appearing on the start screen via `Hide()` and `Show()` methods in `InventoryManager`
+- Separate **Canvas** for the `CodeBoxUI` to prevent destruction by `DontDestroyOnLoad`
+- **Scroll note UI panel** that opens when the player interacts with the scroll
+
+---
+
+## Alpha Feedback & Responses
+
+| Feedback | Response |
+|----------|----------|
+| Control guide text too small | Tutorial screen enlarged for legibility |
+| Interactable items indistinguishable | Key items now appear highlighted |
+| Players trapped in one room (bug) | Bug fixed — players can freely move between all rooms |
+| Item went straight to inventory, no pickup feel | Players must now manually pick up the item from the chest after unlocking |
+| UI text hard to read | Increased size of control guide, instructions, and inventory |
+| Flashlight required item selection to use | Flashlight made part of base movement; removed from inventory |
+| Inventory items unclear at a glance | Adjusted item images to be more clearly distinguishable |
+| Mouse sensitivity too low on trackpad | Mouse sensitivity increased |
+| Multiple flashlights with no added purpose | Extra flashlights removed; battery life mechanic added |
+| Statue too slow to be threatening | Statue speed increased; jumpscare trigger added on catch |
+| No monster in other rooms, lowered tension | Monsters added across more rooms |
+| Couch moving without purpose | Rigidbody and Collider removed from couch |
+
+---
+
+## Beta Release Changes
+
+- Made controls and prompts larger and more legible
+- Fixed room swapping to ensure free movement between all rooms
+- Added statues to multiple rooms to maintain tension throughout
+- Increased statue speed for greater fear factor
+- Improved UI legibility and layout across the entire game
+- Increased mouse sensitivity for easier navigation
+- Integrated flashlight into base movement functionality
+- Improved inventory icons for clearer identification
+- Added several more rooms to expand the experience
+- Added puzzles to increase game difficulty
+- Removed unnecessary object physics
+- Enlarged rooms to reduce feelings of being cramped
+- Applied custom ghost shader to statue enemies
+
+---
+
+## How to Play
+
+1. Download the game from [itch.io](https://mphilip.itch.io/vanishing-spaces)
+2. Extract and launch the executable
+3. Review the **Controls** screen on the start menu before beginning
+4. Use the **flashlight** (always available — press `F`) to freeze statue enemies and navigate the dark
+5. Find **anchor objects** to lock rooms in place and advance the story
+6. Solve **environmental puzzles** to collect key items and unlock new areas
+7. Escape the mansion
+
+> ⚠️ *The mansion rearranges itself when rooms are out of sight. Pay attention to your surroundings.*
+
+---
+
+## Team
+
+- **Matthew Philip**
+- **Bhavani Boini**
+- **James Nguyen**
+
+*Developed for CS 426: Video Game Design — Spring 2026, University of Illinois Chicago.*
+
+--------------------------------------------------------------ASSIGNMENT README BELOW--------------------------------------------------------------
 Vanishing Spaces
 
 Created for CS 426 Spring 2026 at UIC
